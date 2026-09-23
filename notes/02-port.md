@@ -8,7 +8,7 @@ YesMetaZFC は、Phyrion 氏のリポジトリに `vendor/bms` として同梱�
 
 ## 0. 要約
 
-- 取り込むもの：最終定理が import で依存する 161 モジュール、24,420 行。そのうち定数の水準で要るのは 142 モジュール、21,926 行である。残りの 19 モジュール、2,494 行は外す。
+- 取り込むもの：最終定理が import で依存する 161 モジュール、24,420 行。そのうち定数の水準で要るのは 142 モジュール、21,926 行である。残りの 19 モジュール、2,494 行は外す予定だった。実際には、取り込んだモジュールがそのうち 18 個の名前を直接呼んでいたので、外せたのは `ZeroY.BMS.AnyArray` だけである（§2 の後の注）。
 - 書き直すもの：コアが直接使う YesMetaZFC の名前 106 個（公開 105 個、private 1 個）。YesMetaZFC の中でのその閉包は 494 宣言、5,098 行ある。
 - 使わないもの：YesMetaZFC の生成と安定性の枠組み（`Generation`、`Stability`、`RepresentationDescentSystem` など）。1-Y の整礎性は BMS の整礎性を使わない。YesMetaZFC は、BMS の配列、親、祖先、展開、コピーの補題（補題 2.5）という組合せの部品としてだけ使われている。
 - 書き直しの経路は 2 つある。bms-elem-pattern の `Bm4` を経由する経路（新規約 3.0k 行と、Bm4 の 2.9k 行の版上げ）と、直接書く経路（新規約 4.0–5.0k 行）である。どちらにするかは手順 B0 の測定で決める（§4）。
@@ -17,7 +17,7 @@ YesMetaZFC は、Phyrion 氏のリポジトリに `vendor/bms` として同梱�
 ## 1. 測り方
 
 - import の閉包：`OneY.Dynamics`、`OneY.RootIndexed.ExpansionWellFounded`、`OneY.RootIndexed.Representation` から、ソースの import 行をたどった。OneY と ZeroY の全 173 ファイル（25,825 行）のうち、161 モジュールが入る。
-- 定数の閉包：ビルド済みの `.olean` を読むメタプログラムで、`OneY.RootIndexed.*` と `OneY.Dynamics` のすべての宣言から依存をたどった。§2 で「外す」とした 19 モジュールは import されるが、定数を 1 つも出さない。
+- 定数の閉包：ビルド済みの `.olean` を読むメタプログラムで、`OneY.RootIndexed.*` と `OneY.Dynamics` のすべての宣言から依存をたどった。§2 で「外す」とした 19 モジュールは import されるが、最終定理の定数閉包には現れない。ただしソースの水準では、取り込んだモジュールがそのうち 18 個の名前を呼ぶ。
 - 最終定理 4 つだけから依存をたどっても測った。YesMetaZFC の定数は 453 個ある（`Lemma25` 140、`Decomposition` 139、`Ancestor` 54、`Parent` 40、`Reference` 31、`Expansion` 30、`Array` 16、`WellFoundedness` 2、`ExpansionOrder` 1）。そのうちコアの 38 モジュールが直接使う名前は 110 個で、自動で作られる `mk` と `match_1` の 7 個を除くと、§3 の 106 個と一致する（private の `relativeSupport` は match の等式を通して使われる）。
 - コアは Lean のコアと Std だけを使う。Mathlib も sorry も無い。YesMetaZFC を直接 import するのは 10 モジュールで、`open` の行で YesMetaZFC を開くファイルは 52 ある。
 
@@ -189,7 +189,9 @@ import の順（依存される方が先）に並べる。「YesMetaZFC」の列
 | 160 | `ZeroY.Dynamics.Prefix` | 42 | 取り込む |  |
 | 161 | `OneY.Dynamics` | 300 | 取り込む | 直接 import、1 個 |
 
-外す 19 モジュールは、主に 0-Y と BMS の対応の部分（符号化、復号、行列の認識、順序の埋め込み、展開の共役）、BMS の整礎性の系（`ZeroY.BMS.AnyArray`）、入口に届かない 1-Y の幾何（`OneY.Geometry`、`OneY.Build`、`OneY.ForestFrameMatrix`）である。取り込むモジュールの中の、これらを import する行は消す。
+外す 19 モジュールは、主に 0-Y と BMS の対応の部分（符号化、復号、行列の認識、順序の埋め込み、展開の共役）、BMS の整礎性の系（`ZeroY.BMS.AnyArray`）、入口に届かない 1-Y の幾何（`OneY.Geometry`、`OneY.Build`、`OneY.ForestFrameMatrix`）である。取り込むモジュールの中の、これらを import する行は消す予定だった。
+
+**実際の結果（移植のあと）.** 18 個は取り込んだモジュールから名前を直接呼ばれている（例：`ZeroY.Decode` の `decode` を `ZeroY.Expansion` が、`OneY.Build` の `sequenceBound_pos` を `OneY.ExpansionRebuildPrefix` が使う）。そこで外したのは `ZeroY.BMS.AnyArray` だけで、残りの 18 個はそのまま取り込んだ。取り込んだのは 160 モジュールである。
 
 ## 3. コアが使う YesMetaZFC の名前と、書き直し方
 
