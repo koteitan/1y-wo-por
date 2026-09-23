@@ -1,0 +1,14 @@
+1y-wo-por
+
+This repository contains original work and code adapted from the following
+project, which is licensed under the Apache License, Version 2.0 (see LICENSE):
+
+  Phyrion, 1Y-Well-Ordering-Lean
+  https://github.com/Phyrion1343/1Y-Well-Ordering-Lean
+  revision 6533b2975f3cafb3582dc8f8127e9ea7144d7e69
+
+Files adapted from it keep a header naming the original file and stating what
+was changed.  No code from the snapshot vendored there as `vendor/bms`
+(YesMetaZFC, bms-constructible-bridge), which carries no license, is copied or
+adapted here; the mathematics it formalizes is re-implemented independently
+where it is needed.
