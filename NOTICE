@@ -20,8 +20,8 @@ Por/Chain.lean adapt helpers and constructions of `lean/Pattern/Basic.lean`
 and `lean/Pattern/Chain.lean` of koteitan/bms-elem-pattern
 (https://github.com/koteitan/bms-elem-pattern), which is licensed under
 CC BY-SA 4.0 by the same author as this repository; each of these files says
-so in its header.  Whether those parts are also released here under
-Apache-2.0 is the author's decision and is pending.
+so in its header.  The author releases those parts here under Apache-2.0 as
+well (decided 2026-09-23).
 
 ZeroY/ and OneY/ (160 modules) are adapted from `formalization/ZeroY` and
 `formalization/OneY` of Phyrion's project.  Each file starts with a header

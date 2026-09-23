@@ -1,6 +1,6 @@
 /-
 Adapted from koteitan, bms-elem-pattern, `lean/Pattern/Basic.lean`
-(https://github.com/koteitan/bms-elem-pattern, CC BY-SA 4.0): `cat`, `cat_left`, `cat_lt`,
+(https://github.com/koteitan/bms-elem-pattern, CC BY-SA 4.0; released here under Apache-2.0 as well by the same author): `cat`, `cat_left`, `cat_lt`,
 `cat_congr_left`. Changes: ported to Lean 4.33.1; `cat_bound` is new.
 -/
 import Mathlib

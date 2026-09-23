@@ -185,7 +185,7 @@ lake env lean Audit.lean
 このリポジトリは Apache License 2.0 である（[LICENSE](LICENSE)）。出どころと変更点は [NOTICE](NOTICE) に書いてある。
 
 - 組合せの層：[Phyrion1343/1Y-Well-Ordering-Lean](https://github.com/Phyrion1343/1Y-Well-Ordering-Lean)（Apache-2.0、リビジョン `6533b29`）の `formalization/ZeroY` と `formalization/OneY` を移したものである。証明の全体の形も Phyrion 氏による。各ファイルの先頭に、元のパスと変更点を書いてある。変更は、BMS の層の import と名前空間を `Por.BMS` に替えたことなどである。コメントは元のまま（中国語を含む）である。
-- `Por/` の補助：`Tuple`、`Omega1`、`Relation`、`Closure`、`Chain` の 5 ファイルは、[koteitan/bms-elem-pattern](https://github.com/koteitan/bms-elem-pattern) の `lean/Pattern` の補助と組み立てを移したものである。元は CC BY-SA 4.0 である。このリポジトリの作者と同じ著作者による。この部分を Apache-2.0 でも出すかは著作者の判断で、まだ決まっていない。それまでは、この部分は CC BY-SA 4.0 の下にある。各ファイルの先頭に、そのことを書いてある。
+- `Por/` の補助：`Tuple`、`Omega1`、`Relation`、`Closure`、`Chain` の 5 ファイルは、[koteitan/bms-elem-pattern](https://github.com/koteitan/bms-elem-pattern) の `lean/Pattern` の補助と組み立てを移したものである。元は CC BY-SA 4.0 である。このリポジトリの作者と同じ著作者による。著作者は、この部分をこのリポジトリでは Apache-2.0 でも出すと決めた（2026-09-23）。各ファイルの先頭に、そのことを書いてある。
 - BMS の層：`Por/BMS/` はこのリポジトリのために書いた。Phyrion 氏のリポジトリには、ライセンスのファイルが無い BMS のコード（YesMetaZFC）のスナップショットが同梱されている。組合せの層は元はそれを呼ぶ。`Por/BMS/` は、組合せの層が呼ぶ名前と命題の形だけを、呼び出し側（Apache-2.0）から取った。定義と証明は自前で書いた。スナップショットの行は 1 行も写していない。
 
 ## 参考文献

@@ -1,6 +1,6 @@
 /-
 Adapted from koteitan, bms-elem-pattern, `lean/Pattern/Chain.lean`
-(https://github.com/koteitan/bms-elem-pattern, CC BY-SA 4.0): `Form`, `witHeight`,
+(https://github.com/koteitan/bms-elem-pattern, CC BY-SA 4.0; released here under Apache-2.0 as well by the same author): `Form`, `witHeight`,
 `witHeight_lt`, `next`, `lt_next`, `next_lt`, `wit_below`, `tower`, `lam`, `tower_lt`,
 `tower_mono`, `tower_le_lam`, `lam_lt`, `lt_lam`, `exists_tower`. Changes: ported to
 Lean 4.33.1; the formulas are those of `Por.Formula`; `Good` and `lam_good` (Σ₁ only)

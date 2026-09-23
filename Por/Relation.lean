@@ -2,7 +2,7 @@
 The shape of the recursion (`stepF`, `RF`, `RF_eq`, `elem_stage`, `R_iff`) is adapted from
 `stage`, `RFix`, `RFix_eq`, `stage_agree`, `elem_congr`, `rel_iff` of koteitan,
 bms-elem-pattern, `lean/Pattern/Basic.lean`
-(https://github.com/koteitan/bms-elem-pattern, CC BY-SA 4.0). Changes: the recursion key is
+(https://github.com/koteitan/bms-elem-pattern, CC BY-SA 4.0; released here under Apache-2.0 as well by the same author). Changes: the recursion key is
 the triple (top, layer, index) instead of the top alone, the formulas are the single-block
 Σ₁ formulas of `Por.Formula`, and the stage relations are compared through `allowL`.
 -/

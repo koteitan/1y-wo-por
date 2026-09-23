@@ -1,6 +1,6 @@
 /-
 The chain `cC` follows `lamChain` of koteitan, bms-elem-pattern, `lean/Pattern/Chain.lean`
-(https://github.com/koteitan/bms-elem-pattern, CC BY-SA 4.0). Changes: ported to
+(https://github.com/koteitan/bms-elem-pattern, CC BY-SA 4.0; released here under Apache-2.0 as well by the same author). Changes: ported to
 Lean 4.33.1; `sat_abs`, `top_abs` and `chain_R` are new and replace `lab_lam`.
 -/
 import Por.Closure

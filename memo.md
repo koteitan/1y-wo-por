@@ -15,7 +15,7 @@ bms-elem-pattern が BMS でしたことの 1-Y 版である。
 
 ## 守ること
 
-- 検証は `leanman check -C ~/proofs/1y-wo-por`、`leanman build -C ~/proofs/1y-wo-por`。
+- 検証は `leanman check -C <このリポジトリ>`、`leanman build -C <このリポジトリ>`。
 - 緑を確認してから commit する。push はユーザーの指示を待つ。
 - `vendor/bms`（YesMetaZFC）はライセンスが無い。読んでよいが、複製も翻案もしない。
 - Phyrion 氏の Apache-2.0 のコードを移植するときは、`LICENSE` を保持し、`NOTICE` に出どころと
