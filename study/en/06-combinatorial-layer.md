@@ -111,10 +111,11 @@ The conclusion is `WellFounded (ZeroY.ExpansionStep expand)`.
 
 1. No bad root: $`s[N]`$ is $`s`$ without its last column. The new diagram is a prefix of the old one (`sequenceDiagram_take_isPrefix`). The same $`f`$ is a representation, and the new last label $`f(x-1)`$ is below $`f(x) = \beta`$ (`proper_prefix_lowers_last_label`).
 2. Bad root $`y`$ (layer $`K`$, row $`d`$):
-   - The diagram number $`b = 0`$ has size $`x`$ and is a prefix of the old diagram (it does not contain the last column $`x`$; `copyDiagram_zero_isPrefix`). $`f`$ is a representation of it, bounded by $`\beta = f(x)`$.
-   - The edge at the bad root gives $`R(K, f(\rho), f(y), f(x))`$, where $`\rho`$ is the root of the component of $`x`$. This is the first control relation (`initial_control_holds`).
-   - Going from diagram $`b`$ to diagram $`b + 1`$ uses finite reflection once (`exists_bounded_representation_splice`). The cut is the start of block $`b`$, $`y + b \cdot (x - y)`$.
-   - With the $`g`$ from the reflection, the part from the cut on is put below $`f(\mathrm{cut})`$. In the freed space on the right, the old labels $`f(\mathrm{cut}), \ldots, f(n-1)`$ are placed as they are (`spliceLabel`). This gives a representation of the diagram that is one block longer.
+   - The diagrams are numbered $`i = 0, 1, \ldots, N`$ (`copyDiagram`). Diagram $`i`$ has size $`x + i \cdot (x - y)`$.
+   - Diagram $`i = 0`$ has size $`x`$ and is a prefix of the old diagram (it does not contain the last column $`x`$; `copyDiagram_zero_isPrefix`). $`f`$ is a representation of it, bounded by $`\beta = f(x)`$.
+   - The edge at the bad root gives $`R(K, f(\rho), f(y), f(x))`$, where $`\rho`$ is the root of the component of $`x`$ in layer $`K`$, row $`d`$. This is the first control relation (`initial_control_holds`).
+   - Going from diagram $`i`$ to diagram $`i + 1`$ uses finite reflection once (`exists_bounded_representation_splice`). The cut is the start of block $`i`$, $`\mathrm{cut} = y + i \cdot (x - y)`$ (`blockCut`).
+   - Let $`m`$ be the size of diagram $`i`$ and $`f_i`$ its labelling. The $`g`$ from the reflection equals $`f_i`$ left of the cut and lies entirely below $`f_i(\mathrm{cut})`$. The new diagram has $`m + (m - \mathrm{cut})`$ columns. Column $`c \lt m`$ gets $`g(c)`$, and column $`c \ge m`$ gets the old label $`f_i(\mathrm{cut} + c - m)`$ (`spliceLabel`). So $`f_i(\mathrm{cut}), \ldots, f_i(m-1)`$ appear unchanged at the right end. This gives a representation of the diagram that is one block longer.
    - After $`N`$ repetitions we get a representation of the diagram of $`s[N]`$ bounded by $`\beta`$ (`blockScheme_bounded_representations`, `copied_diagrams_bounded`).
    - The new last label is below $`\beta`$ (`last_label_of_bounded_representation`). $`\square`$
 

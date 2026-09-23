@@ -8,13 +8,13 @@ Prerequisites
 |---|---|
 | [01 Ordinals and ω₁](01-ordinals.md) | ordinal, infinite descending sequence, $`\lt`$ is well-founded |
 
-This note explains three things: well-founded relations, well-founded recursion, and termination by decreasing labels. The definition of the relation $`R`$ ([07](07-relation-r.md)) has the form of §4 and §5. The outline of the whole proof ([06](06-combinatorial-layer.md)) has the form of §6.
+This note explains three things: well-founded relations, well-founded recursion, and termination by decreasing labels. The definition of the relation $`R`$ ([07](07-relation-r.md)) has the form of §4 and §5. The whole proof ([06](06-combinatorial-layer.md)) has the form of §6.
 
 ## 1. Well-founded relations
 
 **Definition (well-founded).** A relation $`\prec`$ on a set $`X`$ is **well-founded** if every nonempty subset $`S`$ of $`X`$ has a $`\prec`$-minimal element, that is, some $`x \in S`$ such that no $`y \in S`$ has $`y \prec x`$.
 
-Being well-founded is equivalent to having no infinite descending sequence $`x_0 \succ x_1 \succ x_2 \succ \cdots`$ (the backward direction uses a weak form of the axiom of choice).
+Being well-founded is equivalent to having no infinite descending sequence $`x_0 \succ x_1 \succ x_2 \succ \cdots`$. The direction "no infinite descending sequence implies well-founded" uses a weak form of the axiom of choice (dependent choice).
 
 **Definition in Lean.** Lean uses `Acc` (accessibility).
 
@@ -107,12 +107,12 @@ The second argument (call it `IH`) takes a key `t'` together with a proof that `
 In the definition of $`R`$, which keys are read depends on the values of variables inside a formula. Before writing the definition we cannot say that the keys read are smaller. So we proceed as follows.
 
 1. Write each value to be read as $`\exists h : (\text{the key is smaller}),\ \mathrm{IH}(\text{key}, h)`$. We call the condition a **guard**. Where the key is not smaller, this expression is false.
-2. Get the defining equation `fix_eq`. At this stage the right side carries the guards.
+2. Get the defining equation `fix_eq`. At this stage the right side still contains the guards.
 3. Show that the guard is always true wherever the right side actually reads a value. Then the equation without guards follows.
 
 In [07 The relation R](07-relation-r.md), step 1 is `stepF`, step 2 is `RF_eq`, and step 3 is `elem_stage` and `R_iff`.
 
-**A small example.** On $`\mathbb N`$ consider a definition of the form $`F(n) := 1 + \sum_{i \lt n,\ i \in S_n} F(i)`$, where $`S_n`$ is a given set for each $`n`$ that may contain numbers $`\ge n`$. Written with the guard, $`F(n) := 1 + \sum_{i \in S_n,\ i \lt n} F(i)`$, it is defined by well-founded recursion. If $`S_n \subseteq \{0, \ldots, n-1\}`$ is shown separately, the equation without the guard, $`F(n) = 1 + \sum_{i \in S_n} F(i)`$, holds.
+**A small example.** On $`\mathbb N`$ consider a definition of the form $`F(n) := 1 + \sum_{i \in S_n} F(i)`$, where $`S_n`$ is a given finite set for each $`n`$ that may contain numbers $`\ge n`$. So as it stands, this is not a well-founded recursion. Written with the guard, $`F(n) := 1 + \sum_{i \in S_n,\ i \lt n} F(i)`$, it is defined by well-founded recursion. If $`S_n \subseteq \{0, \ldots, n-1\}`$ is shown separately, the equation without the guard, $`F(n) = 1 + \sum_{i \in S_n} F(i)`$, holds.
 
 ## 6. Termination by labels
 

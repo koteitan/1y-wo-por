@@ -51,9 +51,9 @@ For the same reason, a successor ordinal $`\gamma + 1`$ is not $`\le_1`$ any lar
 
 By Example 1, no two distinct points below $`\omega + 1`$ are related by $`\le_1`$: pairs of natural numbers are handled by Example 1, and the only other point is $`\omega`$ itself. So in $`(\omega; \le, \le_1)`$ and $`(\omega + 1; \le, \le_1)`$, $`x \le_1 y`$ means the same as $`x = y`$. What remains is to compare the order-only structures $`(\omega; \le)`$ and $`(\omega + 1; \le)`$, and since $`\omega`$ is a limit, the example of [03](03-sigma1-elementary.md) §5 applies.
 
-**Example 3.** $`\omega \le_1 \omega + 2`$ fails. $`\exists x\ \exists y\ (x \lt y \land x \le_1 y)`$ is true in $`\omega + 2`$ ($`x = \omega`$, $`y = \omega + 1`$ by Example 2) and false in $`\omega`$ (Example 1).
+**Example 3.** If $`\beta \ge \omega + 2`$, then $`\omega \le_1 \beta`$ fails. $`\exists x\ \exists y\ (x \lt y \land x \le_1 y)`$ is true in $`\beta`$ ($`x = \omega`$, $`y = \omega + 1`$ by Example 2, both below $`\beta`$) and false in $`\omega`$ (Example 1).
 
-Hence $`\{\beta \mid \omega \le_1 \beta\} = \{\omega, \omega + 1\}`$.
+$`\omega \le_1 \omega`$ holds by the definition. Hence $`\{\beta \mid \omega \le_1 \beta\} = \{\omega, \omega + 1\}`$.
 
 In the order-only language, $`(\omega; \le) \preccurlyeq_{\Sigma_1} (\beta; \le)`$ held for every $`\beta \gt \omega`$. Putting $`\le_1`$ itself into the language makes the relation finer.
 
@@ -65,7 +65,7 @@ A termination proof for expansion attaches an ordinal label to each column and s
 
 **Reason.** $`\exists \vec y\ \psi(\vec p, \vec y)`$ is a $`\Sigma_1`$ formula true in $`(\beta; \ldots)`$. By $`\Sigma_1`$-elementarity it is true in $`(\alpha; \ldots)`$.
 
-In an expansion, the labels of old columns play the role of $`\vec y`$. If $`\psi`$ says "the labels at the ends of each parent–child edge satisfy $`\le_1`$ (and so on)", then the new labels $`\vec y'`$ satisfy the same edge conditions. Moreover $`\vec y'`$ lies below $`\alpha`$, below the old labels.
+In an expansion, $`\vec y`$ is the list of old labels of the columns to be relabelled. If $`\psi`$ says "the labels at the ends of each parent–child edge satisfy $`\le_1`$ (and so on)", then the new labels $`\vec y'`$ satisfy the same edge conditions. Moreover $`\vec y'`$ lies below $`\alpha`$. In an expansion, $`\alpha`$ is the old label of the cut column, and every old label $`\vec y`$ that is replaced is $`\ge \alpha`$. So the new labels are smaller than the old ones.
 
 **Use in bms-elem-pattern.** [bms-elem-pattern](https://github.com/koteitan/bms-elem-pattern) proved termination of BMS with $`\mathcal R_N`$. The label relation of a parent–child edge in row $`k`$ is $`\lt_{k+1}`$. Finite reflection uses the levels $`\Sigma_n`$ and lemmas about continuity and cofinality. The definition of $`\mathcal R_N`$ and examples are in the note [proof/pss/03-patterns.md](https://github.com/koteitan/bms-elem-pattern/blob/main/proof/pss/03-patterns.md) of that repository.
 
@@ -81,7 +81,7 @@ Read it as "in layer $`k`$ with root index $`\eta`$, $`a`$ is stable into $`b`$"
 
 **Problem 1: the level index is two-dimensional and transfinite.** The level $`(k, \eta)`$ runs lexicographically over $`\mathbb N \times \mathrm{Ord}`$. With countable labels, the levels are arranged like $`\omega \times \omega_1`$. The levels $`\Sigma_1, \ldots, \Sigma_N`$ of $`\mathcal R_N`$ are finitely many and counted by natural numbers. A transfinite $`\eta`$ cannot serve as a level number.
 
-**Problem 2: demands toward the top.** Finite reflection must also carry "relations $`R(j, v, w, \beta)`$ to the top $`\beta`$" (the `needs` of [06](06-combinatorial-layer.md) §4). $`\beta`$ is not an element of the structure $`(\beta; \ldots)`$. Writing out the definition of $`R`$ does not give a $`\Sigma_1`$ formula.
+**Problem 2: demands toward the top.** Finite reflection must also make "relations $`R(j, v, w, \beta)`$ to the top $`\beta`$" hold for the new labels (the `needs` of [06](06-combinatorial-layer.md) §4). $`\beta`$ is not an element of the structure $`(\beta; \ldots)`$. Writing out the definition of $`R`$ does not give a $`\Sigma_1`$ formula.
 
 ## 5. What this repository changes
 

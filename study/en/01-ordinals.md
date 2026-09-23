@@ -12,7 +12,7 @@ This note explains the ordinals used as labels and the ordinal $`\omega_1`$ used
 
 **Definition (infinite descending sequence).** A sequence $`(x_n)_{n \in \mathbb N}`$ with $`x_0 \gt x_1 \gt x_2 \gt \cdots`$ is an **infinite descending sequence**.
 
-A linear order is a well-order if and only if it has no infinite descending sequence (the backward direction uses a weak form of the axiom of choice).
+A linear order is a well-order if and only if it has no infinite descending sequence. The direction "no infinite descending sequence implies well-order" uses a weak form of the axiom of choice (dependent choice).
 
 | Order | Well-order? | Reason |
 |---|---|---|
@@ -53,7 +53,7 @@ This property is used in an example of [03 Structures and Σ₁-elementary subst
 
 **Definition (supremum).** The **supremum** $`\sup S`$ of a set $`S`$ of ordinals is the least ordinal that is $`\ge`$ every element of $`S`$.
 
-- If $`S`$ has a largest element, $`\sup S`$ is that element. This is always the case for a finite set.
+- If $`S`$ has a largest element, $`\sup S`$ is that element. This is always the case for a nonempty finite set. The supremum of the empty set is $`0`$.
 - If $`S`$ has no largest element, $`\sup S`$ is not in $`S`$.
 
 | $`S`$ | $`\sup S`$ |
@@ -106,7 +106,7 @@ The index set need not be $`\mathbb N`$. Any countable index set works.
 \{\beta \mid \beta \lt \sigma\} = \bigcup_{n} \{\beta \mid \beta \lt \alpha_n\}
 ```
 
-The right side is a countable union of countable sets. Choose a surjection $`e_n : \mathbb N \to \alpha_n`$ for each $`n`$. Then $`(n, t) \mapsto e_n(t)`$ is a surjection from $`\mathbb N \times \mathbb N`$ onto the union. Since $`\mathbb N \times \mathbb N`$ is countable, so is the union. Hence $`\sigma`$ is countable and $`\sigma \lt \omega_1`$. $`\square`$
+The right side is a countable union of countable sets. The terms with $`\alpha_n = 0`$ add nothing to the union, so drop them. For each remaining $`n`$ choose a surjection $`e_n : \mathbb N \to \alpha_n`$. Then $`(n, t) \mapsto e_n(t)`$ is a surjection from $`\mathbb N \times \mathbb N`$ onto the union. Since $`\mathbb N \times \mathbb N`$ is countable, so is the union. Hence $`\sigma`$ is countable and $`\sigma \lt \omega_1`$. $`\square`$
 
 - Choosing countably many surjections $`e_n`$ at once uses the axiom of choice (countable choice).
 - The statement fails for an uncountable index set. For example $`\sup_{\alpha \lt \omega_1} \alpha = \omega_1`$.

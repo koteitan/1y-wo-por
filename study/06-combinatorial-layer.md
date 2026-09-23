@@ -111,10 +111,11 @@ f(0) \lt f(1) \lt f(2), \quad R(0, f(0), f(0), f(1)), \quad R(0, f(0), f(1), f(2
 
 1. 悪い根が無いとき：$`s[N]`$ は $`s`$ から最後の列を消したものである。新しい図式は古い図式の接頭辞である（`sequenceDiagram_take_isPrefix`）。同じ $`f`$ が表現で、新しい末尾のラベル $`f(x-1)`$ は $`f(x) = \beta`$ より小さい（`proper_prefix_lowers_last_label`）。
 2. 悪い根 $`y`$（層 $`K`$、行 $`d`$）があるとき：
-   - $`b = 0`$ 番目の図式はサイズ $`x`$ で、古い図式の接頭辞である（最後の列 $`x`$ を含まない。`copyDiagram_zero_isPrefix`）。$`f`$ はその表現で、$`\beta = f(x)`$ で上から押さえられる。
-   - 悪い根の辺は $`R(K, f(\rho), f(y), f(x))`$ を与える。$`\rho`$ は $`x`$ の成分の根である。これが最初の制御関係になる（`initial_control_holds`）。
-   - $`b`$ 番目の図式から $`b + 1`$ 番目の図式を作るときに、有限反映を 1 回使う（`exists_bounded_representation_splice`）。切れ目は $`b`$ 番目のブロックの始まり $`y + b \cdot (x - y)`$ である。
-   - 反映で得た $`g`$ で、切れ目から右を $`f(\mathrm{cut})`$ より下に入れ直す。空いた右側に、古いラベル $`f(\mathrm{cut}), \ldots, f(n-1)`$ をそのまま並べる（`spliceLabel`）。これで 1 ブロック長い図式の表現ができる。
+   - 図式を番号 $`i = 0, 1, \ldots, N`$ で並べる（`copyDiagram`）。$`i`$ 番目の図式のサイズは $`x + i \cdot (x - y)`$ である。
+   - $`i = 0`$ 番目の図式はサイズ $`x`$ で、古い図式の接頭辞である（最後の列 $`x`$ を含まない。`copyDiagram_zero_isPrefix`）。$`f`$ はその表現で、$`\beta = f(x)`$ で上から押さえられる。
+   - 悪い根の辺は $`R(K, f(\rho), f(y), f(x))`$ を与える。$`\rho`$ は、層 $`K`$、行 $`d`$ での $`x`$ の成分の根である。これが最初の制御関係になる（`initial_control_holds`）。
+   - $`i`$ 番目の図式から $`i + 1`$ 番目の図式を作るときに、有限反映を 1 回使う（`exists_bounded_representation_splice`）。切れ目は $`i`$ 番目のブロックの始まり $`\mathrm{cut} = y + i \cdot (x - y)`$ である（`blockCut`）。
+   - $`i`$ 番目の図式のサイズを $`m`$、そのラベルを $`f_i`$ とする。反映で得た $`g`$ は、切れ目より左で $`f_i`$ と等しく、全体が $`f_i(\mathrm{cut})`$ より下にある。新しい図式の列は $`m + (m - \mathrm{cut})`$ 個である。列 $`c \lt m`$ には $`g(c)`$ を、列 $`c \ge m`$ には古いラベル $`f_i(\mathrm{cut} + c - m)`$ を付ける（`spliceLabel`）。つまり右端に $`f_i(\mathrm{cut}), \ldots, f_i(m-1)`$ がそのまま並ぶ。これで 1 ブロック長い図式の表現ができる。
    - $`N`$ 回くり返すと、$`s[N]`$ の図式の表現で $`\beta`$ で上から押さえられるものができる（`blockScheme_bounded_representations`、`copied_diagrams_bounded`）。
    - 新しい末尾のラベルは $`\beta`$ より小さい（`last_label_of_bounded_representation`）。$`\square`$
 

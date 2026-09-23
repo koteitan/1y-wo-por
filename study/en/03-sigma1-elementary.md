@@ -161,7 +161,7 @@ The comparison used in this repository differs from the textbook definition in t
 
 **Difference 1: one symbol, two interpretations.** The definition of $`R`$ compares the structure of height $`a`$ with the structure of height $`b`$. The top predicate $`\mathrm{Top}_j`$ is interpreted as "the relation to $`a`$" at height $`a`$ and as "the relation to $`b`$" at height $`b`$. So as it stands, one is not a substructure of the other.
 
-Therefore `ElemL` does not assume a substructure. It only requires that every $`\Sigma_1`$ formula with $`\vec p \lt a`$ has the same truth value on both sides. Taking $`\mathit{bb} = 0`$ (no quantifier), the atomic diagrams of points below $`a`$ agree. So when the agreement holds, the smaller structure is in fact a substructure, and a $`\Sigma_1`$-elementary one.
+Therefore `ElemL` does not assume a substructure. It only requires that every $`\Sigma_1`$ formula with $`\vec p \lt a`$ has the same truth value on both sides. Taking $`\mathit{bb} = 0`$ (no quantifier), the readable bits (Difference 2 below) of the atomic diagrams of points below $`a`$ agree. So when the agreement holds and both structures are restricted to the language of the readable symbols, the smaller structure is a substructure of the larger one, and a $`\Sigma_1`$-elementary one.
 
 **Difference 2: visible bits.** Each formula comes with a rule saying which top-predicate bits it may read. Bits it may not read are read as false. The argument `allow` of `diagM` decides this.
 

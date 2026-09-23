@@ -92,7 +92,7 @@ The right side reads $`R`$ itself. We use well-founded recursion on the lexicogr
 | a top predicate $`\mathrm{Top}_j(\xi, x)`$ of $`\mathfrak A^{a}`$ | $`(a, j, \xi)`$ | $`a \lt b`$ |
 | a visible top predicate of $`\mathfrak A^{b}`$ | $`(b, j, \xi)`$ | $`j \lt k`$, or $`j = k`$ and $`\xi \lt \eta`$ |
 
-**The recursion in Lean (`stepF`).** At key $`t = (b, k, \eta)`$ it returns the set of $`a`$ with $`R(k, \eta, a, b)`$. Each of the three interpretations carries, as a guard, a proof that the key is smaller ([02](02-well-founded.md) §5).
+**The recursion in Lean (`stepF`).** At key $`t = (b, k, \eta)`$ it returns the set of $`a`$ with $`R(k, \eta, a, b)`$. Each of the three interpretations contains, as a guard, a proof that the key is smaller ([02](02-well-founded.md) §5).
 
 | Stage interpretation | Formula |
 |---|---|
@@ -147,7 +147,7 @@ The core receives the strict version `fun h hR => R_weaken h.le hR`.
 R(j, \xi, x, a) \iff R(j, \xi, x, b)
 ```
 
-**Reason.** Use the quantifier-free formula $`\mathrm{Top}_j(p_0, p_1)`$ with parameters $`(\xi, x)`$ (if $`j = k`$, put position 0 into $`S`$). At height $`a`$ it means the left side, at height $`b`$ the right side.
+**Reason.** Use the quantifier-free formula $`\mathrm{Top}_j(p_0, p_1)`$ with parameters $`(\xi, x)`$ (if $`j = k`$, put position 0 into $`S`$). At height $`a`$ it means the left side, at height $`b`$ the right side. This property is not stated as a Lean theorem. The proof uses `top_abs`, a statement of a similar form (agreement of the top predicates between a good point and $`\omega_1`$, [09](09-obligations.md) §4).
 
 **Property (the lower point is a limit ordinal).** $`R(k, \eta, a, b)`$ implies that $`a`$ is a nonzero limit ordinal.
 
@@ -156,7 +156,7 @@ R(j, \xi, x, a) \iff R(j, \xi, x, b)
 - If $`a = 0`$: $`\exists y\ \neg(y \lt y)`$ ($`n = 1`$, $`\mathit{bb} = 1`$, $`r = 0`$, the matrix is all atomic diagrams) is true at height $`b`$ and false at height 0.
 - If $`a = \gamma + 1`$: $`\exists y\ (\gamma \lt y)`$ with parameter $`\gamma \lt a`$ is true at height $`b`$ ($`y = \gamma + 1 \lt b`$) and false at height $`a`$.
 
-Both contradict $`\mathrm{Elem}`$.
+Both contradict $`\mathrm{Elem}`$. This property is not proved in Lean, and the combinatorial layer does not use it.
 
 ## 8. Properties that are not used
 

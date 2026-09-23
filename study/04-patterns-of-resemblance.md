@@ -51,9 +51,9 @@ Carlson はこれを $`\le_1, \ldots, \le_N`$（$`\Sigma_1, \ldots, \Sigma_N`$ �
 
 例 1 から、$`\omega + 1`$ より下の異なる 2 点は $`\le_1`$ の関係にない。自然数どうしは例 1 で、残りは $`\omega`$ 自身だけだからである。したがって $`(\omega; \le, \le_1)`$ と $`(\omega + 1; \le, \le_1)`$ では、$`x \le_1 y`$ は $`x = y`$ と同じである。すると比べるのは順序だけの構造 $`(\omega; \le)`$ と $`(\omega + 1; \le)`$ で、$`\omega`$ は極限なので [03](03-sigma1-elementary.md) §5 の例から成り立つ。
 
-**例 3.** $`\omega \le_1 \omega + 2`$ ではない。$`\exists x\ \exists y\ (x \lt y \land x \le_1 y)`$ は、$`\omega + 2`$ で真（例 2 の $`x = \omega`$、$`y = \omega + 1`$）、$`\omega`$ で偽（例 1）だからである。
+**例 3.** $`\beta \ge \omega + 2`$ なら、$`\omega \le_1 \beta`$ ではない。$`\exists x\ \exists y\ (x \lt y \land x \le_1 y)`$ は、$`\beta`$ で真（例 2 の $`x = \omega`$、$`y = \omega + 1`$ はどちらも $`\beta`$ より下にある）、$`\omega`$ で偽（例 1）だからである。
 
-以上から $`\{\beta \mid \omega \le_1 \beta\} = \{\omega, \omega + 1\}`$ である。
+$`\omega \le_1 \omega`$ は定義から成り立つ。以上から $`\{\beta \mid \omega \le_1 \beta\} = \{\omega, \omega + 1\}`$ である。
 
 順序だけの言語では、$`\omega`$ より大きいどの $`\beta`$ でも $`(\omega; \le) \preccurlyeq_{\Sigma_1} (\beta; \le)`$ だった。$`\le_1`$ 自身を言語に入れたので、関係が細かくなった。
 
@@ -65,7 +65,7 @@ Carlson はこれを $`\le_1, \ldots, \le_N`$（$`\Sigma_1, \ldots, \Sigma_N`$ �
 
 **理由.** $`\exists \vec y\ \psi(\vec p, \vec y)`$ は $`\Sigma_1`$ 論理式で、$`(\beta; \ldots)`$ で真である。$`\Sigma_1`$ 初等性から $`(\alpha; \ldots)`$ でも真である。
 
-展開では、古い列のラベルを $`\vec y`$ として、この形を使う。$`\psi`$ に「親子の辺のラベルが関係 $`\le_1`$ などを満たす」と書いておけば、新しいラベル $`\vec y'`$ も同じ辺の条件を満たす。しかも $`\vec y'`$ は $`\alpha`$ より下にあり、古いラベルより小さい。
+展開では、付け替える列の古いラベルを $`\vec y`$ として、この形を使う。$`\psi`$ に「親子の辺のラベルが関係 $`\le_1`$ などを満たす」と書いておけば、新しいラベル $`\vec y'`$ も同じ辺の条件を満たす。しかも $`\vec y'`$ は $`\alpha`$ より下にある。展開では $`\alpha`$ は切れ目の列の古いラベルで、付け替える古いラベル $`\vec y`$ はどれも $`\alpha`$ 以上である。したがって新しいラベルは古いラベルより小さい。
 
 **bms-elem-pattern での使い方.** [bms-elem-pattern](https://github.com/koteitan/bms-elem-pattern) は、BMS の停止性を $`\mathcal R_N`$ で示した。行 $`k`$ の親子の辺のラベルの関係を $`\lt_{k+1}`$ にする。有限反映には $`\Sigma_n`$ の段、連続性や共終性の補題を使う。$`\mathcal R_N`$ の定義と例は、同リポジトリのノート [proof/pss/03-patterns.md](https://github.com/koteitan/bms-elem-pattern/blob/main/proof/pss/03-patterns.md) にある。
 
@@ -81,7 +81,7 @@ R(k, \eta, a, b) \quad (k \in \mathbb N,\ \eta, a, b \in \mathrm{Ord})
 
 **問題 1：段の添字が 2 次元で超限である.** 段 $`(k, \eta)`$ は $`\mathbb N \times \mathrm{Ord}`$ を辞書式に動く。ラベルが可算なら、段は $`\omega \times \omega_1`$ の形に並ぶ。$`\mathcal R_N`$ の段 $`\Sigma_1, \ldots, \Sigma_N`$ は有限個で、自然数で数える。超限の $`\eta`$ を段の番号にできない。
 
-**問題 2：上端への要求.** 有限反映は「上端 $`\beta`$ への関係 $`R(j, v, w, \beta)`$」も運ぶ必要がある（[06](06-combinatorial-layer.md) §4 の `needs`）。$`\beta`$ は構造 $`(\beta; \ldots)`$ の元ではない。$`R`$ の定義を展開して書くと $`\Sigma_1`$ にならない。
+**問題 2：上端への要求.** 有限反映は「上端 $`\beta`$ への関係 $`R(j, v, w, \beta)`$」も新しいラベルで成り立たせる必要がある（[06](06-combinatorial-layer.md) §4 の `needs`）。$`\beta`$ は構造 $`(\beta; \ldots)`$ の元ではない。$`R`$ の定義を展開して書くと $`\Sigma_1`$ にならない。
 
 ## 5. このリポジトリの変更点
 
