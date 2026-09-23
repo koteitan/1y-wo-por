@@ -13,13 +13,15 @@ was changed.  No code from the snapshot vendored there as `vendor/bms`
 adapted here; the mathematics it formalizes is re-implemented independently
 where it is needed.
 
-Por/Model.lean restates, as definitions only, the interface of
-`formalization/OneY/RootIndexed/Representation.lean` of the project above, and
-adapts the tuple and omega_1 helpers of `lean/Pattern/Basic.lean` and
-`lean/Pattern/Chain.lean` of koteitan/bms-elem-pattern
+The model in Por/ is stated against the interface of
+`OneY/RootIndexed/Representation.lean` (adapted from the project above).
+Por/Tuple.lean, Por/Omega1.lean, Por/Relation.lean, Por/Closure.lean and
+Por/Chain.lean adapt helpers and constructions of `lean/Pattern/Basic.lean`
+and `lean/Pattern/Chain.lean` of koteitan/bms-elem-pattern
 (https://github.com/koteitan/bms-elem-pattern), which is licensed under
-CC BY-SA 4.0 by the same author as this repository.  Whether those helpers are
-also released here under Apache-2.0 is the author's decision and is pending.
+CC BY-SA 4.0 by the same author as this repository; each of these files says
+so in its header.  Whether those parts are also released here under
+Apache-2.0 is the author's decision and is pending.
 
 ZeroY/ and OneY/ (160 modules) are adapted from `formalization/ZeroY` and
 `formalization/OneY` of Phyrion's project.  Each file starts with a header

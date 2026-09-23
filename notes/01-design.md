@@ -12,9 +12,9 @@ Phyrion 氏のリポジトリ [Phyrion1343/1Y-Well-Ordering-Lean](https://github
 - 方法：Phyrion 氏の証明の組合せの層（`formalization/OneY`、`formalization/ZeroY`）は変えずに使う。意味の層（`formalization/Concrete/OneYTruth`）を、順序数の上に直接定義した関係 $`R`$ に取り替える。
 - 関係：$`R(k,η,a,b)`$ は「段 $`(k,η)`$ の言語で、高さ $`a`$ の構造が高さ $`b`$ の構造の $`Σ_1`$ 初等部分構造である」ことである。言語は、すべての層の $`R`$（高さより下の点どうし）と、高さへの $`R`$ を表す上端述語を持つ。$`R`$ は（上端、層、根の添字）の辞書式順序による整礎再帰で定義する。
 - 状態（2026-09-23）：
-  - 定義と全義務の証明を Lean で書いた。`Por/Model.lean`（653 行、`import Mathlib` だけ、名前空間 `Por`）である。Lean 4.33.1 と Mathlib v4.33.1 で緑。公理は `propext`、`Classical.choice`、`Quot.sound` だけである。
+  - 定義と全義務の証明を Lean で書いた。`Por/` の 9 ファイル（§6.1、名前空間 `Por`）である。Lean 4.33.1 と Mathlib v4.33.1 で緑。公理は `propext`、`Classical.choice`、`Quot.sound` だけである。
   - 同じモデルを、Phyrion 氏の組合せの層（`6533b29` のビルド済み `.olean`、無改変）に差し込んだ。1-Y の 4 つの最終定理が緑になった。公理は同じ 3 つである。
-  - `Por/Model.lean` は、コアのインターフェースを書き写した版（Part 0）の上で証明している。Phyrion 氏の `Representation.lean`（Std だけに依存）を取り込んで、書き写しを本物の import に替え、ファイルを分ける（§6）。最終定理 4 つは、コアの移植のあとで入れる。
+  - モデルは 1 つだけで、本物のコアのインターフェース（`OneY.RootIndexed.*`）の上で述べる。書き写しの版は消した。最終定理 4 つは `Por/WellOrdering.lean` にあり、このリポジトリの `leanman build` で緑である（§6）。
 - 残る仕事は数学ではなく移植である。組合せの層は、ライセンスの無い YesMetaZFC に依存する。その部分を自前で書き直す（[02-port.md](02-port.md)）。
 - このノートは 1-Y だけを扱う。ω-Y（wy-wo-por）は 1-Y の後で扱う。
 
@@ -145,7 +145,7 @@ def FiniteReflection (lt : α → α → Prop) (D : α → Prop)
 | O6 | `reflection` | `FiniteReflection lt D R` | `finiteReflection` |
 | O7 | `initial` | 各式の図式に表現がある | `initial_all`（すべての `Diagram` について） |
 
-モデルの Lean 名は `Por/Model.lean`（名前空間 `Por`）のものである。まとめの定理 `model_obligations` は、6 つの仮定を入口の定理と同じ形で述べる。最終定理は `expansion_wellFounded`、`generated_strictWellOrder`、`descendants_strictWellOrder`、`expansion_chain_reaches_empty` とする。これらは結合検査のファイルで緑になった（§4.10）。このリポジトリには、移植のあとで入れる。
+モデルの Lean 名は `Por/` のファイル（名前空間 `Por`、§6.1）のものである。まとめの定理 `model_obligations` は、6 つの仮定を入口の定理と同じ形で述べる。最終定理は `expansion_wellFounded`、`generated_strictWellOrder`、`descendants_strictWellOrder`、`expansion_chain_reaches_empty` とする。これらは `Por/WellOrdering.lean` にあり、緑である（§4.10）。
 
 ### 2.4 コアでの使われ方
 
@@ -279,7 +279,7 @@ $`\mathrm{Good}`$ な点の集合が閉じていることは示していない�
 
 ### 3.7 Lean の名前との対応
 
-| 数学 | Lean 名（`Por/Model.lean`） |
+| 数学 | Lean 名（名前空間 `Por`、ファイルは §6.1） |
 |---|---|
 | 完全な原子図式の型 | `Diag m n` |
 | 点の列の原子図式（見えないビットは偽） | `diagM rel top allow m n v` |
@@ -292,7 +292,7 @@ $`\mathrm{Good}`$ な点の集合が閉じていることは示していない�
 | 真の内部関係と上端述語 | `relR`、`topR γ` |
 | 補助 | `Good`、`Form`、`witHeight`、`next`、`tower`、`lam`、`cC` |
 
-中心の定義は次のとおりである（`Por/Model.lean` から）。
+中心の定義は次のとおりである（`Por/Formula.lean` と `Por/Relation.lean` から）。
 
 ```lean
 def allowL (k : ℕ) (S : Set ℕ) (j a : ℕ) : Prop := j < k ∨ (j = k ∧ a ∈ S)
@@ -530,10 +530,12 @@ Lean：`cC_lt`、`cC_strictMono`、`cC_good`、`chain_R`、`initial_all`。
 
 ```lean
 theorem expansion_wellFounded : WellFounded (ZeroY.ExpansionStep OneY.Numeric.expand) :=
+  let h := model_obligations
   OneY.RootIndexed.actual_expansion_wellFounded (α := Ord) (· < ·) (fun _ => True) R
-    Ordinal.lt_wf (fun h₁ h₂ => h₁.trans h₂) (fun h => R_lt h) (fun h hR => R_weaken h.le hR)
-    finiteReflection (fun s => initial_all (exprDiagram s))
+    h.1 h.2.1 h.2.2.1 h.2.2.2.1 h.2.2.2.2.1 (fun s => h.2.2.2.2.2 (exprDiagram s))
 ```
+
+`model_obligations` の 6 つの成分は、`Ordinal.lt_wf`、`fun h₁ h₂ => h₁.trans h₂`、`fun h => R_lt h`、`fun h hR => R_weaken h.le hR`、`finiteReflection`、`initial_all` である（`Por/Model.lean`）。
 
 残りの 3 つは、`OneY.Numeric.generated_strictWellOrder`、`OneY.Numeric.descendants_strictWellOrder`、`OneY.Numeric.expansion_chain_reaches_empty` に `expansion_wellFounded` を渡すだけである。
 
@@ -541,6 +543,7 @@ theorem expansion_wellFounded : WellFounded (ZeroY.ExpansionStep OneY.Numeric.ex
 
 - モデル単体（`Por/Model.lean` と同じ内容。インターフェースは書き写した版）：Lean 4.33.1 と Mathlib v4.33.1 で緑。`model_obligations` の公理は `[propext, Classical.choice, Quot.sound]`。
 - コアとの結合（本物の `OneY.RootIndexed.ExpansionWellFounded` と `OneY.Dynamics` を import）：緑。`finiteReflection`、`initial_all` と最終定理 4 つの公理は、どれも同じ 3 つ。`#print axioms` は依存の閉包全体を見るので、コアにも `sorryAx` は無い。
+- このリポジトリの中（移植と分割のあと、`leanman build ZeroY OneY Por`）：終了コード 0。上と同じ 7 つの定理の公理は、どれも `[propext, Classical.choice, Quot.sound]`。
 - 対照：同じファイルに偽の `example : (1:ℕ) = 2 := rfl` を足すと、検査は失敗した（exit 2）。検査は本当にファイルを展開している。
 
 ### 4.11 使わない性質（Lean で未検査）
@@ -566,7 +569,7 @@ theorem expansion_wellFounded : WellFounded (ZeroY.ExpansionStep OneY.Numeric.ex
 7. **強さ.** 証明は $`ω_1`$ の正則性（可算選択）と選択公理を使う。ラベルは $`ω_1`$ より下の閉包点で、順序数の上界や表記系は得られない。L モデルも同じなので、これは後退ではない。
 8. **名前.** $`R`$ は Carlson の $`\mathcal R_N`$ そのものではない。上端述語を持つ $`Σ_1`$ 初等性を、上端を外側にした再帰で定義したものである。標準的な patterns of resemblance の構造と同じだとは主張しない。
 9. **付随の主張.** §4.11 の性質は Lean で検査していない。コアは使わない。
-10. **ツールチェーン.** Lean 4.33.1 と Mathlib v4.33.1 に固定する。コアは Lean 4.30 では 3 か所で壊れる（`ZeroY.Mountain.SumInverse`、`ZeroY.Structural.DecodeTower`、`OneY.Expansion`）。bms-elem-pattern（Lean 4.30）から持ってくる補助は、`Por/Model.lean` ですでに 4.33.1 に合わせてある。
+10. **ツールチェーン.** Lean 4.33.1 と Mathlib v4.33.1 に固定する。コアは Lean 4.30 では 3 か所で壊れる（`ZeroY.Mountain.SumInverse`、`ZeroY.Structural.DecodeTower`、`OneY.Expansion`）。bms-elem-pattern（Lean 4.30）から持ってくる補助は、`Por/` ですでに 4.33.1 に合わせてある。
 
 この方法はうまくいくと考える。意味の層は、本物のコアと組み合わせて 4 つの最終定理まで検査が通った。残りは移植の手間と、ライセンスの判断である。
 
@@ -574,36 +577,40 @@ theorem expansion_wellFounded : WellFounded (ZeroY.ExpansionStep OneY.Numeric.ex
 
 ### 6.1 ファイル
 
-今は `Por/Model.lean` の 1 ファイル（653 行）に、インターフェースの書き写し（Part 0）、補助、モデル、全義務の証明が入っている。これを次の表のように分ける。コアのモジュール名（`OneY.*`、`ZeroY.*`）は Phyrion 氏のものをそのまま使う。こうするとコアの import 行を変えずに済む。モデルの名前空間は `Por` のままにする。
+モデルは 1 つだけで、本物のコアのインターフェース（`OneY.RootIndexed.Atom`、`Diagram`、`TopAtom`、`Representation`、`FiniteReflection` など）の上で述べる。前にあった書き写しの版（`Por/Model.lean` の Part 0）と、最終定理のファイルの中の 2 つめのモデル（名前空間 `Por.Final`）は消した。名前空間はどのファイルも `Por` である。`Por.lean` は下の 2〜10 番を import する。
 
-| # | ファイル | 中身 | 行数の目安 |
+| # | ファイル | 中身 | 行数 |
 |---|---|---|---|
-| 1 | `OneY/RootIndexed/Representation.lean` | Phyrion 氏のファイルそのもの（`import Std` だけ）。先頭に出どころと変更点を書き、`NOTICE` に載せる | 533 |
-| 2 | `Por/Tuple.lean` | `cat`、`cat_left`、`cat_lt`、`cat_congr_left`、`cat_bound` | 30 |
-| 3 | `Por/Omega1.lean` | `Om`、`om_pos`、`om_succ_lt`、`countable_Iio`、`enumBelow`、`enumBelow_surj`、`params`、`exists_params` | 50 |
-| 4 | `Por/Formula.lean` | `Diag`、`RelF`、`TopF`、`diagM`、`Sat`、`full`、`allowL`、`ElemL`、`diagM_congr`、`sat_congr`、`maskD`、`diagM_mask`、`sat_mask` | 90 |
-| 5 | `Por/Relation.lean` | `Idx`、`ilt`、`ilt_wf`、`stepF`、`RF`、`R`、`RF_eq`、`relR`、`topR`、`Elem`、`elem_stage`、`R_iff`、`R_lt`、`R_index_le`、`R_weaken` | 90 |
-| 6 | `Por/Reflection.lean` | `getLt`、`getRel`、`getTop` とその `_diagM` 補題、`sigBound`、`atom_layer_lt`、`need_layer_lt`、`reflMat`、`reflMat_iff`、`finiteReflection` | 110 |
-| 7 | `Por/Closure.lean` | `Good`、`Form`、`witHeight`、`witHeight_lt`、`next`、`lt_next`、`next_lt`、`wit_below`、`tower`、`lam`、`tower_lt`、`tower_mono`、`tower_le_lam`、`lam_lt`、`lt_lam`、`exists_tower`、`lam_good` | 115 |
-| 8 | `Por/Chain.lean` | `sat_abs`、`top_abs`、`cC`、`cC_lt`、`cC_strictMono`、`cC_good`、`chain_R`、`initial_all` | 80 |
-| 9 | `Por/Model.lean` | `model_obligations` と `#print axioms` だけを残す | 25 |
-| 10 | `Por/WellOrdering.lean` | 最終定理 4 つと `#print axioms`（移植のあと） | 40 |
+| 1 | `OneY/RootIndexed/Representation.lean` | Phyrion 氏のファイルそのもの（`import Std` だけ）。先頭に出どころと変更点を書き、`NOTICE` に載せる | 538 |
+| 2 | `Por/Tuple.lean` | `Ord`、`cat`、`cat_left`、`cat_lt`、`cat_congr_left`、`cat_bound` | 49 |
+| 3 | `Por/Omega1.lean` | `Om`、`om_pos`、`om_succ_lt`、`countable_Iio`、`enumBelow`、`enumBelow_surj`、`params`、`exists_params` | 63 |
+| 4 | `Por/Formula.lean` | `Diag`、`RelF`、`TopF`、`diagM`、`Sat`、`full`、`allowL`、`ElemL`、`diagM_congr`、`sat_congr`、`maskD`、`diagM_mask`、`sat_mask` | 104 |
+| 5 | `Por/Relation.lean` | `Idx`、`ilt`、`ilt_wf`、`stepF`、`RF`、`R`、`RF_eq`、`relR`、`topR`、`Elem`、`elem_stage`、`R_iff`、`R_lt`、`R_index_le`、`R_weaken` | 120 |
+| 6 | `Por/Reflection.lean` | `getLt`、`getRel`、`getTop` とその `_diagM` 補題、`sigBound`、`atom_layer_lt`、`need_layer_lt`、`reflMat`、`reflMat_iff`、`finiteReflection` | 127 |
+| 7 | `Por/Closure.lean` | `Good`、`Form`、`witHeight`、`witHeight_lt`、`next`、`lt_next`、`next_lt`、`wit_below`、`tower`、`lam`、`tower_lt`、`tower_mono`、`tower_le_lam`、`lam_lt`、`lt_lam`、`exists_tower`、`lam_good` | 137 |
+| 8 | `Por/Chain.lean` | `sat_abs`、`top_abs`、`cC`、`cC_lt`、`cC_strictMono`、`cC_good`、`chain_R`、`initial_all` | 103 |
+| 9 | `Por/Model.lean` | `model_obligations` と `#print axioms` | 35 |
+| 10 | `Por/WellOrdering.lean` | 最終定理 4 つ（`model_obligations` から作る）と `#print axioms` | 59 |
 
-1 番を入れると、Part 0 の書き写しは要らなくなる。`Representation.lean` は Std だけに依存するので、コアの残りより先に入れられる。`lakefile.toml` に `[[lean_lib]] name = "OneY"` を足す（移植のときに `ZeroY` も足す）。
+import の順：`Tuple` → `Omega1`、`Formula` → `Relation` → `Reflection`（と `OneY.RootIndexed.Representation`）、`Closure`（と `Omega1`）→ `Chain`（と `OneY.RootIndexed.Representation`）→ `Model` → `WellOrdering`（と `OneY.RootIndexed.ExpansionWellFounded`、`OneY.Dynamics`）。
+
+どのファイルにも、何を示すかを書いたモジュールの説明（英語）がある。bms-elem-pattern から持ってきたファイル（`Tuple`、`Omega1`、`Relation`、`Closure`、`Chain`）は、先頭にそのことを書いてある。
+
+名前の変更：最終定理は `Por.Final.expansion_wellFounded` などから `Por.expansion_wellFounded`、`Por.generated_strictWellOrder`、`Por.descendants_strictWellOrder`、`Por.expansion_chain_reaches_empty` になった。`Por.finiteReflection`、`Por.initial_all`、`Por.model_obligations` は同じ名前のままで、型は本物のインターフェースを使う。
 
 ### 6.2 順序
 
 1. 手順 4（済）：`Por/Model.lean` を入れた。全義務が緑。
-2. 手順 4 の続き：1 番を入れ、`Por/Model.lean` の Part 0 を消して、その import に替える。次に 2〜9 番へ分ける。1 ファイルごとに `leanman build` する。`model_obligations` の公理が `[propext, Classical.choice, Quot.sound]` のままであることを確かめる。この作業は手順 5 と並べて行ってよい。
-3. 手順 5：組合せの層を移植する（[02-port.md](02-port.md)）。
-4. 手順 6：10 番を入れ、`leanman build` で結合検査をこのリポジトリの中でやり直す。§5 の 2 の注意はこれで消える。
-5. 手順 7：文書と公理の監査。`#print axioms` を最終定理 4 つと `finiteReflection`、`initial_all` について記録する。
+2. 手順 4 の続き（済）：1 番を入れ、書き写しを消し、2〜9 番に分けた。
+3. 手順 5（済）：組合せの層を移植した（[02-port.md](02-port.md)）。
+4. 手順 6（済）：10 番を入れ、`leanman build ZeroY OneY Por` で結合検査をこのリポジトリの中でやり直した。終了コードは 0。§5 の 2 の注意はこれで消える。
+5. 手順 7：文書と公理の監査。`#print axioms` の結果（2026-09-23）：最終定理 4 つ、`finiteReflection`、`initial_all`、`model_obligations` は、どれも `[propext, Classical.choice, Quot.sound]` である。
 
 どの手順も、緑を確かめてから commit する。
 
 ### 6.3 bms-elem-pattern から持ってくるもの
 
-[bms-elem-pattern](https://github.com/koteitan/bms-elem-pattern) の `lean/Pattern` から次を使う。`Por/Model.lean` ではすでに Lean 4.33.1 に合わせてある。
+[bms-elem-pattern](https://github.com/koteitan/bms-elem-pattern) の `lean/Pattern` から次を使う。§6.1 の 2、3、5、7、8 番で、すでに Lean 4.33.1 に合わせてある。
 
 - `Basic.lean`
   - そのまま：`cat`、`cat_left`、`cat_lt`、`cat_congr_left`。
@@ -614,7 +621,7 @@ theorem expansion_wellFounded : WellFounded (ZeroY.ExpansionStep OneY.Numeric.ex
   - 置き換え：`lam_elem`（$`Σ_n`$ の一致）は `lam_good`（$`Σ_1`$ だけ）になる。`lab_lam` は `chain_R` になり、新しい補題 `top_abs` が要る。言語に上端述語が入ったからである。`lamChain` とその補題は `cC` とその補題になる。
 - 使わないもの：`General.lean`（P4′、$`Φ_m`$、共終な連続性）、`Reflect.lean`（`reflect_one`、`reflect_two` など）、`Main.lean`、`Basic.lean` の $`Σ_n`$ の段の補題（`lev`、`lab` の類、`elem_cofinal` など）。
 
-ライセンス：これらは koteitan 氏のコードで、CC BY-SA 4.0 である。`Por/Model.lean` にはすでに入っていて、`NOTICE` に出どころと、判断が保留であることが書いてある。著作者が Apache-2.0 でも出すと決めるか、書き直す（§5 の 5）。
+ライセンス：これらは koteitan 氏のコードで、CC BY-SA 4.0 である。§6.1 の 2、3、5、7、8 番にすでに入っていて、`NOTICE` に出どころと、判断が保留であることが書いてある。著作者が Apache-2.0 でも出すと決めるか、書き直す（§5 の 5）。
 
 ### 6.4 検査の方法
 

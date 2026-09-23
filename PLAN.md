@@ -1,6 +1,5 @@
 # PLAN — 1y-wo-por
 
-- 🤖 `Por/Model.lean` と `Por/WellOrdering.lean` の重複をなくし、`notes/01-design.md` §6 のファイルに分ける
-- 文書：README（日英）、NOTICE の更新、公理の監査
 - ライセンスの判断（著作者）
-  - `Por/` の bms-elem-pattern 由来の補助（CC BY-SA 4.0）を Apache-2.0 でも出すか
+  - `Por/` の bms-elem-pattern 由来の 5 ファイル（CC BY-SA 4.0）を Apache-2.0 でも出すか
+- 公開（著作者）：GitHub のリポジトリを作り、push する
