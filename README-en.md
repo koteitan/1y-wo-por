@@ -107,6 +107,10 @@ The proof uses the axiom of choice and the regularity of $`\omega_1`$. The label
 
 The full design and proof are in [notes/01-design.md](notes/01-design.md) (in Japanese).
 
+## Mathematical background
+
+[study/](study/en/README.md) has background notes for reading this repository (in English and Japanese). There are nine: ordinals and $`\omega_1`$, well-founded recursion, $`\Sigma_1`$-elementary substructures and the Tarski–Vaught test, Carlson's patterns of resemblance, the mountain of a 1-Y sequence, Phyrion's combinatorial layer, the relation $`R`$, closure below $`\omega_1`$ and the chain, and the discharge of the obligations. Every note names the Lean declarations.
+
 ## Files
 
 | Path | Content |
@@ -116,6 +120,7 @@ The full design and proof are in [notes/01-design.md](notes/01-design.md) (in Ja
 | [ZeroY/](ZeroY/) | Phyrion's 0-Y layer, adapted. 42 modules |
 | [OneY/](OneY/) | Phyrion's 1-Y layer, adapted. 118 modules |
 | [notes/](notes/) | Design notes (in Japanese) |
+| [study/](study/en/README.md) | Notes on the mathematical background (in English and Japanese) |
 | [Audit.lean](Audit.lean) | The axiom audit. Not part of any `lean_lib` |
 | [LICENSE](LICENSE), [NOTICE](NOTICE) | Apache-2.0 and the record of origins |
 

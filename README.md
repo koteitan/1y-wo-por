@@ -107,6 +107,10 @@ Lean では `Por.R` と、その定義の式 `Por.R_iff` である（[Por/Relati
 
 詳しい設計と証明は [notes/01-design.md](notes/01-design.md) にある（日本語）。
 
+## 数学の解説
+
+[study/](study/README.md) に、このリポジトリを読むための背景ノートがある（日本語と英語）。順序数と $`\omega_1`$、整礎再帰、$`\Sigma_1`$ 初等部分構造と Tarski–Vaught 判定法、Carlson の patterns of resemblance、1-Y 数列の山、Phyrion 氏の組合せの層、関係 $`R`$、$`\omega_1`$ より下の閉包と鎖、義務の証明の 9 本である。どのノートも Lean の名前を挙げる。
+
 ## ファイル
 
 | 場所 | 中身 |
@@ -116,6 +120,7 @@ Lean では `Por.R` と、その定義の式 `Por.R_iff` である（[Por/Relati
 | [ZeroY/](ZeroY/) | Phyrion 氏の 0-Y の層を移したもの。42 モジュール |
 | [OneY/](OneY/) | Phyrion 氏の 1-Y の層を移したもの。118 モジュール |
 | [notes/](notes/) | 設計のノート（日本語） |
+| [study/](study/README.md) | 数学の解説のノート（日本語と英語） |
 | [Audit.lean](Audit.lean) | 公理の監査。どの `lean_lib` にも入っていない |
 | [LICENSE](LICENSE)、[NOTICE](NOTICE) | Apache-2.0 と出どころの記録 |
 
