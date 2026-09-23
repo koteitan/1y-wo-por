@@ -2,8 +2,7 @@
 
 - 組合せの層の移植（`notes/02-port.md`）
   - BMS の層を自前で書く（`Por/BMS/`、Std だけ、YesMetaZFC は写さない）
-    - 🤖 `Array.lean`：配列、行を落とす補題、`ValidArray.expand`、`StrictWellOrder`
-    - `ParentAncestor.lean`：親と祖先の補題
+    - 🤖 `ParentAncestor.lean`：親と祖先の補題
     - `Context.lean`：`ExpansionContext` とコピーの座標
     - `CopyLemma.lean`：コピーの補題（BMS の補題 2.5）
   - 取り込んだコア（`ZeroY/`、`OneY/`）を層ごとにビルドし、壊れたところを直す
