@@ -12,9 +12,9 @@ Phyrion 氏のリポジトリ [Phyrion1343/1Y-Well-Ordering-Lean](https://github
 - 方法：Phyrion 氏の証明の組合せの層（`formalization/OneY`、`formalization/ZeroY`）は変えずに使う。意味の層（`formalization/Concrete/OneYTruth`）を、順序数の上に直接定義した関係 $`R`$ に取り替える。
 - 関係：$`R(k,η,a,b)`$ は「段 $`(k,η)`$ の言語で、高さ $`a`$ の構造が高さ $`b`$ の構造の $`Σ_1`$ 初等部分構造である」ことである。言語は、すべての層の $`R`$（高さより下の点どうし）と、高さへの $`R`$ を表す上端述語を持つ。$`R`$ は（上端、層、根の添字）の辞書式順序による整礎再帰で定義する。
 - 状態（2026-09-23）：
-  - 定義と全義務の証明を Lean で書いた（試作、653 行、`import Mathlib` だけ）。Lean 4.33.1 と Mathlib v4.33.1 で緑。公理は `propext`、`Classical.choice`、`Quot.sound` だけである。
+  - 定義と全義務の証明を Lean で書いた。`Por/Model.lean`（653 行、`import Mathlib` だけ、名前空間 `Por`）である。Lean 4.33.1 と Mathlib v4.33.1 で緑。公理は `propext`、`Classical.choice`、`Quot.sound` だけである。
   - 同じモデルを、Phyrion 氏の組合せの層（`6533b29` のビルド済み `.olean`、無改変）に差し込んだ。1-Y の 4 つの最終定理が緑になった。公理は同じ 3 つである。
-  - 試作はまだこのリポジトリに入れていない。入れ方は §6 に書く。
+  - `Por/Model.lean` は、コアのインターフェースを書き写した版（Part 0）の上で証明している。Phyrion 氏の `Representation.lean`（Std だけに依存）を取り込んで、書き写しを本物の import に替え、ファイルを分ける（§6）。最終定理 4 つは、コアの移植のあとで入れる。
 - 残る仕事は数学ではなく移植である。組合せの層は、ライセンスの無い YesMetaZFC に依存する。その部分を自前で書き直す（[02-port.md](02-port.md)）。
 - このノートは 1-Y だけを扱う。ω-Y（wy-wo-por）は 1-Y の後で扱う。
 
@@ -145,7 +145,7 @@ def FiniteReflection (lt : α → α → Prop) (D : α → Prop)
 | O6 | `reflection` | `FiniteReflection lt D R` | `finiteReflection` |
 | O7 | `initial` | 各式の図式に表現がある | `initial_all`（すべての `Diagram` について） |
 
-最終定理（試作では名前空間 `OneYPor`）：`expansion_wellFounded`、`generated_strictWellOrder`、`descendants_strictWellOrder`、`expansion_chain_reaches_empty`。まとめの定理 `model_obligations` は、6 つの仮定を入口の定理と同じ形で述べる。
+モデルの Lean 名は `Por/Model.lean`（名前空間 `Por`）のものである。まとめの定理 `model_obligations` は、6 つの仮定を入口の定理と同じ形で述べる。最終定理は `expansion_wellFounded`、`generated_strictWellOrder`、`descendants_strictWellOrder`、`expansion_chain_reaches_empty` とする。これらは結合検査のファイルで緑になった（§4.10）。このリポジトリには、移植のあとで入れる。
 
 ### 2.4 コアでの使われ方
 
@@ -249,7 +249,7 @@ R(k,η,a,b) \;:⟺\; η ≤ a \ ∧\ a \lt b \ ∧\ \mathfrak A^{a}_{k,η} ≼_{
 - 2 つの構造の上端述語は別の関係である。$`\mathfrak A^{a}`$ では $`a`$ への $`R`$、$`\mathfrak A^{b}`$ では $`b`$ への $`R`$ である。
 - 量化子の無い $`φ`$ を取ると、$`a`$ より下の点では、見える原子の真偽が一致する。特に、$`ξ, x \lt a`$ と見える $`(j,ξ)`$ について $`R(j,ξ,x,a) ⟺ R(j,ξ,x,b)`$ である。したがって $`\mathfrak A^{a}_{k,η}`$ は $`\mathfrak A^{b}_{k,η}`$ の部分構造で、しかも $`Σ_1`$ 初等である。
 - 読み方は $`a ≤_{(k,η)} b`$、つまり「層 $`k`$、根の添字 $`η`$ で、$`a`$ は $`b`$ へ安定している」である。
-- 条件 $`η ≤ a`$ は L モデルの `R.index_le` と同じである。辺は根 $`≤`$ 親なので、この条件で辺が失われることは無い。
+- 条件 $`η ≤ a`$ は L モデルの `R.index_le` と同じである。辺も要求も根 $`≤`$ 親なので、増加するラベル付けではこの条件はいつも満たされる。
 
 再帰。$`R`$ は $`(b,k,η)`$ についての $`\lhd`$ による整礎再帰で、すべての $`a`$ について一度に定義する。$`(b,k,η)`$ の定義が読む $`R`$ は次の 3 種類だけで、どれも鍵が小さい。
 
@@ -279,7 +279,7 @@ $`\mathrm{Good}`$ な点の集合が閉じていることは示していない�
 
 ### 3.7 Lean の名前との対応
 
-| 数学 | 試作での Lean 名 |
+| 数学 | Lean 名（`Por/Model.lean`） |
 |---|---|
 | 完全な原子図式の型 | `Diag m n` |
 | 点の列の原子図式（見えないビットは偽） | `diagM rel top allow m n v` |
@@ -292,7 +292,7 @@ $`\mathrm{Good}`$ な点の集合が閉じていることは示していない�
 | 真の内部関係と上端述語 | `relR`、`topR γ` |
 | 補助 | `Good`、`Form`、`witHeight`、`next`、`tower`、`lam`、`cC` |
 
-中心の定義は次のとおりである（試作から）。
+中心の定義は次のとおりである（`Por/Model.lean` から）。
 
 ```lean
 def allowL (k : ℕ) (S : Set ℕ) (j a : ℕ) : Prop := j < k ∨ (j = k ∧ a ∈ S)
@@ -358,7 +358,7 @@ C を選んだ。本物のコアと一緒に検査したのは C だけだから
 
 - 推移性、添字についての単調性、局所性は Lean で検査していない。→ §4.11 に「使わない性質」として分けた。コアはこれらを使わない。
 - 「YesMetaZFC から使うのは `StrictWellOrder` だけ」という前提は、定数の水準では誤りだった。→ 正しい数を §5 と [02-port.md](02-port.md) に書いた。
-- 端から端の検査は、手で組んだ環境で行った。→ 移植のあとに、このリポジトリの正式なビルドでやり直す（§6 の手順 6）。
+- コアと組み合わせた検査は、手で組んだ環境で行った。→ 移植のあとに、このリポジトリの正式なビルドでやり直す（§6 の手順 6）。
 - B についての「等号の原子」の指摘は C には当たらない。C の行列は $`\lt`$ のビットをすべて決めるので、等号も決まる。
 
 ## 4. 証明
@@ -438,7 +438,7 @@ Lean：`finiteReflection : FiniteReflection (α := Ord) (· < ·) (fun _ => True
 Φ :≡ ∃ y_{\mathrm{cut}} \dots ∃ y_{n-1}\ \Bigl[\ \bigwedge_{i \lt j \lt n} z_i \lt z_j \ ∧\ \bigwedge_{e ∈ G} \mathrm{Rel}_{k_e}(z_{r_e}, z_{p_e}, z_{q_e}) \ ∧\ \bigwedge_{d ∈ \mathrm{needs}} \mathrm{Top}_{k_d}(z_{r_d}, z_{p_d})\ \Bigr]
 ```
 
-5. $`Φ`$ は段 $`(K,θ)`$ の論理式である。$`k_d \lt K`$ の $`\mathrm{Top}_{k_d}`$ は対角なので、$`r_d`$ は証人の位置でもよい。$`k_d = K`$ なら $`r_d ∈ S`$ で、これは名前付き述語 $`\mathrm{Top}_{K, f(r_d)}`$ である。Lean では `allowL K S` の条件が、`Admissible` とちょうど一致する。
+5. $`Φ`$ は段 $`(K,θ)`$ の論理式である。$`k_d \lt K`$ の $`\mathrm{Top}_{k_d}`$ は対角なので、$`r_d`$ は証人の位置でもよい。$`k_d = K`$ なら $`r_d ∈ S`$ で、これは名前付き述語 $`\mathrm{Top}_{K, f(r_d)}`$ である。Lean では、`Admissible` から、各要求のビットが `allowL K S` で見えることと、$`S`$ の位置が $`s \lt \mathrm{cut}`$ かつ $`f(s) \lt θ`$ を満たすことが出る。
 6. $`\mathfrak A^{β}_{K,θ} ⊨ Φ`$ である。$`y_i := f(i) \lt β`$ と取ると $`z = f`$ になる。
    - $`\lt`$ の項は `Representation.ordered` から出る。
    - $`\mathrm{Rel}`$ の項は `Representation.relations` から出る（$`\mathrm{Rel}_j`$ は $`R(j,\cdot,\cdot,\cdot)`$）。
@@ -526,7 +526,7 @@ Lean：`cC_lt`、`cC_strictMono`、`cC_good`、`chain_R`、`initial_all`。
 
 よって 1 つの $`f`$ が、すべての `Diagram` を同時に表現する。特に `exprDiagram s` を表現する。上界や種の条件は要らない。$`\square`$
 
-### 4.10 端から端：最終定理
+### 4.10 コアとの結合：最終定理
 
 ```lean
 theorem expansion_wellFounded : WellFounded (ZeroY.ExpansionStep OneY.Numeric.expand) :=
@@ -539,8 +539,8 @@ theorem expansion_wellFounded : WellFounded (ZeroY.ExpansionStep OneY.Numeric.ex
 
 検査（2026-09-23 に再実行した）。
 
-- モデル単体（インターフェースを書き写した版）：Lean 4.33.1 と Mathlib v4.33.1 で緑。`model_obligations` の公理は `[propext, Classical.choice, Quot.sound]`。
-- 端から端（本物の `OneY.RootIndexed.ExpansionWellFounded` と `OneY.Dynamics` を import）：緑。`finiteReflection`、`initial_all` と最終定理 4 つの公理は、どれも同じ 3 つ。`#print axioms` は依存の閉包全体を見るので、コアにも `sorryAx` は無い。
+- モデル単体（`Por/Model.lean` と同じ内容。インターフェースは書き写した版）：Lean 4.33.1 と Mathlib v4.33.1 で緑。`model_obligations` の公理は `[propext, Classical.choice, Quot.sound]`。
+- コアとの結合（本物の `OneY.RootIndexed.ExpansionWellFounded` と `OneY.Dynamics` を import）：緑。`finiteReflection`、`initial_all` と最終定理 4 つの公理は、どれも同じ 3 つ。`#print axioms` は依存の閉包全体を見るので、コアにも `sorryAx` は無い。
 - 対照：同じファイルに偽の `example : (1:ℕ) = 2 := rfl` を足すと、検査は失敗した（exit 2）。検査は本当にファイルを展開している。
 
 ### 4.11 使わない性質（Lean で未検査）
@@ -556,17 +556,17 @@ theorem expansion_wellFounded : WellFounded (ZeroY.ExpansionStep OneY.Numeric.ex
 数学の部分は、本物のコアと一緒に Lean で検査した。残るリスクは主に工学とライセンスである。
 
 1. **移植の規模.** コアの import 閉包は 161 モジュール、24,420 行ある（定数の水準で要るのは 142 モジュール、21,926 行）。コアはライセンスの無い YesMetaZFC に依存する。コアが直接使う名前は 106 個で、YesMetaZFC の中でのその閉包は 494 宣言、5,098 行ある。最終定理の定数閉包には、YesMetaZFC の定数が 453 個入っている。「使うのは `StrictWellOrder` だけ」という最初の見立ては誤りだった。これを自前で書き直す必要がある（[02-port.md](02-port.md)）。
-2. **端から端の検査の環境.** 検査は、このリポジトリの Mathlib と、Phyrion 氏のリポジトリ（`6533b29`、作業木に変更なし）のビルド済み `.olean` を並べた、手で組んだ `LEAN_PATH` で行った。コアをソースから作り直してはいない。`.olean` はどれもソースより新しいので、古い `.olean` の可能性は低い。移植のあと、このリポジトリの `leanman build` でやり直す。
-3. **Mathlib の見える環境でのコアの展開.** 端から端の検査は、コアを展開し直していない。BMS の層（または Bm4）が Mathlib を import すると、コアのファイルが Mathlib の simp 集合と名前の下で展開される。simp の結果が変わって証明が壊れるかもしれない。まだ測っていない。対策は [02-port.md](02-port.md) の手順 B0 にある。
+2. **結合検査の環境.** 検査は、このリポジトリの Mathlib と、Phyrion 氏のリポジトリ（`6533b29`、作業木に変更なし）のビルド済み `.olean` を並べた、手で組んだ `LEAN_PATH` で行った。コアをソースから作り直してはいない。`.olean` はどれもソースより新しいので、古い `.olean` の可能性は低い。移植のあと、このリポジトリの `leanman build` でやり直す。
+3. **Mathlib の見える環境でのコアの展開.** 結合検査は、コアを展開し直していない。BMS の層（または Bm4）が Mathlib を import すると、コアのファイルが Mathlib の simp 集合と名前の下で展開される。simp の結果が変わって証明が壊れるかもしれない。まだ測っていない。対策は [02-port.md](02-port.md) の手順 B0 にある。
 4. **定義の形への依存.** コアは YesMetaZFC の定義を開いて計算する。定義の等式や match の等式を使う証明項が約 10 個、BMS の定義名を含む simp、rw、unfold の行が約 69 行ある。自前の定義は同じ再帰の形にするか、それらの行を直す必要がある。
 5. **ライセンス.**
-   - bms-elem-pattern（CC BY-SA 4.0）から持ってくる補助（`cat` の類、`Om` の類、`enumBelow`、`params`、閉包の組み立て）がある。このリポジトリは Apache-2.0 である。著作者本人が Apache-2.0 でも出すと決めるか、書き直す必要がある。Bm4 を使う場合も同じである。
+   - bms-elem-pattern（CC BY-SA 4.0）から持ってくる補助（`cat` の類、`Om` の類、`enumBelow`、`params`、閉包の組み立て）がある。このリポジトリは Apache-2.0 である。著作者本人が Apache-2.0 でも出すと決めるか、書き直す必要がある。今は `NOTICE` に、この判断が保留だと書いてある。Bm4 を使う場合も同じである。
    - YesMetaZFC について：コードは写さない。コアが呼ぶ名前と命題の形には合わせる。命題の形はコアの使用箇所（Apache-2.0）から取る。これで足りるかは、著作者が判断することである。
 6. **仕様への信頼.** 1-Y の展開が `OneY.Numeric.expand` で正しく書かれていることは、Phyrion 氏の形式化に依る。このリポジトリは仕様を検査し直さない。
 7. **強さ.** 証明は $`ω_1`$ の正則性（可算選択）と選択公理を使う。ラベルは $`ω_1`$ より下の閉包点で、順序数の上界や表記系は得られない。L モデルも同じなので、これは後退ではない。
 8. **名前.** $`R`$ は Carlson の $`\mathcal R_N`$ そのものではない。上端述語を持つ $`Σ_1`$ 初等性を、上端を外側にした再帰で定義したものである。標準的な patterns of resemblance の構造と同じだとは主張しない。
 9. **付随の主張.** §4.11 の性質は Lean で検査していない。コアは使わない。
-10. **ツールチェーン.** Lean 4.33.1 と Mathlib v4.33.1 に固定する。コアは Lean 4.30 では 3 か所で壊れる（`ZeroY.Mountain.SumInverse`、`ZeroY.Structural.DecodeTower`、`OneY.Expansion`）。bms-elem-pattern（Lean 4.30）から持ってくる補助は、試作ですでに 4.33.1 に合わせてある。
+10. **ツールチェーン.** Lean 4.33.1 と Mathlib v4.33.1 に固定する。コアは Lean 4.30 では 3 か所で壊れる（`ZeroY.Mountain.SumInverse`、`ZeroY.Structural.DecodeTower`、`OneY.Expansion`）。bms-elem-pattern（Lean 4.30）から持ってくる補助は、`Por/Model.lean` ですでに 4.33.1 に合わせてある。
 
 この方法はうまくいくと考える。意味の層は、本物のコアと組み合わせて 4 つの最終定理まで検査が通った。残りは移植の手間と、ライセンスの判断である。
 
@@ -574,7 +574,7 @@ theorem expansion_wellFounded : WellFounded (ZeroY.ExpansionStep OneY.Numeric.ex
 
 ### 6.1 ファイル
 
-コアのモジュール名（`OneY.*`、`ZeroY.*`）は Phyrion 氏のものをそのまま使う。こうするとコアの import 行を変えずに済む。モデルは `Por` 名前空間に置く（試作の `OneYPor` から改名する）。
+今は `Por/Model.lean` の 1 ファイル（653 行）に、インターフェースの書き写し（Part 0）、補助、モデル、全義務の証明が入っている。これを次の表のように分ける。コアのモジュール名（`OneY.*`、`ZeroY.*`）は Phyrion 氏のものをそのまま使う。こうするとコアの import 行を変えずに済む。モデルの名前空間は `Por` のままにする。
 
 | # | ファイル | 中身 | 行数の目安 |
 |---|---|---|---|
@@ -586,35 +586,35 @@ theorem expansion_wellFounded : WellFounded (ZeroY.ExpansionStep OneY.Numeric.ex
 | 6 | `Por/Reflection.lean` | `getLt`、`getRel`、`getTop` とその `_diagM` 補題、`sigBound`、`atom_layer_lt`、`need_layer_lt`、`reflMat`、`reflMat_iff`、`finiteReflection` | 110 |
 | 7 | `Por/Closure.lean` | `Good`、`Form`、`witHeight`、`witHeight_lt`、`next`、`lt_next`、`next_lt`、`wit_below`、`tower`、`lam`、`tower_lt`、`tower_mono`、`tower_le_lam`、`lam_lt`、`lt_lam`、`exists_tower`、`lam_good` | 115 |
 | 8 | `Por/Chain.lean` | `sat_abs`、`top_abs`、`cC`、`cC_lt`、`cC_strictMono`、`cC_good`、`chain_R`、`initial_all` | 80 |
-| 9 | `Por/Model.lean` | `model_obligations` と `#print axioms` | 25 |
+| 9 | `Por/Model.lean` | `model_obligations` と `#print axioms` だけを残す | 25 |
 | 10 | `Por/WellOrdering.lean` | 最終定理 4 つと `#print axioms`（移植のあと） | 40 |
 
-1 番を先に入れるので、インターフェースを書き写す必要は無い。`Representation.lean` は Std だけに依存するので、コアの残りより先に入れられる。`lakefile.toml` に `[[lean_lib]] name = "OneY"` を足す（移植のときに `ZeroY` も足す）。
+1 番を入れると、Part 0 の書き写しは要らなくなる。`Representation.lean` は Std だけに依存するので、コアの残りより先に入れられる。`lakefile.toml` に `[[lean_lib]] name = "OneY"` を足す（移植のときに `ZeroY` も足す）。
 
 ### 6.2 順序
 
-1. 手順 4a：1 番を入れる。`leanman build` で緑を確かめる。
-2. 手順 4b：2〜9 番をこの順に入れる。1 ファイルごとに `leanman build` する。`model_obligations` の公理が `[propext, Classical.choice, Quot.sound]` であることを確かめる。
+1. 手順 4（済）：`Por/Model.lean` を入れた。全義務が緑。
+2. 手順 4 の続き：1 番を入れ、`Por/Model.lean` の Part 0 を消して、その import に替える。次に 2〜9 番へ分ける。1 ファイルごとに `leanman build` する。`model_obligations` の公理が `[propext, Classical.choice, Quot.sound]` のままであることを確かめる。この作業は手順 5 と並べて行ってよい。
 3. 手順 5：組合せの層を移植する（[02-port.md](02-port.md)）。
-4. 手順 6：10 番を入れ、`leanman build` で端から端をこのリポジトリの中でやり直す。§5 の 2 の注意はこれで消える。
+4. 手順 6：10 番を入れ、`leanman build` で結合検査をこのリポジトリの中でやり直す。§5 の 2 の注意はこれで消える。
 5. 手順 7：文書と公理の監査。`#print axioms` を最終定理 4 つと `finiteReflection`、`initial_all` について記録する。
 
 どの手順も、緑を確かめてから commit する。
 
 ### 6.3 bms-elem-pattern から持ってくるもの
 
-[bms-elem-pattern](https://github.com/koteitan/bms-elem-pattern) の `lean/Pattern` から次を使う。試作ではすでに Lean 4.33.1 に合わせてある。
+[bms-elem-pattern](https://github.com/koteitan/bms-elem-pattern) の `lean/Pattern` から次を使う。`Por/Model.lean` ではすでに Lean 4.33.1 に合わせてある。
 
 - `Basic.lean`
   - そのまま：`cat`、`cat_left`、`cat_lt`、`cat_congr_left`。
-  - 型紙として：`stage`、`RFix`、`RFix_eq`、`stage_agree`、`elem_congr`、`rel_iff` の組み立てが、`stepF`、`RF`、`RF_eq`、`elem_stage`、`R_iff` になる。再帰の鍵は上端 1 つから（上端、層、添字）の 3 つ組に変わる。段の関係と真の関係の一致は、見えるビットの条件 `allowL` を通して示す。
+  - 組み立てを流用する：`stage`、`RFix`、`RFix_eq`、`stage_agree`、`elem_congr`、`rel_iff` の組み立てが、`stepF`、`RF`、`RF_eq`、`elem_stage`、`R_iff` になる。再帰の鍵は上端 1 つから（上端、層、添字）の 3 つ組に変わる。段の関係と真の関係の一致は、見えるビットの条件 `allowL` を通して示す。
   - 置き換え：ブロックを並べた `Sig` は、ブロック 1 つの `Sat` になる。原子図式は、記号の上限 $`m`$ を持つ `Diag m n` になる。
 - `Chain.lean`
   - ほぼそのまま：`Om`、`om_pos`、`om_succ_lt`、`countable_Iio`、`enumBelow`、`enumBelow_surj`、`params`、`exists_params`。閉包の組み立て `Form`、`witHeight`、`witHeight_lt`、`next`、`lt_next`、`next_lt`、`wit_below`、`tower`、`lam`、`tower_lt`、`tower_mono`、`tower_le_lam`、`lam_lt`、`lt_lam`、`exists_tower`（論理式の型だけ替える）。
   - 置き換え：`lam_elem`（$`Σ_n`$ の一致）は `lam_good`（$`Σ_1`$ だけ）になる。`lab_lam` は `chain_R` になり、新しい補題 `top_abs` が要る。言語に上端述語が入ったからである。`lamChain` とその補題は `cC` とその補題になる。
 - 使わないもの：`General.lean`（P4′、$`Φ_m`$、共終な連続性）、`Reflect.lean`（`reflect_one`、`reflect_two` など）、`Main.lean`、`Basic.lean` の $`Σ_n`$ の段の補題（`lev`、`lab` の類、`elem_cofinal` など）。
 
-ライセンス：これらは koteitan 氏のコードで、CC BY-SA 4.0 である。このリポジトリに入れる前に、著作者が Apache-2.0 でも出すと決めるか、書き直す（§5 の 5）。どちらにしても `NOTICE` に書く。
+ライセンス：これらは koteitan 氏のコードで、CC BY-SA 4.0 である。`Por/Model.lean` にはすでに入っていて、`NOTICE` に出どころと、判断が保留であることが書いてある。著作者が Apache-2.0 でも出すと決めるか、書き直す（§5 の 5）。
 
 ### 6.4 検査の方法
 

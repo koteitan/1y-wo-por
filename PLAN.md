@@ -22,7 +22,7 @@ bms-elem-pattern が BMS でしたことの 1-Y 版である。
 |---|---|---|
 | 1 | 意味の層が組合せの層に渡している義務を正確に抜き出す | 済（`notes/01-design.md` §2） |
 | 2 | patterns of resemblance による設計と、全義務の証明（`notes/01-design.md`） | 済。Lean でも全義務が緑（`Por/Model.lean`） |
-| 3 | 組合せの層の移植計画（`notes/02-port.md`） | 作業中 |
+| 3 | 組合せの層の移植計画（`notes/02-port.md`） | 済 |
 | 4 | Lean: patterns の関係と有限反映（`Por/Model.lean`。後でファイルに分ける） | 済 |
 | 5 | Lean: 組合せの層の移植。ライセンスの無い BMS 部分は自前で書き直す | 未 |
 | 6 | Lean: 両者をつなぎ、最終定理を得る | 未 |
