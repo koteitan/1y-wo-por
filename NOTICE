@@ -12,3 +12,11 @@ was changed.  No code from the snapshot vendored there as `vendor/bms`
 (YesMetaZFC, bms-constructible-bridge), which carries no license, is copied or
 adapted here; the mathematics it formalizes is re-implemented independently
 where it is needed.
+
+Por/Model.lean restates, as definitions only, the interface of
+`formalization/OneY/RootIndexed/Representation.lean` of the project above, and
+adapts the tuple and omega_1 helpers of `lean/Pattern/Basic.lean` and
+`lean/Pattern/Chain.lean` of koteitan/bms-elem-pattern
+(https://github.com/koteitan/bms-elem-pattern), which is licensed under
+CC BY-SA 4.0 by the same author as this repository.  Whether those helpers are
+also released here under Apache-2.0 is the author's decision and is pending.
