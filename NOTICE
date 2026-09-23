@@ -20,3 +20,17 @@ adapts the tuple and omega_1 helpers of `lean/Pattern/Basic.lean` and
 (https://github.com/koteitan/bms-elem-pattern), which is licensed under
 CC BY-SA 4.0 by the same author as this repository.  Whether those helpers are
 also released here under Apache-2.0 is the author's decision and is pending.
+
+ZeroY/ and OneY/ (160 modules) are adapted from `formalization/ZeroY` and
+`formalization/OneY` of Phyrion's project.  Each file starts with a header
+naming its original path and revision and stating what was changed: the
+imports and namespaces of the BMS layer are renamed to `Por.BMS`, a few
+declarations that serve only the BMS well-foundedness corollary are removed,
+and a few proofs that opened definitions of the BMS layer now use the lemmas
+of Por/BMS instead.  `ZeroY/BMS/AnyArray.lean` is not included.
+
+Por/BMS/ is written for this repository.  Its theorems carry the names and
+statements the adapted core calls, taken from the call sites in the core; the
+definitions and proofs are this repository's own formulation.  A line-by-line
+comparison against the unlicensed snapshot finds no coinciding line in any
+definition body or proof.

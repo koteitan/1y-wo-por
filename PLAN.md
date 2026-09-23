@@ -1,8 +1,6 @@
 # PLAN — 1y-wo-por
 
-- 🤖 BMS の層（`Por/BMS/`）を書き直す：定義の本文と証明の行が、ライセンスの無い YesMetaZFC と一致しないようにする。必要ならコア側（Apache-2.0）の、定義を開く箇所を自前の補題に替える
-- commit：BMS の層、取り込んだコア（`ZeroY/`、`OneY/`）、`Por/WellOrdering.lean`
-- `notes/02-port.md` の外すモジュールの記述を直す（実際に外せたのは `ZeroY.BMS.AnyArray` だけ）
+- 🤖 `notes/02-port.md` の外すモジュールの記述を直す（実際に外せたのは `ZeroY.BMS.AnyArray` だけ）
 - `Por/Model.lean` と `Por/WellOrdering.lean` の重複をなくし、`notes/01-design.md` §6 のファイルに分ける
 - 文書：README（日英）、NOTICE の更新、公理の監査
 - ライセンスの判断（著作者）
