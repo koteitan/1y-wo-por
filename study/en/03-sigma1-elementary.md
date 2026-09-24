@@ -16,6 +16,15 @@ This note explains the model-theoretic terms used in the definition of the relat
 
 **Definition (structure).** A **structure** $`\mathfrak A`$ for a language $`L`$ consists of a set $`A`$ (the domain, possibly empty) and an interpretation $`P^{\mathfrak A} \subseteq A^n`$ of each symbol $`P`$ of arity $`n`$.
 
+**Notation.** We write a structure as $`(A; P_1, \ldots, P_k)`$.
+
+- Left of the semicolon, $`A`$ is the domain.
+- Right of the semicolon are the interpretations of the symbols, in the order of the language. A symbol and its interpretation are written with the same letter.
+- When an ordinal $`\gamma`$ stands on the left, the domain is $`\{x \mid x \lt \gamma\}`$.
+- The relations on the right are restricted to the domain. For example, the $`\le`$ of $`(\gamma; \le)`$ is $`\{(x, y) \mid x, y \lt \gamma,\ x \le y\}`$.
+
+Example: $`(4; \lt)`$ has domain $`\{0, 1, 2, 3\}`$, and its relation is $`\lt`$ on $`\{0, 1, 2, 3\}`$.
+
 | Language | Structure | Domain |
 |---|---|---|
 | $`\{\lt\}`$ | $`(\omega; \lt)`$ | natural numbers |
