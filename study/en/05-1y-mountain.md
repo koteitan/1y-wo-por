@@ -111,7 +111,7 @@ For $`(1, 2, 4, 3)`$ all top values of layer 0 are 1, so layers 1 and above have
 
 **Definition (expansion $`s[N]`$).** $`N \in \mathbb N`$ is the number of copies. Let $`x`$ be the last column.
 
-- No bad root: delete the last column. $`s[N] = (s_0, \ldots, s_{x-1})`$.
+- (0) No bad root: delete the last column. $`s[N] = (s_0, \ldots, s_{x-1})`$.
 - Bad root (§5) at layer $`K`$, row $`d`$, column $`z`$: let $`L := x - z`$, and build the expression $`s[N]`$ of length $`W := x + N L`$ by steps 1 and 2 below. The values are not copied directly; the mountain of each layer is copied, and the values are rebuilt from it.
 
 **Definition (block).** If there is a bad root $`z`$, then for $`i = 0, 1, \ldots, N`$ the columns $`z + i L`$ to $`z + (i+1) L - 1`$ of $`s[N]`$ form **block $`i`$**. Block 0 is the original columns $`z, \ldots, x - 1`$, and blocks $`1, \ldots, N`$ are its copies. Every column from $`z`$ on is written uniquely as $`c = z + i L + j`$ ($`0 \le i \le N`$, $`0 \le j \lt L`$); $`i`$ is its block number and $`j`$ its position in the block. For example, in $`(1, 2, 2)[2] = (1, 2, 1, 2, 1, 2)`$ we have $`z = 0`$, $`x = 2`$, and blocks 0, 1, 2 are the columns $`\{0, 1\}`$, $`\{2, 3\}`$, $`\{4, 5\}`$.
@@ -120,25 +120,25 @@ Below, $`h_k(c)`$ is the height of column $`c`$ in layer $`k`$ (§3, §4), and $
 
 **Definition (shift).** For $`i \in \mathbb N`$ and a column $`p`$, let $`m_i(p) := p`$ if $`p \lt z`$, and $`m_i(p) := p + i L`$ if $`p \ge z`$. It moves a column of block 0 to the same position in block $`i`$.
 
-**Step 1 (copy the mountain of each layer).** For each layer $`k`$, the height $`h'_k(c)`$ of each column $`c \lt W`$ of $`s[N]`$ and its parents $`\mathrm{par}'_{k,r}(c)`$ for $`r \lt h'_k(c)`$ are given by the following branches. "Unchanged" means $`h'_k(c) = h_k(c)`$ and $`\mathrm{par}'_{k,r}(c) = \mathrm{par}_{k,r}(c)`$. A column $`c \ge z`$ is written $`c = z + i L + j`$ (block $`i`$, position $`j`$).
+**Step 1 (copy the mountain of each layer).** For each layer $`k`$, the height $`h'_k(c)`$ of each column $`c \lt W`$ of $`s[N]`$ and its parents $`\mathrm{par}'_{k,r}(c)`$ for $`r \lt h'_k(c)`$ are given by the following branches. Each branch is named by the number at its head, such as (2-3-1). In the examples below, the branches that set a parent are listed as "branches used"; the branches (1-1), (2-1), (3-1) that keep the original are not listed. "Unchanged" means $`h'_k(c) = h_k(c)`$ and $`\mathrm{par}'_{k,r}(c) = \mathrm{par}_{k,r}(c)`$. A column $`c \ge z`$ is written $`c = z + i L + j`$ (block $`i`$, position $`j`$).
 
-- **Layer $`k \gt K`$ (above the bad root)**
-  - $`c \lt z`$: unchanged.
-  - $`c \ge z`$: copy column $`z + j`$ shifted $`i`$ times. $`h'_k(c) = h_k(z + j)`$, $`\mathrm{par}'_{k,r}(c) = m_i(\mathrm{par}_{k,r}(z + j))`$.
-- **Layer $`k = K`$ (the layer of the bad root)**
-  - $`c \lt x`$: unchanged.
-  - $`c \ge x`$ with $`j \ge 1`$: copy column $`z + j`$ shifted $`i`$ times. $`h'_K(c) = h_K(z + j)`$, $`\mathrm{par}'_{K,r}(c) = m_i(\mathrm{par}_{K,r}(z + j))`$.
-  - $`c \ge x`$ with $`j = 0`$ (the first column of a block): the height is $`h'_K(c) = h_K(z)`$. The parents depend on the row.
-    - Rows $`r \lt d`$ (below the bad row): the parent of the last column $`x`$ shifted $`i - 1`$ times, $`\mathrm{par}'_{K,r}(c) = m_{i-1}(\mathrm{par}_{K,r}(x))`$.
-    - Rows $`d \le r \lt h_K(z)`$: the parent of column $`z`$ as it is, $`\mathrm{par}'_{K,r}(c) = \mathrm{par}_{K,r}(z)`$.
-- **Layer $`k \lt K`$ (below the bad root)**. Let $`f := h_k(z)`$ and $`e := h_k(x) - f`$ ($`e \gt 0`$). A column $`\sigma`$ **lies above $`z`$** if $`h_k(\sigma) \ge f`$ and the root of $`\sigma`$ in row $`f`$ is $`z`$.
-  - $`c \lt x`$: unchanged.
-  - $`c \ge x`$: first fix the source column $`\sigma`$ and the shift count $`b`$: if $`j \ge 1`$, $`\sigma := z + j`$ and $`b := i`$; if $`j = 0`$, $`\sigma := x`$ and $`b := i - 1`$.
-    - $`\sigma`$ lies above $`z`$: the height is $`h'_k(c) = h_k(\sigma) + b e`$ (the part from row $`f`$ up grows by $`b e`$ rows). The parents depend on the row.
-      - Rows $`r \lt f`$: $`\mathrm{par}'_{k,r}(c) = m_b(\mathrm{par}_{k,r}(\sigma))`$.
-      - Rows $`f \le r \lt f + b e`$: $`\mathrm{par}'_{k,r}(c) = \mathrm{par}_{k,f}(\sigma) + b L`$.
-      - Rows $`r \ge f + b e`$: $`\mathrm{par}'_{k,r}(c) = \mathrm{par}_{k,r - b e}(\sigma) + b L`$.
-    - $`\sigma`$ does not lie above $`z`$: $`h'_k(c) = h_k(\sigma)`$, $`\mathrm{par}'_{k,r}(c) = m_b(\mathrm{par}_{k,r}(\sigma))`$.
+- **(1) Layer $`k \gt K`$ (above the bad root)**
+  - (1-1) $`c \lt z`$: unchanged.
+  - (1-2) $`c \ge z`$: copy column $`z + j`$ shifted $`i`$ times. $`h'_k(c) = h_k(z + j)`$, $`\mathrm{par}'_{k,r}(c) = m_i(\mathrm{par}_{k,r}(z + j))`$.
+- **(2) Layer $`k = K`$ (the layer of the bad root)**
+  - (2-1) $`c \lt x`$: unchanged.
+  - (2-2) $`c \ge x`$ with $`j \ge 1`$: copy column $`z + j`$ shifted $`i`$ times. $`h'_K(c) = h_K(z + j)`$, $`\mathrm{par}'_{K,r}(c) = m_i(\mathrm{par}_{K,r}(z + j))`$.
+  - (2-3) $`c \ge x`$ with $`j = 0`$ (the first column of a block): the height is $`h'_K(c) = h_K(z)`$. The parents depend on the row.
+    - (2-3-1) Rows $`r \lt d`$ (below the bad row): the parent of the last column $`x`$ shifted $`i - 1`$ times, $`\mathrm{par}'_{K,r}(c) = m_{i-1}(\mathrm{par}_{K,r}(x))`$.
+    - (2-3-2) Rows $`d \le r \lt h_K(z)`$: the parent of column $`z`$ as it is, $`\mathrm{par}'_{K,r}(c) = \mathrm{par}_{K,r}(z)`$.
+- **(3) Layer $`k \lt K`$ (below the bad root)**. Let $`f := h_k(z)`$ and $`e := h_k(x) - f`$ ($`e \gt 0`$). A column $`\sigma`$ **lies above $`z`$** if $`h_k(\sigma) \ge f`$ and the root of $`\sigma`$ in row $`f`$ is $`z`$.
+  - (3-1) $`c \lt x`$: unchanged.
+  - (3-2) $`c \ge x`$: first fix the source column $`\sigma`$ and the shift count $`b`$: if $`j \ge 1`$, $`\sigma := z + j`$ and $`b := i`$; if $`j = 0`$, $`\sigma := x`$ and $`b := i - 1`$.
+    - (3-2-1) $`\sigma`$ lies above $`z`$: the height is $`h'_k(c) = h_k(\sigma) + b e`$ (the part from row $`f`$ up grows by $`b e`$ rows). The parents depend on the row.
+      - (3-2-1-1) Rows $`r \lt f`$: $`\mathrm{par}'_{k,r}(c) = m_b(\mathrm{par}_{k,r}(\sigma))`$.
+      - (3-2-1-2) Rows $`f \le r \lt f + b e`$: $`\mathrm{par}'_{k,r}(c) = \mathrm{par}_{k,f}(\sigma) + b L`$.
+      - (3-2-1-3) Rows $`r \ge f + b e`$: $`\mathrm{par}'_{k,r}(c) = \mathrm{par}_{k,r - b e}(\sigma) + b L`$.
+    - (3-2-2) $`\sigma`$ does not lie above $`z`$: $`h'_k(c) = h_k(\sigma)`$, $`\mathrm{par}'_{k,r}(c) = m_b(\mathrm{par}_{k,r}(\sigma))`$.
     - Column $`c = x`$ has $`\sigma = x`$, $`b = 0`$, so it is unchanged in either branch.
 
 **Step 2 (rebuild the values).** Let $`B := \max(1, \max_i s_i)`$ be the number of layers (§4). The top values $`t_k`$ of the layers are determined from the top layer down. Let $`t_{B-1}(c) := 1`$, and for $`k = B - 1, B - 2, \ldots, 0`$ define the values of the copied mountain by
@@ -151,7 +151,42 @@ and, if $`k \ge 1`$, $`t_{k-1}(c) := v^k_0(c)`$. Parents are columns to the left
 
 This formula is the difference $`v_{r+1}(c) = v_r(c) - v_r(\mathrm{par}_r(c))`$ of §3 run backwards: the value in the top row $`h'_k(c)`$ is the top value $`t_k(c)`$, and each row down adds the value of the parent. The row-0 values of layer $`k + 1`$ were the top values of layer $`k`$ (§4), so the top values of layer $`k`$ are the row-0 values $`v^{k+1}_0`$ of layer $`k + 1`$.
 
-**Example 1 ($`(1, 2, 4, 8, 10, 8)[2]`$).** We follow the definition.
+**Example 1 ($`(1)[2]`$).** An example with no bad root. The last column is $`x = 0`$; there is no column to its left, so it has no parent in row 0. As in §5, if the last column has no parent in row 0, there is no bad root. So the last column is deleted, and $`(1)[2] = ()`$. For every $`N`$, $`(1)[N] = ()`$.
+
+**Branches used.** (0).
+
+**Example 2 ($`(1, 2, 3)[2]`$).** In the layer of the bad root, the first column of a block uses the shape of column $`z`$ from row $`d`$ up.
+
+**Branches used.** (2-3-2): columns 2, 3 of layer 0.
+
+1. **The original mountain.** The row-0 values of layer 1 are $`(1, 1, 1)`$, and there are no parents from layer 1 up.
+
+   | layer 0 | column 0 | 1 | 2 |
+   |---|---|---|---|
+   | row 1 | 0 | 1 | 1 |
+   | row 0 | 1 | 2 ← 0 | 3 ← 1 |
+
+2. **The bad root.** The last column is $`x = 2`$; in row 0 its parent is 1 and $`3 = 2 + 1`$. So $`K = 0`$, $`d = 0`$, $`z = 1`$. $`L = 1`$ and $`W = 2 + 2 \cdot 1 = 4`$; the new columns 2 and 3 both have $`j = 0`$ ($`i = 1, 2`$).
+
+3. **Copy the mountain.** Layer 0 is copied by the branch (2). Columns 2 and 3 have $`j = 0`$, so their height is $`h_0(z) = h_0(1) = 1`$. There are no rows $`r \lt d = 0`$. In row 0 ($`d \le 0 \lt h_0(1)`$) the parent is the parent of column $`z = 1`$ as it is, namely 0.
+
+   | layer 0 | column 0 | 1 | 2 | 3 |
+   |---|---|---|---|---|
+   | row 1 |   | ○ | ○ | ○ |
+   | row 0 | ○ | ← 0 | ← 0 | ← 0 |
+
+4. **Rebuild the values.** There are no parents from layer 1 up, so $`t_0`$ is all 1. Columns 2 and 3 have row 1 equal to 1 and row 0 equal to $`1 + v_0(0) = 2`$.
+
+   | layer 0 | column 0 | 1 | 2 | 3 |
+   |---|---|---|---|---|
+   | row 1 |   | 1 | 1 | 1 |
+   | row 0 | 1 | 2 ← 0 | 2 ← 0 | 2 ← 0 |
+
+   So $`(1, 2, 3)[2] = (1, 2, 2, 2)`$.
+
+**Example 3 ($`(1, 2, 4, 8, 10, 8)[2]`$).** We follow the definition.
+
+**Branches used.** (2-2): columns 6, 7, 9, 10 of layer 0. (2-3-1): columns 5, 8 of layer 0.
 
 1. **The original mountain.** Built by §2–§4. The row-0 values of layer 1 are $`(1, 1, 1, 1, 1, 1)`$, and there are no parents from layer 1 up. So only the mountain of layer 0 matters. In the table, "$`v \leftarrow p`$" means value $`v`$ with parent column $`p`$.
 
@@ -164,7 +199,7 @@ This formula is the difference $`v_{r+1}(c) = v_r(c) - v_r(\mathrm{par}_r(c))`$ 
 
 2. **The bad root.** The last column is $`x = 5`$, and its parent is column 2 in rows 0, 1 and 2. In row 0, $`8 \ne 4 + 1`$; in row 1, $`4 \ne 2 + 1`$; in row 2, $`2 = 1 + 1`$. So the bad root is layer 0, row 2, column $`z = 2`$. Block 0 is columns 2–4, of length $`x - z = 3`$. The length of $`s[2]`$ is $`5 + 2 \cdot 3 = 11`$; block 1 is columns 5–7 and block 2 is columns 8–10.
 
-3. **Copy the mountain (step 1).** $`L = 3`$, $`K = 0`$, $`d = 2`$. Layer 0 is the layer of the bad root, so it is copied by the branch "layer $`k = K`$" of step 1. Layers 1 and up have no parents, so their copies have no parents.
+3. **Copy the mountain (step 1).** $`L = 3`$, $`K = 0`$, $`d = 2`$. Layer 0 is the layer of the bad root, so it is copied by branch (2) of step 1. Layers 1 and up have no parents, so their copies have no parents.
 
    The mountain after copying only is as follows; there are no values yet. "← $`p`$" means the parent is column $`p`$, "○" is the top row of the column (the row of its height, with no parent), and a blank is above the column's height. Columns 0–4 are the original mountain.
 
@@ -201,14 +236,16 @@ This formula is the difference $`v_{r+1}(c) = v_r(c) - v_r(\mathrm{par}_r(c))`$ 
 
    So $`(1, 2, 4, 8, 10, 8)[2] = (1, 2, 4, 8, 10, 7, 12, 14, 11, 17, 19)`$. The values $`(7, 12, 14)`$ of block 1 are not those of block 0, $`(4, 8, 10)`$, plus a constant, because the mountain is copied and the values are rebuilt, instead of copying the values.
 
-**Example 2 ($`(1, 3)[2]`$).** The bad root is in layer 1, and the branch "layer $`k \lt K`$" of step 1 is used.
+**Example 4 ($`(1, 3)[2]`$).** The bad root is in layer 1, and branch (3) of step 1 is used.
+
+**Branches used.** (3-2-1-2), (3-2-1-3): column 2 of layer 0.
 
 1. **The original mountain.** As in the example of §4: column 1 of layer 0 has height 1 (parent column 0 in row 0), column 1 of layer 1 has height 1 (parent column 0 in row 0), and layer 2 has no parents.
 2. **The bad root.** In layer 1, row 0, $`2 = 1 + 1`$, so the bad root is layer $`K = 1`$, row $`d = 0`$, column $`z = 0`$ (§5). $`x = 1`$, $`L = 1`$, $`W = 1 + 2 = 3`$.
 3. **Copy the mountain.** The new columns are 1 and 2, both with $`j = 0`$. The source columns and shift counts used in layer 0 are $`\sigma = x = 1`$, $`b = 0`$ for column 1 and $`\sigma = 1`$, $`b = 1`$ for column 2.
-   - Layer 2 (branch $`k \gt K`$): no parents.
-   - Layer 1 (branch $`k = K`$): since $`j = 0`$, columns 1 and 2 have height $`h_1(z) = h_1(0) = 0`$. No parents.
-   - Layer 0 (branch $`k \lt K`$): $`f = h_0(0) = 0`$ and $`e = h_0(1) - 0 = 1`$. Column 1 has $`h_0(1) \ge 0`$ and root column 0 in row 0, so it lies above $`z`$. Column 1 has $`b = 0`$ and keeps the original (height 1, row-0 parent column 0). Column 2 has $`b = 1`$, so its height grows to $`h_0(1) + 1 \cdot 1 = 2`$. Its row-0 parent ($`f \le 0 \lt f + b e = 1`$) is $`\mathrm{par}_{0,0}(1) + 1 = 1`$, and its row-1 parent ($`\ge 1`$) is $`\mathrm{par}_{0,1-1}(1) + 1 = 1`$.
+   - Layer 2 (branch (1)): no parents.
+   - Layer 1 (branch (2)): since $`j = 0`$, columns 1 and 2 have height $`h_1(z) = h_1(0) = 0`$. No parents.
+   - Layer 0 (branch (3)): $`f = h_0(0) = 0`$ and $`e = h_0(1) - 0 = 1`$. Column 1 has $`h_0(1) \ge 0`$ and root column 0 in row 0, so it lies above $`z`$. Column 1 has $`b = 0`$ and keeps the original (height 1, row-0 parent column 0). Column 2 has $`b = 1`$, so its height grows to $`h_0(1) + 1 \cdot 1 = 2`$. Its row-0 parent ($`f \le 0 \lt f + b e = 1`$) is $`\mathrm{par}_{0,0}(1) + 1 = 1`$, and its row-1 parent ($`\ge 1`$) is $`\mathrm{par}_{0,1-1}(1) + 1 = 1`$.
 
    | layer 0 | column 0 | 1 | 2 |
    |---|---|---|---|
@@ -218,7 +255,120 @@ This formula is the difference $`v_{r+1}(c) = v_r(c) - v_r(\mathrm{par}_r(c))`$ 
 
 4. **Rebuild the values.** The number of layers is $`B = \max(1, 3) = 3`$, and $`t_2 = 1`$. The copied mountains of layers 2 and 1 have no parents, so $`t_1`$ and $`t_0`$ are all 1 as well. In layer 0, column 1 has $`v_1(1) = 1`$ and $`v_0(1) = 1 + v_0(0) = 2`$. Column 2 has $`v_2(2) = 1`$, $`v_1(2) = 1 + v_1(1) = 2`$, and $`v_0(2) = 1 + v_0(1) + v_1(1) = 1 + 2 + 1 = 4`$. So $`(1, 3)[2] = (1, 2, 4)`$.
 
-**Example 3 ($`(1, 3, 9, 23)[2]`$).** The bad root is in layer 1, row 1, and in layer 0 the mountain grows by 2 rows with each copy.
+**Example 5 ($`(1, 3, 2)[2]`$).** A layer above the bad root has parents.
+
+**Branches used.** (2-2): columns 3, 5 of layer 0. (1-2): columns 3, 5 of layer 1.
+
+1. **The original mountain.** The row-0 values of layer 2 are $`(1, 1, 1)`$, and there are no parents from layer 2 up.
+
+   | layer 0 | column 0 | 1 | 2 |
+   |---|---|---|---|
+   | row 1 | 0 | 2 | 1 |
+   | row 0 | 1 | 3 ← 0 | 2 ← 0 |
+
+   | layer 1 | column 0 | 1 | 2 |
+   |---|---|---|---|
+   | row 1 | 0 | 1 | 0 |
+   | row 0 | 1 | 2 ← 0 | 1 |
+
+2. **The bad root.** The last column is $`x = 2`$; in layer 0, row 0 its parent is 0 and $`2 = 1 + 1`$. So $`K = 0`$, $`d = 0`$, $`z = 0`$. $`L = 2`$ and $`W = 2 + 2 \cdot 2 = 6`$; the new columns 2, 3, 4, 5 have $`(i, j) = (1, 0)`$, $`(1, 1)`$, $`(2, 0)`$, $`(2, 1)`$.
+
+3. **Copy the mountain.**
+   - Layer 0 (branch (2)): columns 2 and 4 ($`j = 0`$) have height $`h_0(z) = h_0(0) = 0`$ and no parents. Columns 3 and 5 ($`j = 1`$) are copies of column 1 shifted $`i`$ times: height 1, parents $`m_1(0) = 2`$ and $`m_2(0) = 4`$ (since $`z = 0`$, column 0 is shifted too).
+
+   | layer 0 | column 0 | 1 | 2 | 3 | 4 | 5 |
+   |---|---|---|---|---|---|---|
+   | row 1 |   | ○ |   | ○ |   | ○ |
+   | row 0 | ○ | ← 0 | ○ | ← 2 | ○ | ← 4 |
+
+   - Layer 1 (branch (1)): column $`c = z + i L + j = 2 i + j`$ is copied from column $`j`$. In layer 1 only column 1 has a parent (0), so column 3 has parent $`m_1(0) = 2`$ and column 5 has parent $`m_2(0) = 4`$.
+
+   | layer 1 | column 0 | 1 | 2 | 3 | 4 | 5 |
+   |---|---|---|---|---|---|---|
+   | row 1 |   | ○ |   | ○ |   | ○ |
+   | row 0 | ○ | ← 0 | ○ | ← 2 | ○ | ← 4 |
+
+4. **Rebuild the values.** The number of layers is $`B = \max(1, 3) = 3`$, and $`t_2 = 1`$. The copied mountain of layer 2 has no parents, so $`t_1`$ is all 1. In layer 1, columns 1, 3, 5 have row 1 equal to 1 and row 0 equal to $`1 + 1 = 2`$.
+
+   | layer 1 | column 0 | 1 | 2 | 3 | 4 | 5 |
+   |---|---|---|---|---|---|---|
+   | row 1 |   | 1 |   | 1 |   | 1 |
+   | row 0 | 1 | 2 ← 0 | 1 | 2 ← 2 | 1 | 2 ← 4 |
+
+   Its row-0 values are the top values of layer 0, $`t_0 = (1, 2, 1, 2, 1, 2)`$. The top value 2 of columns 3 and 5 comes from the copied edges of layer 1 ($`3 \leftarrow 2`$, $`5 \leftarrow 4`$).
+
+   | layer 0 | column 0 | 1 | 2 | 3 | 4 | 5 |
+   |---|---|---|---|---|---|---|
+   | row 1 |   | 2 |   | 2 |   | 2 |
+   | row 0 | 1 | 3 ← 0 | 1 | 3 ← 2 | 1 | 3 ← 4 |
+
+   Column 3 has row 1 equal to $`t_0(3) = 2`$ and row 0 equal to $`2 + v_0(2) = 2 + 1 = 3`$. So $`(1, 3, 2)[2] = (1, 3, 1, 3, 1, 3)`$.
+
+**Example 6 ($`(1, 3, 4, 2, 5, 6, 5)[2]`$).** In layer 0, columns that lie above $`z`$ and columns that do not are mixed.
+
+**Branches used.** (2-2): columns 7, 10 of layer 1. (3-2-1-1), (3-2-1-2), (3-2-1-3): columns 7, 9, 10 of layer 0. (3-2-2): columns 8, 11 of layer 0.
+
+1. **The original mountain.** The row-0 values of layer 2 are all 1, and there are no parents from layer 2 up.
+
+   | layer 0 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 |
+   |---|---|---|---|---|---|---|---|
+   | row 2 | 0 | 0 | 0 | 0 | 2 | 0 | 2 |
+   | row 1 | 0 | 2 | 1 | 1 | 3 ← 3 | 1 | 3 ← 3 |
+   | row 0 | 1 | 3 ← 0 | 4 ← 1 | 2 ← 0 | 5 ← 3 | 6 ← 4 | 5 ← 3 |
+
+   | layer 1 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 |
+   |---|---|---|---|---|---|---|---|
+   | row 1 | 0 | 1 | 0 | 0 | 1 | 0 | 1 |
+   | row 0 | 1 | 2 ← 0 | 1 | 1 | 2 ← 3 | 1 | 2 ← 3 |
+
+2. **The bad root.** The last column is $`x = 6`$. In layer 0, row 0 has parent 3 and $`5 \ne 2 + 1`$; row 1 has parent 3 and $`3 \ne 1 + 1`$; row 2 has no parent. In layer 1, row 0 has parent 3 and $`2 = 1 + 1`$. So $`K = 1`$, $`d = 0`$, $`z = 3`$. $`L = 3`$ and $`W = 6 + 2 \cdot 3 = 12`$; block 1 is columns 6–8 and block 2 is columns 9–11.
+
+3. **Copy the mountain.**
+   - Layer 1 (branch (2)): columns 6 and 9 ($`j = 0`$) have height $`h_1(3) = 0`$ and no parents. The other new columns copy columns 4 and 5. In layer 1 only column 4 has a parent (3), so column 7 has parent $`m_1(3) = 6`$ and column 10 has parent $`m_2(3) = 9`$.
+
+   | layer 1 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+   |---|---|---|---|---|---|---|---|---|---|---|---|---|
+   | row 1 |   | ○ |   |   | ○ |   |   | ○ |   |   | ○ |   |
+   | row 0 | ○ | ← 0 | ○ | ○ | ← 3 | ○ | ○ | ← 6 | ○ | ○ | ← 9 | ○ |
+
+   - Layer 0 (branch (3)): $`f = h_0(3) = 1`$ and $`e = h_0(6) - 1 = 1`$. In row 1, columns 4 and 6 have root column 3 and lie above $`z`$. Column 5 has no parent in row 1, so its root is column 5 itself and it does not lie above $`z`$.
+     - Column 6 ($`\sigma = x`$, $`b = 0`$): unchanged.
+     - Column 7 ($`\sigma = 4`$, $`b = 1`$): it lies above $`z`$ and grows by 1 row, to height $`2 + 1 = 3`$. The parent is $`m_1(3) = 6`$ in row 0, $`\mathrm{par}_{0,1}(4) + 3 = 6`$ in row 1, and $`\mathrm{par}_{0,2-1}(4) + 3 = 6`$ in row 2.
+     - Column 8 ($`\sigma = 5`$, $`b = 1`$): it does not lie above $`z`$ and is copied as it is: height 1, parent $`m_1(4) = 7`$.
+     - Column 9 ($`j = 0`$, $`\sigma = x = 6`$, $`b = 1`$): it lies above $`z`$, so its height is $`2 + 1 = 3`$, with parent 6 in every row.
+     - Column 10 ($`\sigma = 4`$, $`b = 2`$): grows by 2 rows to height 4, with parent 9 in every row.
+     - Column 11 ($`\sigma = 5`$, $`b = 2`$): copied as it is: height 1, parent $`m_2(4) = 10`$.
+
+   | layer 0 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+   |---|---|---|---|---|---|---|---|---|---|---|---|---|
+   | row 4 |   |   |   |   |   |   |   |   |   |   | ○ |   |
+   | row 3 |   |   |   |   |   |   |   | ○ |   | ○ | ← 9 |   |
+   | row 2 |   |   |   |   | ○ |   | ○ | ← 6 |   | ← 6 | ← 9 |   |
+   | row 1 |   | ○ | ○ | ○ | ← 3 | ○ | ← 3 | ← 6 | ○ | ← 6 | ← 9 | ○ |
+   | row 0 | ○ | ← 0 | ← 1 | ← 0 | ← 3 | ← 4 | ← 3 | ← 6 | ← 7 | ← 6 | ← 9 | ← 10 |
+
+4. **Rebuild the values.** There are no parents from layer 2 up, so $`t_1`$ is all 1. First the values of layer 1:
+
+   | layer 1 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+   |---|---|---|---|---|---|---|---|---|---|---|---|---|
+   | row 1 |   | 1 |   |   | 1 |   |   | 1 |   |   | 1 |   |
+   | row 0 | 1 | 2 ← 0 | 1 | 1 | 2 ← 3 | 1 | 1 | 2 ← 6 | 1 | 1 | 2 ← 9 | 1 |
+
+   Its row-0 values are the top values $`t_0`$ of layer 0.
+
+   | layer 0 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+   |---|---|---|---|---|---|---|---|---|---|---|---|---|
+   | row 4 |   |   |   |   |   |   |   |   |   |   | 2 |   |
+   | row 3 |   |   |   |   |   |   |   | 2 |   | 1 | 3 ← 9 |   |
+   | row 2 |   |   |   |   | 2 |   | 1 | 3 ← 6 |   | 2 ← 6 | 5 ← 9 |   |
+   | row 1 |   | 2 | 1 | 1 | 3 ← 3 | 1 | 2 ← 3 | 5 ← 6 | 1 | 4 ← 6 | 9 ← 9 | 1 |
+   | row 0 | 1 | 3 ← 0 | 4 ← 1 | 2 ← 0 | 5 ← 3 | 6 ← 4 | 4 ← 3 | 9 ← 6 | 10 ← 7 | 8 ← 6 | 17 ← 9 | 18 ← 10 |
+
+   For example, column 7 starts from the top value $`t_0(7) = 2`$: row 2 is $`2 + v_2(6) = 3`$, row 1 is $`2 + v_1(6) + v_2(6) = 5`$, and row 0 is $`2 + v_0(6) + v_1(6) + v_2(6) = 2 + 4 + 2 + 1 = 9`$. So $`(1, 3, 4, 2, 5, 6, 5)[2] = (1, 3, 4, 2, 5, 6, 4, 9, 10, 8, 17, 18)`$.
+
+**Example 7 ($`(1, 3, 9, 23)[2]`$).** The bad root is in layer 1, row 1, and in layer 0 the mountain grows by 2 rows with each copy.
+
+**Branches used.** (2-2): columns 4, 6 of layer 1. (2-3-1): columns 3, 5 of layer 1. (3-2-1-1), (3-2-1-2), (3-2-1-3): columns 4, 5, 6 of layer 0.
 
 1. **The original mountain.** The row-0 values of layer 2 are all 1, and there are no parents from layer 2 up.
 
@@ -238,7 +388,7 @@ This formula is the difference $`v_{r+1}(c) = v_r(c) - v_r(\mathrm{par}_r(c))`$ 
 2. **The bad root.** The last column is $`x = 3`$. In layer 0, rows 0, 1, 2 give $`23 \ne 9 + 1`$, $`14 \ne 6 + 1`$, $`8 \ne 4 + 1`$. In layer 1, row 0 gives $`4 \ne 2 + 1`$ and row 1 gives $`2 = 1 + 1`$. So $`K = 1`$, $`d = 1`$, $`z = 1`$. $`L = 2`$ and $`W = 3 + 2 \cdot 2 = 7`$; the new columns 3, 4, 5, 6 have $`(i, j) = (1, 0)`$, $`(1, 1)`$, $`(2, 0)`$, $`(2, 1)`$.
 
 3. **Copy the mountain.**
-   - Layer 1 (branch $`k = K`$):
+   - Layer 1 (branch (2)):
      - Columns 3, 5 ($`j = 0`$): height $`h_1(z) = 1`$. The row-0 parent ($`\lt d`$) is the parent 1 of $`x`$ shifted $`i - 1`$ times: $`m_0(1) = 1`$ for column 3 and $`m_1(1) = 3`$ for column 5.
      - Columns 4, 6 ($`j = 1`$): copies of column 2 shifted $`i`$ times. Height 2, parents $`m_1(1) = 3`$ and $`m_2(1) = 5`$.
 
@@ -248,7 +398,7 @@ This formula is the difference $`v_{r+1}(c) = v_r(c) - v_r(\mathrm{par}_r(c))`$ 
    | row 1 |   | ○ | ← 1 | ○ | ← 3 | ○ | ← 5 |
    | row 0 | ○ | ← 0 | ← 1 | ← 1 | ← 3 | ← 3 | ← 5 |
 
-   - Layer 0 (branch $`k \lt K`$): $`f = h_0(1) = 1`$ and $`e = h_0(3) - 1 = 2`$. Columns 2 and 3 have root column 1 in row 1, so they lie above $`z`$.
+   - Layer 0 (branch (3)): $`f = h_0(1) = 1`$ and $`e = h_0(3) - 1 = 2`$. Columns 2 and 3 have root column 1 in row 1, so they lie above $`z`$.
      - Column 3: $`\sigma = x`$, $`b = 0`$; unchanged.
      - Column 4: $`\sigma = 2`$, $`b = 1`$. Height $`2 + 2 = 4`$. The parent is $`m_1(1) = 3`$ in row 0, $`\mathrm{par}_{0,1}(2) + 2 = 3`$ in rows 1 and 2, and $`\mathrm{par}_{0,3-2}(2) + 2 = 3`$ in row 3.
      - Column 5: $`\sigma = x = 3`$, $`b = 1`$. Height $`3 + 2 = 5`$. The parent is column 4 in every row.
@@ -285,68 +435,6 @@ This formula is the difference $`v_{r+1}(c) = v_r(c) - v_r(\mathrm{par}_r(c))`$ 
    | row 0 | 1 | 3 ← 0 | 9 ← 1 | 22 ← 2 | 50 ← 3 | 110 ← 4 | 238 ← 5 |
 
    For example, column 3 starts from the top value $`t_0(3) = 3`$: row 2 is $`3 + v_2(2) = 7`$, row 1 is $`3 + v_1(2) + v_2(2) = 13`$, and row 0 is $`3 + v_0(2) + v_1(2) + v_2(2) = 3 + 9 + 6 + 4 = 22`$. So $`(1, 3, 9, 23)[2] = (1, 3, 9, 22, 50, 110, 238)`$.
-
-**Example 4 ($`(1, 3, 4, 2, 5, 6, 5)[2]`$).** In layer 0, columns that lie above $`z`$ and columns that do not are mixed.
-
-1. **The original mountain.** The row-0 values of layer 2 are all 1, and there are no parents from layer 2 up.
-
-   | layer 0 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 |
-   |---|---|---|---|---|---|---|---|
-   | row 2 | 0 | 0 | 0 | 0 | 2 | 0 | 2 |
-   | row 1 | 0 | 2 | 1 | 1 | 3 ← 3 | 1 | 3 ← 3 |
-   | row 0 | 1 | 3 ← 0 | 4 ← 1 | 2 ← 0 | 5 ← 3 | 6 ← 4 | 5 ← 3 |
-
-   | layer 1 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 |
-   |---|---|---|---|---|---|---|---|
-   | row 1 | 0 | 1 | 0 | 0 | 1 | 0 | 1 |
-   | row 0 | 1 | 2 ← 0 | 1 | 1 | 2 ← 3 | 1 | 2 ← 3 |
-
-2. **The bad root.** The last column is $`x = 6`$. In layer 0, row 0 has parent 3 and $`5 \ne 2 + 1`$; row 1 has parent 3 and $`3 \ne 1 + 1`$; row 2 has no parent. In layer 1, row 0 has parent 3 and $`2 = 1 + 1`$. So $`K = 1`$, $`d = 0`$, $`z = 3`$. $`L = 3`$ and $`W = 6 + 2 \cdot 3 = 12`$; block 1 is columns 6–8 and block 2 is columns 9–11.
-
-3. **Copy the mountain.**
-   - Layer 1 (branch $`k = K`$): columns 6 and 9 ($`j = 0`$) have height $`h_1(3) = 0`$ and no parents. The other new columns copy columns 4 and 5. In layer 1 only column 4 has a parent (3), so column 7 has parent $`m_1(3) = 6`$ and column 10 has parent $`m_2(3) = 9`$.
-
-   | layer 1 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
-   |---|---|---|---|---|---|---|---|---|---|---|---|---|
-   | row 1 |   | ○ |   |   | ○ |   |   | ○ |   |   | ○ |   |
-   | row 0 | ○ | ← 0 | ○ | ○ | ← 3 | ○ | ○ | ← 6 | ○ | ○ | ← 9 | ○ |
-
-   - Layer 0 (branch $`k \lt K`$): $`f = h_0(3) = 1`$ and $`e = h_0(6) - 1 = 1`$. In row 1, columns 4 and 6 have root column 3 and lie above $`z`$. Column 5 has no parent in row 1, so its root is column 5 itself and it does not lie above $`z`$.
-     - Column 6 ($`\sigma = x`$, $`b = 0`$): unchanged.
-     - Column 7 ($`\sigma = 4`$, $`b = 1`$): it lies above $`z`$ and grows by 1 row, to height $`2 + 1 = 3`$. The parent is $`m_1(3) = 6`$ in row 0, $`\mathrm{par}_{0,1}(4) + 3 = 6`$ in row 1, and $`\mathrm{par}_{0,2-1}(4) + 3 = 6`$ in row 2.
-     - Column 8 ($`\sigma = 5`$, $`b = 1`$): it does not lie above $`z`$ and is copied as it is: height 1, parent $`m_1(4) = 7`$.
-     - Column 9 ($`j = 0`$, $`\sigma = x = 6`$, $`b = 1`$): it lies above $`z`$, so its height is $`2 + 1 = 3`$, with parent 6 in every row.
-     - Column 10 ($`\sigma = 4`$, $`b = 2`$): grows by 2 rows to height 4, with parent 9 in every row.
-     - Column 11 ($`\sigma = 5`$, $`b = 2`$): copied as it is: height 1, parent $`m_2(4) = 10`$.
-
-   | layer 0 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
-   |---|---|---|---|---|---|---|---|---|---|---|---|---|
-   | row 4 |   |   |   |   |   |   |   |   |   |   | ○ |   |
-   | row 3 |   |   |   |   |   |   |   | ○ |   | ○ | ← 9 |   |
-   | row 2 |   |   |   |   | ○ |   | ○ | ← 6 |   | ← 6 | ← 9 |   |
-   | row 1 |   | ○ | ○ | ○ | ← 3 | ○ | ← 3 | ← 6 | ○ | ← 6 | ← 9 | ○ |
-   | row 0 | ○ | ← 0 | ← 1 | ← 0 | ← 3 | ← 4 | ← 3 | ← 6 | ← 7 | ← 6 | ← 9 | ← 10 |
-
-4. **Rebuild the values.** There are no parents from layer 2 up, so $`t_1`$ is all 1. First the values of layer 1:
-
-   | layer 1 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
-   |---|---|---|---|---|---|---|---|---|---|---|---|---|
-   | row 1 |   | 1 |   |   | 1 |   |   | 1 |   |   | 1 |   |
-   | row 0 | 1 | 2 ← 0 | 1 | 1 | 2 ← 3 | 1 | 1 | 2 ← 6 | 1 | 1 | 2 ← 9 | 1 |
-
-   Its row-0 values are the top values $`t_0`$ of layer 0.
-
-   | layer 0 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
-   |---|---|---|---|---|---|---|---|---|---|---|---|---|
-   | row 4 |   |   |   |   |   |   |   |   |   |   | 2 |   |
-   | row 3 |   |   |   |   |   |   |   | 2 |   | 1 | 3 ← 9 |   |
-   | row 2 |   |   |   |   | 2 |   | 1 | 3 ← 6 |   | 2 ← 6 | 5 ← 9 |   |
-   | row 1 |   | 2 | 1 | 1 | 3 ← 3 | 1 | 2 ← 3 | 5 ← 6 | 1 | 4 ← 6 | 9 ← 9 | 1 |
-   | row 0 | 1 | 3 ← 0 | 4 ← 1 | 2 ← 0 | 5 ← 3 | 6 ← 4 | 4 ← 3 | 9 ← 6 | 10 ← 7 | 8 ← 6 | 17 ← 9 | 18 ← 10 |
-
-   For example, column 7 starts from the top value $`t_0(7) = 2`$: row 2 is $`2 + v_2(6) = 3`$, row 1 is $`2 + v_1(6) + v_2(6) = 5`$, and row 0 is $`2 + v_0(6) + v_1(6) + v_2(6) = 2 + 4 + 2 + 1 = 9`$. So $`(1, 3, 4, 2, 5, 6, 5)[2] = (1, 3, 4, 2, 5, 6, 4, 9, 10, 8, 17, 18)`$.
-
-**Example 5 ($`(1)[2]`$).** An example with no bad root. The last column is $`x = 0`$; there is no column to its left, so it has no parent in row 0. As in §5, if the last column has no parent in row 0, there is no bad root. So the last column is deleted, and $`(1)[2] = ()`$. For every $`N`$, $`(1)[N] = ()`$.
 
 The table lists the expansions of a few expressions.
 
