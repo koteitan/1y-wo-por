@@ -8,7 +8,7 @@
 |---|---|
 | [01 順序数と ω₁](01-ordinals.md) | 順序数、極限順序数、$`\{x \mid x \lt \gamma\}`$ |
 
-このノートは、関係 $`R`$ の定義に使うモデル論の言葉を説明する。一階の構造、$`\Sigma_1`$ 論理式、$`\Sigma_1`$ 初等部分構造、Tarski–Vaught の判定法である。後半（§7、§8）は、Lean がそれらをどう表すかを説明する。
+このノートは、関係 $`R`$ の定義に使うモデル論の言葉を説明する。一階の構造、$`\Sigma_1`$ 論理式、$`\Sigma_1`$ 初等部分構造、Tarski–Vaught の判定法である。§7、§8 は、このリポジトリで使う $`\Sigma_1`$ 論理式の標準形と、2 つの構造の比べ方を説明する。
 
 ## 1. 言語と構造
 
@@ -137,11 +137,11 @@ $`\Sigma_1`$ 初等性を示すには、下向きだけを確かめればよい�
 
 一般の Tarski–Vaught 判定法は、すべての論理式について同じことを言う。このリポジトリは $`\Sigma_1`$ だけを使う。
 
-**使い方.** 2 の条件は「$`A`$ が証人で閉じている」ことである。[08 閉包と鎖](08-closure-chain.md) の `lam_good` はこの形で示す。$`\gamma`$ から始めて、真の主張の証人を足していき、上限を取る。
+**使い方.** 2 の条件は「$`A`$ が証人で閉じている」ことである。[08 閉包と鎖](08-closure-chain.md) §6 の定理（λ(γ) は Good）はこの形で示す。$`\gamma`$ から始めて、真の主張の証人を足していき、上限を取る。
 
-## 7. Lean での Σ₁ 論理式
+## 7. Σ₁ 論理式の標準形
 
-このリポジトリは、論理式を構文として定義しない。[notes/01-design.md](../notes/01-design.md) §3.2 のとおり、次の 5 つ組で表す。
+このリポジトリの言語は、$`\lt`$ と、3 項の記号 $`\mathrm{Rel}_j`$ と、2 項の記号 $`\mathrm{Top}_j`$（$`j \in \mathbb N`$）からなる（[07](07-relation-r.md) §2）。§3 から、量化子の無い部分は原子図式の集合で書き直せる。そこで $`\Sigma_1`$ 論理式を次の 5 つ組で表す（[notes/01-design.md](../notes/01-design.md) §3.2）。
 
 | 成分 | 意味 |
 |---|---|
@@ -151,13 +151,13 @@ $`\Sigma_1`$ 初等性を示すには、下向きだけを確かめればよい�
 | $`\mathit{bb}`$ | 存在量化する変数の数 |
 | $`r`$ | パラメータの数 |
 
-- `Diag m n` は $`n`$ 点の完全な原子図式の型である。$`\lt`$ のビット、3 項の $`\mathrm{Rel}_j`$ のビット、2 項の $`\mathrm{Top}_j`$ のビットからなる。有限型である。
-- `diagM rel top allow m n v` は、点の列 $`v`$ の原子図式である。`rel` と `top` は記号の解釈である。`allow j a` が偽のとき、$`\mathrm{Top}_j(v_a, \cdot)`$ のビットは読まずに偽とする（§8）。
-- 変数の列は、パラメータ $`p_0, \ldots, p_{r-1}`$ のあとに証人 $`y_0, \ldots, y_{\mathit{bb}-1}`$ を並べたものである。Lean では `cat r p y` と書く（[Por/Tuple.lean](../Por/Tuple.lean)）。
-- `Sat rel top allow M m n D bb r p` は「高さ $`M`$ の構造で、この $`\Sigma_1`$ 論理式が $`\vec p`$ について真」である。
+- $`n`$ 点の **完全な原子図式** は、$`\lt`$ のビット、3 項の $`\mathrm{Rel}_j`$ のビット、2 項の $`\mathrm{Top}_j`$ のビット（$`j \lt m`$）からなる。$`m, n`$ を決めると、完全な原子図式は有限個しかない。
+- 点の列 $`v`$ の原子図式を $`\mathrm{diag}(v)`$ と書く。読まないビットを偽と読む場合は §8 で扱う。
+- 変数の列は、パラメータ $`p_0, \ldots, p_{r-1}`$ のあとに証人 $`y_0, \ldots, y_{\mathit{bb}-1}`$ を並べたものである。
+- 高さ $`M`$ の構造 $`\mathfrak A`$ で、この $`\Sigma_1`$ 論理式 $`\varphi`$ が $`\vec p`$ について真であることは、次のとおりである。
 
 ```math
-\mathrm{Sat}(M, D, \mathit{bb}, r, \vec p) \iff \exists \vec y\ \Bigl(\forall i \lt \mathit{bb}\ \ y_i \lt M\Bigr) \land \mathrm{diag}(p_0, \ldots, p_{r-1}, y_0, \ldots, y_{\mathit{bb}-1}) \in D
+\mathfrak A \models \varphi(\vec p) \iff \exists \vec y\ \Bigl(\forall i \lt \mathit{bb}\ \ y_i \lt M\Bigr) \land \mathrm{diag}(p_0, \ldots, p_{r-1}, y_0, \ldots, y_{\mathit{bb}-1}) \in D
 ```
 
 証人の条件 $`y_i \lt M`$ が「領域は $`\{x \mid x \lt M\}`$」を表す。
@@ -170,42 +170,26 @@ $`\Sigma_1`$ 初等性を示すには、下向きだけを確かめればよい�
 
 **違い 1：同じ記号を別に解釈する.** 関係 $`R`$ の定義では、高さ $`a`$ の構造と高さ $`b`$ の構造を比べる。上端述語 $`\mathrm{Top}_j`$ は、高さ $`a`$ では「$`a`$ への関係」、高さ $`b`$ では「$`b`$ への関係」と解釈する。したがって、そのままでは部分構造ではない。
 
-そこで `ElemL` は、部分構造であることを仮定しない。$`\vec p \lt a`$ のすべての $`\Sigma_1`$ 論理式で、真偽が一致することだけを要求する。$`\mathit{bb} = 0`$（量化子なし）の場合を取ると、$`a`$ より下の点の原子図式のうち、読めるビット（次の違い 2）が一致する。したがって一致が言えれば、読める記号だけの言語に制限したとき、小さい方の構造は大きい方の部分構造になっていて、しかも $`\Sigma_1`$ 初等である。
+そこでこの比べ方は、部分構造であることを仮定しない。$`\vec p \lt a`$ のすべての $`\Sigma_1`$ 論理式で、真偽が一致することだけを要求する。$`\mathit{bb} = 0`$（量化子なし）の場合を取ると、$`a`$ より下の点の原子図式のうち、読めるビット（次の違い 2）が一致する。したがって一致が言えれば、読める記号だけの言語に制限したとき、小さい方の構造は大きい方の部分構造になっていて、しかも $`\Sigma_1`$ 初等である。
 
-**違い 2：見えるビット.** 論理式ごとに、どの上端述語のビットを読めるかを決める。読めないビットは偽と読む。`diagM` の引数 `allow` がこれを決める。
+**違い 2：見えるビット.** 論理式ごとに、どの上端述語のビットを読めるかを、条件 $`\mathrm{allow}(j, a)`$ で決める。$`\mathrm{allow}(j, a)`$ は「位置 $`a`$ の点を第 1 引数とする $`\mathrm{Top}_j`$ のビット $`\mathrm{Top}_j(v_a, \cdot)`$ を読める」ことを表す。読めないビットは偽と読む。
 
-| `allow` | 見えるビット | 使う場所 |
+| 条件 | 見えるビット | 使う場所 |
 |---|---|---|
-| `full` | すべて | $`\omega_1`$ の構造（`Good`） |
-| `allowL k S` | $`j \lt k`$ の $`\mathrm{Top}_j`$ と、$`j = k`$ で第 1 引数が位置 $`S`$ の $`\mathrm{Top}_k`$ | 段 $`(k, \eta)`$ の構造 |
+| いつも真 | すべて | 高さ $`\omega_1`$ の構造（[08](08-closure-chain.md) §1 の Good） |
+| $`\mathrm{allow}_{k,S}(j, a) :\iff j \lt k \lor (j = k \land a \in S)`$ | $`j \lt k`$ の $`\mathrm{Top}_j`$ と、$`j = k`$ で第 1 引数が位置 $`S`$ の $`\mathrm{Top}_k`$ | 段 $`(k, \eta)`$ の構造（[07](07-relation-r.md) §3） |
 
-`allowL k S` での「見える」は、変数の位置だけで決まり、点の値に依らない。そのため次の 2 つの補題が成り立つ。
+$`\mathrm{allow}_{k,S}`$ での「見える」は、変数の位置だけで決まり、点の値に依らない。そのため次の 2 つの補題が成り立つ。
 
-- `diagM_congr`、`sat_congr`：2 つの解釈が、見えるビットで一致すれば、原子図式も真偽も一致する。
-- `maskD`、`sat_mask`：見えないビットを偽にする操作は、完全な原子図式の上の関数 `maskD allow` である。したがって「見えるビットだけを読む論理式 $`D`$」は「すべてを読む論理式 $`\mathrm{maskD}^{-1}(D)`$」と同じ真偽を持つ。
+- **補題 1（同じビットなら同じ真偽）.** 2 つの解釈が、見えるビットで一致すれば、原子図式も真偽も一致する。
+- **補題 2（見えないビットを偽にする）.** 見えないビットを偽にする操作は、完全な原子図式の上の関数 $`\mathrm{mask}_{\mathrm{allow}}`$ である。したがって「見えるビットだけを読む論理式 $`D`$」は「すべてを読む論理式 $`\mathrm{mask}_{\mathrm{allow}}^{-1}(D)`$」と同じ真偽を持つ。
 
-2 つめの補題は、段ごとの論理式を、すべての記号を使う言語の論理式に訳す。[08](08-closure-chain.md) と [09](09-obligations.md) で、$`\omega_1`$ の構造との比較に使う。
+補題 2 は、段ごとの論理式を、すべての記号を使う言語の論理式に訳す。[08](08-closure-chain.md) と [09](09-obligations.md) で、$`\omega_1`$ の構造との比較に使う。
 
 ## 9. このリポジトリでの使われ方
 
 | 場所 | 使い方 |
 |---|---|
 | [README](../README.md)「関係 R」 | $`\preccurlyeq_{\Sigma_1}`$ と構造 $`\mathfrak A^{\gamma}_{k,\eta}`$ |
-| [notes/01-design.md](../notes/01-design.md) §3.2〜§3.4 | 言語、$`\Sigma_1`$ 論理式の 5 つ組、`allowL` |
-| [notes/01-design.md](../notes/01-design.md) §4.7 | Tarski–Vaught の形での `lam_good` |
-| [Por/Formula.lean](../Por/Formula.lean) | §7、§8 のすべて |
-| [Por/Closure.lean](../Por/Closure.lean) | §6（`lam_good`） |
-
-## 10. Lean での対応
-
-| 概念 | Lean | ファイル |
-|---|---|---|
-| 完全な原子図式 | `Diag m n` | [Por/Formula.lean](../Por/Formula.lean) |
-| 記号の解釈の型 | `RelF`、`TopF` | 同上 |
-| 点の列の原子図式 | `diagM` | 同上 |
-| $`\Sigma_1`$ 論理式が真 | `Sat` | 同上 |
-| 見えるビット | `full`、`allowL` | 同上 |
-| 段つきの $`\Sigma_1`$ 初等性 | `ElemL` | 同上 |
-| 読むビットが同じなら同じ | `diagM_congr`、`sat_congr` | 同上 |
-| 見えないビットを偽にする | `maskD`、`diagM_mask`、`sat_mask` | 同上 |
-| 変数の列をつなぐ | `cat`、`cat_left`、`cat_lt`、`cat_bound` | [Por/Tuple.lean](../Por/Tuple.lean) |
+| [notes/01-design.md](../notes/01-design.md) §3.2〜§3.4 | 言語、$`\Sigma_1`$ 論理式の 5 つ組（§7）、段の見えるビット $`\mathrm{allow}_{k,S}`$（§8） |
+| [notes/01-design.md](../notes/01-design.md) §4.7 | Tarski–Vaught の形（§6）での、λ(γ) が Good であることの証明 |

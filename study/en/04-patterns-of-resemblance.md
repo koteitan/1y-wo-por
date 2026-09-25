@@ -81,7 +81,7 @@ Read it as "in layer $`k`$ with root index $`\eta`$, $`a`$ is stable into $`b`$"
 
 **Problem 1: the level index is two-dimensional and transfinite.** The level $`(k, \eta)`$ runs lexicographically over $`\mathbb N \times \mathrm{Ord}`$. With countable labels, the levels are arranged like $`\omega \times \omega_1`$. The levels $`\Sigma_1, \ldots, \Sigma_N`$ of $`\mathcal R_N`$ are finitely many and counted by natural numbers. A transfinite $`\eta`$ cannot serve as a level number.
 
-**Problem 2: demands toward the top.** Finite reflection must also make "relations $`R(j, v, w, \beta)`$ to the top $`\beta`$" hold for the new labels (the `needs` of [06](06-combinatorial-layer.md) §4). $`\beta`$ is not an element of the structure $`(\beta; \ldots)`$. Writing out the definition of $`R`$ does not give a $`\Sigma_1`$ formula.
+**Problem 2: demands toward the top.** Finite reflection must also make "relations $`R(j, v, w, \beta)`$ to the top $`\beta`$" hold for the new labels (the list of demands $`\mathrm{needs}`$ of [06](06-combinatorial-layer.md) §4). $`\beta`$ is not an element of the structure $`(\beta; \ldots)`$. Writing out the definition of $`R`$ does not give a $`\Sigma_1`$ formula.
 
 ## 5. What this repository changes
 
@@ -109,17 +109,4 @@ The resulting relation $`R`$ is not Carlson's $`\mathcal R_N`$ itself, and we do
 |---|---|
 | [README](../../README-en.md) "Shape of the proof" | this is the 1-Y version of bms-elem-pattern; the level index becomes $`\omega \times \omega_1`$ |
 | [notes/01-design.md](../../notes/01-design.md) §1, §3.8 (Japanese) | reasons for the design |
-| [notes/01-design.md](../../notes/01-design.md) §6.3 (Japanese) | what was taken from bms-elem-pattern |
-| header of [Por/Relation.lean](../../Por/Relation.lean) | origin of the shape of the recursion (`stage`, `RFix`, … of bms-elem-pattern) |
-
-## 7. Lean correspondence
-
-$`\le_1`$ itself does not occur in the Lean code of this repository. The corresponding objects are these.
-
-| Concept | Lean | File |
-|---|---|---|
-| the relation $`R`$ | `Por.R` | [Por/Relation.lean](../../Por/Relation.lean) |
-| recursion keys | `Idx`, `ilt` | same |
-| visible symbols of a level | `allowL` | [Por/Formula.lean](../../Por/Formula.lean) |
-| interpretation of the top predicates | `topR γ` | [Por/Relation.lean](../../Por/Relation.lean) |
-| interpretation of the internal relations | `relR` | same |
+| [notes/01-design.md](../../notes/01-design.md) §6.3 (Japanese) | what was taken from bms-elem-pattern (the shape of the recursion and more) |

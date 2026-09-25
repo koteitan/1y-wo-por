@@ -16,27 +16,24 @@
 
 整礎であることと、$`x_0 \succ x_1 \succ x_2 \succ \cdots`$ となる無限降下列が無いことは同値である。「無限降下列が無いなら整礎」の向きには、選択公理の弱い形（従属選択）を使う。
 
-**Lean での定義.** Lean は `Acc`（到達可能）を使う。
+**定義（到達可能）.** $`x`$ が **到達可能** であるとは、$`y \prec x`$ となるすべての $`y`$ が到達可能であることをいう。これは帰納的な定義である。到達可能な元の集合は、この条件で閉じた最小の集合である。
 
-- `Acc r x` は、「$`r\,y\,x`$ となるすべての $`y`$ について `Acc r y`」のとき成り立つ。帰納的に定義される。
-- `WellFounded r` は、すべての $`x`$ で `Acc r x` が成り立つことである。
+$`x`$ が到達可能であることは、「$`x`$ から $`\prec`$ を逆にたどる列は必ず止まる」という意味である。$`\prec`$ が整礎であることは、すべての $`x`$ が到達可能であることと同値である。
 
-`Acc r x` は「$`x`$ から $`r`$ を逆にたどる列は必ず止まる」という意味である。
+| 関係 | 整礎か |
+|---|---|
+| $`\mathbb N`$ の $`\lt`$ | はい |
+| 順序数の $`\lt`$ | はい |
+| $`\mathbb Z`$ の $`\lt`$ | いいえ |
+| 1-Y の式の辞書式順序 | いいえ |
 
-| 関係 | 整礎か | Lean |
-|---|---|---|
-| $`\mathbb N`$ の $`\lt`$ | はい | `wellFounded_lt` |
-| 順序数の $`\lt`$ | はい | `Ordinal.lt_wf` |
-| $`\mathbb Z`$ の $`\lt`$ | いいえ | |
-| 1-Y の式の辞書式順序 | いいえ | `ZeroY.exprLt_not_wellFounded` |
-
-最後の行の例。式の辞書式順序では真の接頭辞が小さく、最初に違う項で比べる。すると次の無限降下列がある（`ZeroY.descendingValues`）。
+最後の行の例。式の辞書式順序では真の接頭辞が小さく、最初に違う項で比べる。すると次の無限降下列がある。
 
 ```math
 (1,2) \gt (1,1,2) \gt (1,1,1,2) \gt (1,1,1,1,2) \gt \cdots
 ```
 
-1-Y の展開は辞書式順序を下げる（`OneY.Numeric.exprLt_of_step`）。それでも辞書式順序だけでは停止は出ない。そこでラベルを使う（§6）。
+1-Y の展開は辞書式順序を下げる（[05](05-1y-mountain.md) §7）。それでも辞書式順序だけでは停止は出ない。そこでラベルを使う（§6）。
 
 ## 2. 整礎帰納法
 
@@ -50,7 +47,7 @@
 
 **証明.** $`P`$ が偽になる $`x`$ の集合が空でないとする。その極小元 $`x`$ を取る。$`y \prec x`$ なら $`P(y)`$ は真である。仮定から $`P(x)`$ も真になり、矛盾する。$`\square`$
 
-Lean では `WellFounded.induction` である。[09 義務の証明](09-obligations.md) の `top_abs` は、$`\mathbb N \times \mathrm{Ord}`$ の辞書式順序でこれを使う。
+[09 義務の証明](09-obligations.md) §4.1 の上端述語の絶対性は、$`\mathbb N \times \mathrm{Ord}`$ の辞書式順序でこれを使う。
 
 ## 3. 辞書式積
 
@@ -66,13 +63,13 @@ Lean では `WellFounded.induction` である。[09 義務の証明](09-obligati
 
 **例.** $`\mathbb N \times \mathbb N`$ で、$`(1, 0)`$ より小さい組は $`(0, 0), (0, 1), (0, 2), \ldots`$ と無限個ある。それでも降下列はどれも有限である。例えば $`(1,0) \succ (0, 100) \succ (0, 99) \succ \cdots \succ (0, 0)`$ は 102 項で止まる。
 
-Lean では `Prod.Lex` と `WellFounded.prod_lex` である。組を 3 つにするには、2 回使う。
+組を 3 つにするには、この定理を 2 回使う。
 
 ```math
 (b', k', \eta') \lhd (b, k, \eta) \iff b' \lt b\ \lor\ \bigl(b' = b \land (k', \eta') \prec (k, \eta)\bigr)
 ```
 
-ここで $`(k', \eta') \prec (k, \eta)`$ は $`\mathbb N \times \mathrm{Ord}`$ の辞書式順序である。これが関係 $`R`$ の再帰の鍵の順序で、Lean では `Por.Idx := Ord × ℕ × Ord`、`Por.ilt`、`Por.ilt_wf` である（[Por/Relation.lean](../Por/Relation.lean)）。
+ここで $`(k', \eta') \prec (k, \eta)`$ は $`\mathbb N \times \mathrm{Ord}`$ の辞書式順序である。これが関係 $`R`$ の再帰の鍵 $`(b, k, \eta) \in \mathrm{Ord} \times \mathbb N \times \mathrm{Ord}`$ の順序である。上の定理から $`\lhd`$ は整礎である。
 
 ## 4. 整礎再帰
 
@@ -94,23 +91,17 @@ A(m+1, n+1) &= A\bigl(m,\ A(m+1, n)\bigr).
 
 右辺が呼ぶ鍵 $`(m, 1)`$、$`(m+1, n)`$、$`(m, \cdot)`$ は、どれも左辺の鍵より辞書式に小さい。だから整礎再帰で定義できる。
 
-**Lean での形.** `WellFounded.fix` は、規則 $`G`$ を次の型で受け取る。
-
-```lean
-G : (t : T) → ((t' : T) → r t' t → V) → V
-```
-
-2 番目の引数（以下 `IH`）は、鍵 `t'` と、`t'` が小さいことの証明を受け取る。証明が無いと呼べない。定義の等式は `WellFounded.fix_eq` である。
+規則 $`G`$ が読んでよいのは、$`t' \prec t`$ となる鍵 $`t'`$ での値 $`F(t')`$ だけである。以下、この「小さい鍵での値」を $`\mathrm{IH}(t')`$ と書く。$`t' \prec t`$ でない鍵では $`\mathrm{IH}(t')`$ は定義されない。
 
 ## 5. ガードつきの再帰
 
 関係 $`R`$ の定義では、「どの鍵を読むか」が論理式の中の変数の値で決まる。書く前に、読む鍵が小さいとは言えない。そこで次の形にする。
 
-1. 読みたい値を $`\exists h : (\text{鍵が小さい}),\ \mathrm{IH}(\text{鍵}, h)`$ と書く。これを **ガード** と呼ぶ。鍵が小さくないところでは、この式は偽になる。
-2. 定義の等式 `fix_eq` を得る。この段階では、右辺にガードが付いている。
+1. 読みたい値を「鍵が小さい $`\land`$ $`\mathrm{IH}(\text{鍵})`$」と書く。前半の条件を **ガード** と呼ぶ。鍵が小さくないところでは、この式は偽になる。
+2. §4 の定理から、定義の等式 $`F(t) = G(t, F{\restriction}\{t' \mid t' \prec t\})`$ を得る。この段階では、右辺にガードが付いている。
 3. 右辺が実際に読むところでは、ガードがいつも真であることを示す。するとガードを外した等式が得られる。
 
-[07 関係 R](07-relation-r.md) では、1 が `stepF`、2 が `RF_eq`、3 が `elem_stage` と `R_iff` である。
+[07 関係 R](07-relation-r.md) では、1 が §5 の段の解釈、2 が §5 のガードつきの等式、3 が §6 の補題（ガードを外す）と定理（定義の式）である。
 
 **小さい例.** $`\mathbb N`$ の上で $`F(n) := 1 + \sum_{i \in S_n} F(i)`$ という形の定義を考える。$`S_n`$ は $`n`$ ごとに与えた有限集合で、$`n`$ 以上の数を含むかもしれない。そのため、このままでは整礎再帰にならない。ガードつきで $`F(n) := 1 + \sum_{i \in S_n,\ i \lt n} F(i)`$ と書けば、整礎再帰で定義できる。$`S_n \subseteq \{0, \ldots, n-1\}`$ が別に示せれば、ガードを外した式 $`F(n) = 1 + \sum_{i \in S_n} F(i)`$ が成り立つ。
 
@@ -118,14 +109,14 @@ G : (t : T) → ((t' : T) → r t' t → V) → V
 
 状態の集合 $`X`$ の上の 1 段の関係 $`\to`$ が整礎であることを、整礎な順序 $`(L, \lt)`$ のラベルで示す。
 
-**定理（`wellFounded_of_lowerable_labels`）.** 状態とラベルの間の関係 $`\mathrm{valid}(s, a)`$ が次を満たすとする。
+**定理（ラベルによる停止）.** 状態とラベルの間の関係 $`\mathrm{valid}(s, a)`$ が次を満たすとする。
 
 - どの状態 $`s`$ にも、$`\mathrm{valid}(s, a)`$ となるラベル $`a`$ がある。
 - $`\mathrm{valid}(s, a)`$ で $`s \to t`$ なら、ある $`b \lt a`$ で $`\mathrm{valid}(t, b)`$ である。
 
 このとき、$`\to`$ は整礎である。つまり $`s_0 \to s_1 \to s_2 \to \cdots`$ という無限列は無い。
 
-**証明.** $`a`$ についての整礎帰納法で、「$`\mathrm{valid}(s, a)`$ なら $`s`$ は到達可能」を示す（`accessible_of_lowerable_labels`）。$`s \to t`$ なら $`t`$ に $`b \lt a`$ のラベルがあるので、帰納法の仮定から $`t`$ は到達可能である。$`\square`$
+**証明.** $`a`$ についての整礎帰納法で、「$`\mathrm{valid}(s, a)`$ なら $`s`$ は到達可能」を示す。$`s \to t`$ なら $`t`$ に $`b \lt a`$ のラベルがあるので、帰納法の仮定から $`t`$ は到達可能である。$`\square`$
 
 大事な点は、ラベルが 1 つの状態に 1 つに決まっている必要が無いことである。「どれか 1 つのラベルが付けられる」ことと「1 段進むと、もっと小さいラベルが付けられる」ことだけを使う。
 
@@ -133,35 +124,14 @@ G : (t : T) → ((t' : T) → r t' t → V) → V
 
 | 一般形 | 1-Y |
 |---|---|
-| 状態 | 式 $`s`$（`ZeroY.Expr`） |
-| $`s \to t`$ | 自明でない 1 段の展開 `ZeroY.ExpansionStep expand t s` |
+| 状態 | 式 $`s`$ |
+| $`s \to t`$ | 自明でない 1 段の展開（$`t = s[N] \ne s`$） |
 | ラベル | 順序数 |
-| $`\mathrm{valid}(s, a)`$ | $`s`$ の図式に、末尾のラベルが $`a`$ の表現がある（`LastRepresentation`） |
-
-Lean の本体は `expansion_accessible_of_lastRepresentation` で、同じ帰納法を直接書いている。
+| $`\mathrm{valid}(s, a)`$ | $`s`$ の図式に、末尾のラベルが $`a`$ の表現がある |
 
 ## 7. このリポジトリでの使われ方
 
 | 場所 | 使い方 |
 |---|---|
 | [README](../README.md)「関係 R」 | 鍵 $`(b, k, \eta)`$ の辞書式順序による整礎再帰 |
-| [notes/01-design.md](../notes/01-design.md) §3.1、§3.4、§4.1 | 3 つ組の順序、再帰、`R_iff` の証明 |
-| [Por/Relation.lean](../Por/Relation.lean) | §3〜§5（`ilt_wf`、`stepF`、`RF`、`RF_eq`、`elem_stage`） |
-| [Por/Chain.lean](../Por/Chain.lean) | §2（`top_abs` の帰納法） |
-| `OneY/RootIndexed/ExpansionWellFounded.lean` | §6（末尾のラベルでの帰納法） |
-
-## 8. Lean での対応
-
-| 概念 | Lean | ファイル |
-|---|---|---|
-| 到達可能 | `Acc` | Lean のコア |
-| 整礎 | `WellFounded` | Lean のコア |
-| 整礎帰納法 | `WellFounded.induction` | 同上 |
-| 辞書式積 | `Prod.Lex`、`WellFounded.prod_lex` | 同上 |
-| 整礎再帰とその等式 | `WellFounded.fix`、`WellFounded.fix_eq` | 同上 |
-| 鍵と順序 | `Idx`、`ilt`、`ilt_wf` | [Por/Relation.lean](../Por/Relation.lean) |
-| ガードつきの 1 段 | `stepF` | 同上 |
-| ガードを外す | `elem_stage`、`R_iff` | 同上 |
-| 式の辞書式順序が整礎でない | `ZeroY.exprLt_not_wellFounded` | [ZeroY/Syntax.lean](../ZeroY/Syntax.lean) |
-| ラベルによる停止 | `wellFounded_of_lowerable_labels`、`accessible_of_lowerable_labels` | [OneY/RootIndexed/Representation.lean](../OneY/RootIndexed/Representation.lean) |
-| 1-Y での帰納法 | `expansion_accessible_of_lastRepresentation` | [OneY/RootIndexed/ExpansionWellFounded.lean](../OneY/RootIndexed/ExpansionWellFounded.lean) |
+| [notes/01-design.md](../notes/01-design.md) §3.1、§3.4、§4.1 | 3 つ組の順序（§3）、ガードつきの再帰（§4、§5）、$`R`$ の定義の式の証明 |

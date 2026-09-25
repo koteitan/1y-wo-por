@@ -6,8 +6,8 @@ Prerequisites
 
 | Note | Terms used here |
 |---|---|
-| [06 Phyrion's combinatorial layer](06-combinatorial-layer.md) | diagram, representation, top atom, `Admissible`, `FiniteReflection`, the six hypotheses |
-| [07 The relation R](07-relation-r.md) | $`R`$, `R_iff`, `allowL`, `R_lt`, `R_weaken` |
+| [06 Phyrion's combinatorial layer](06-combinatorial-layer.md) | diagram, representation, top atom, admissible demand, finite reflection, the six hypotheses |
+| [07 The relation R](07-relation-r.md) | $`R`$, the defining equation, visible bits $`\mathrm{allow}_{k,S}`$, the theorems of strictness and weakening |
 | [08 Closure below ω₁ and the chain](08-closure-chain.md) | $`\mathfrak B`$, Good, the chain $`c_t`$ |
 
 This note explains how the relation $`R`$ satisfies the six hypotheses of the combinatorial layer. The main parts are finite reflection (§3) and the first representation (§4).
@@ -16,23 +16,23 @@ This note explains how the relation $`R`$ satisfies the six hypotheses of the co
 
 The label data are $`\alpha = \mathrm{Ord}`$, $`\lt`$, $`D = \mathrm{True}`$ and $`R`$ ([notes/01-design.md](../../notes/01-design.md) §3.5, Japanese).
 
-| Code | Hypothesis | Lean name | Section |
-|---|---|---|---|
-| O1 | `hWF` | `Ordinal.lt_wf` | §2 |
-| O2 | `hTrans` | `fun h₁ h₂ => h₁.trans h₂` | §2 |
-| O3 | `hStrict` | `R_lt` | §2 |
-| O4 | `hWeak` | `fun h hR => R_weaken h.le hR` | §2 |
-| O6 | `reflection` | `finiteReflection` | §3 |
-| O7 | `initial` | `initial_all` | §4 |
+| Code | Hypothesis ([06](06-combinatorial-layer.md) §5) | Section |
+|---|---|---|
+| O1 | well-foundedness | §2 |
+| O2 | transitivity | §2 |
+| O3 | strictness | §2 |
+| O4 | weakening | §2 |
+| O6 | finite reflection | §3 |
+| O7 | initial representation | §4 |
 
-O5 is the definition of `Representation` and carries no obligation.
+O5 is the definition of a representation ([06](06-combinatorial-layer.md) §2) and carries no obligation.
 
 ## 2. O1–O4
 
 - O1: $`\lt`$ on ordinals is well-founded ([01](01-ordinals.md) §1).
 - O2: $`\lt`$ on ordinals is transitive.
-- O3: the second conjunct of `R_iff` ([07](07-relation-r.md) §7).
-- O4: `R_weaken` is proved for $`\eta' \le \eta`$. The core asks for the version with $`\eta' \lt \eta`$, so it is passed with `h.le`.
+- O3: the theorem (strictness) of [07](07-relation-r.md) §7. It is the second conjunct of the defining equation.
+- O4: the theorem (weakening) of [07](07-relation-r.md) §7 is proved for $`\eta' \le \eta`$. The combinatorial layer asks for the version with $`\eta' \lt \eta`$. Since $`\eta' \lt \eta`$ implies $`\eta' \le \eta`$, it applies directly.
 
 ## 3. O6: finite reflection
 
@@ -40,8 +40,8 @@ O5 is the definition of `Representation` and carries no obligation.
 
 **Proof.**
 
-1. Let $`a := f(\mathrm{cut})`$. By `R_iff`, $`\theta \le a \lt \beta`$ and $`\mathrm{Elem}(K, \theta, a, \beta)`$.
-2. Let the named positions be $`S := \{r_d \mid d \in \mathrm{needs},\ k_d = K\}`$. If $`k_d = K`$, the first case of `Admissible` cannot occur, so $`r_d \lt \mathrm{cut}`$ and $`f(r_d) \lt \theta`$.
+1. Let $`a := f(\mathrm{cut})`$. By the defining equation of [07](07-relation-r.md) §6, $`\theta \le a \lt \beta`$ and $`\mathrm{Elem}(K, \theta, a, \beta)`$.
+2. Let the named positions be $`S := \{r_d \mid d \in \mathrm{needs},\ k_d = K\}`$. If $`k_d = K`$, the first case of an admissible demand ([06](06-combinatorial-layer.md) §4) cannot occur, so $`r_d \lt \mathrm{cut}`$ and $`f(r_d) \lt \theta`$.
 3. The parameters are $`f(0), \ldots, f(\mathrm{cut} - 1)`$. Since $`f`$ is increasing, all are $`\lt a`$.
 4. Build the following $`\Sigma_1`$ formula $`\Phi`$. Let $`z_i := f(i)`$ for $`i \lt \mathrm{cut}`$ and $`z_i := y_i`$ for $`\mathrm{cut} \le i \lt n`$.
 
@@ -52,7 +52,7 @@ O5 is the definition of `Representation` and carries no obligation.
 5. $`\Phi`$ is a formula of level $`(K, \theta)`$. For $`k_d \lt K`$, $`\mathrm{Top}_{k_d}`$ is diagonal, so its first argument $`z_{r_d}`$ may be a witness. For $`k_d = K`$, $`r_d \in S`$ and this is the named $`\mathrm{Top}_{K, f(r_d)}`$.
 6. $`\Phi`$ is true at height $`\beta`$. With witnesses $`y_i := f(i)`$ we get $`z = f`$. The order part follows from condition 2 of the representation, the $`\mathrm{Rel}`$ part from condition 3, and the $`\mathrm{Top}`$ part from the demand hypothesis ($`R(k_d, f(r_d), f(p_d), \beta)`$).
 7. By the elementarity of step 1, $`\Phi`$ is true at height $`a`$. Take its witnesses $`y'_i \lt a`$.
-8. Let $`g := `$ `cat cut f y'`, that is, $`g(i) = f(i)`$ for $`i \lt \mathrm{cut}`$ and $`g(i) = y'_i`$ otherwise.
+8. Define $`g`$ by $`g(i) := f(i)`$ for $`i \lt \mathrm{cut}`$ and $`g(i) := y'_i`$ otherwise.
    - $`g`$ is increasing (the order part).
    - $`R`$ holds on every atom of $`G`$ (the $`\mathrm{Rel}`$ part).
    - $`g(i) \lt a`$ (on the left $`f(i) \lt f(\mathrm{cut})`$; on the right the witnesses are $`\lt a`$).
@@ -66,7 +66,7 @@ O5 is the definition of `Representation` and carries no obligation.
 
 At height $`\beta`$ the witnesses are $`(y_1, y_2) = (f(1), f(2))`$. Reflection gives new $`(y'_1, y'_2)`$ below $`f(1)`$.
 
-**The form in Lean.** The bound on symbols is `sigBound G needs` (sum of the layers of the atoms + sum of the layers of the demands + 1), and the matrix is `reflMat G needs m`. `reflMat_iff` reads out the matrix, using `getLt`, `getRel`, `getTop` and their `_diagM` lemmas.
+**Bound on symbols.** $`\Phi`$ uses only the symbols $`\mathrm{Rel}_j`$ and $`\mathrm{Top}_j`$ of the layers that occur in the atoms of $`G`$ and in the demands, finitely many. Take the bound on symbols $`m`$ to be the sum of the layers of the atoms plus the sum of the layers of the demands plus 1. Then $`\Phi`$ is a 5-tuple as in [03](03-sigma1-elementary.md) §7.
 
 **Not used.** $`D(\beta)`$, that $`a`$ or $`\beta`$ is a limit, that they are closure points.
 
@@ -74,7 +74,7 @@ At height $`\beta`$ the witnesses are $`(y_1, y_2) = (f(1), f(2))`$. Reflection 
 
 ### 4.1 Absoluteness of the top predicates
 
-**Theorem (`top_abs`).** Let $`\mathrm{Good}(\alpha)`$ and $`\alpha \lt \omega_1`$. For every $`j`$ and $`\zeta, x \lt \alpha`$,
+**Theorem (absoluteness of the top predicates).** Let $`\mathrm{Good}(\alpha)`$ and $`\alpha \lt \omega_1`$. For every $`j`$ and $`\zeta, x \lt \alpha`$,
 
 ```math
 R(j, \zeta, x, \alpha) \iff R(j, \zeta, x, \omega_1)
@@ -82,17 +82,17 @@ R(j, \zeta, x, \alpha) \iff R(j, \zeta, x, \omega_1)
 
 **Proof.** Well-founded induction on $`(j, \zeta)`$ in the lexicographic order of $`\mathbb N \times \mathrm{Ord}`$ ([02](02-well-founded.md) §2).
 
-1. Open both sides with `R_iff`. $`\zeta \le x`$ is common, and both $`x \lt \alpha`$ and $`x \lt \omega_1`$ hold. What remains is that every formula $`\psi`$ of level $`(j, \zeta)`$ (parameters $`\lt x`$) has the same truth value at height $`\alpha`$ and at height $`\omega_1`$ (`sat_abs`).
+1. Open both sides with the defining equation ([07](07-relation-r.md) §6). $`\zeta \le x`$ is common, and both $`x \lt \alpha`$ and $`x \lt \omega_1`$ hold. What remains is that every formula $`\psi`$ of level $`(j, \zeta)`$ (parameters $`\lt x`$) has the same truth value at height $`\alpha`$ and at height $`\omega_1`$.
 2. Every top-predicate bit $`\mathrm{Top}_i(u, v)`$ ($`u, v \lt \alpha`$) that $`\psi`$ reads satisfies $`(i, u) \prec (j, \zeta)`$. By the induction hypothesis it has the same truth value at heights $`\alpha`$ and $`\omega_1`$.
-3. So on visible bits the structure of height $`\alpha`$ agrees with $`\mathfrak B{\restriction}\alpha`$. With `sat_mask`, translate the level formula into the all-symbol formula $`\psi^*`$ whose invisible bits are set to false.
+3. So on visible bits the structure of height $`\alpha`$ agrees with $`\mathfrak B{\restriction}\alpha`$. With Lemma 2 of [03](03-sigma1-elementary.md) §8, translate the level formula into the all-symbol formula $`\psi^*`$ whose invisible bits are set to false.
 4. By $`\mathrm{Good}(\alpha)`$, $`\mathfrak B{\restriction}\alpha \models \psi^* \iff \mathfrak B \models \psi^*`$.
-5. Translating back with `sat_mask` gives the truth value in the level-$`(j, \zeta)`$ structure of height $`\omega_1`$. $`\square`$
+5. Translating back with Lemma 2 gives the truth value in the level-$`(j, \zeta)`$ structure of height $`\omega_1`$. $`\square`$
 
 Step 3 uses "visibility depends only on positions" ([03](03-sigma1-elementary.md) §8). This is the reason for named top predicates ([notes/01-design.md](../../notes/01-design.md) §3.8, item 3, Japanese).
 
 ### 4.2 Two points of the chain are related by R
 
-**Theorem (`chain_R`).** For $`i \lt j`$, every layer $`k`$ and $`\eta \le c_i`$, $`R(k, \eta, c_i, c_j)`$.
+**Theorem (two points of the chain are related by R).** For $`i \lt j`$, every layer $`k`$ and $`\eta \le c_i`$, $`R(k, \eta, c_i, c_j)`$.
 
 **Proof.** $`\eta \le c_i \lt c_j`$, so the side conditions hold. For a formula $`\psi`$ of level $`(k, \eta)`$ and parameters $`\vec p \lt c_i`$, chain these equivalences.
 
@@ -100,37 +100,32 @@ Step 3 uses "visibility depends only on positions" ([03](03-sigma1-elementary.md
 \mathfrak A^{c_i}_{k,\eta} \models \psi \iff \mathfrak B{\restriction}c_i \models \psi^* \iff \mathfrak B \models \psi^* \iff \mathfrak B{\restriction}c_j \models \psi^* \iff \mathfrak A^{c_j}_{k,\eta} \models \psi
 ```
 
-The first and fourth use `top_abs` (at $`c_i`$ and at $`c_j`$) and `sat_mask`; the second and third use $`\mathrm{Good}(c_i)`$ and $`\mathrm{Good}(c_j)`$. $`\square`$
+The first and fourth use the theorem of §4.1 (at $`c_i`$ and at $`c_j`$) and Lemma 2 of [03](03-sigma1-elementary.md) §8; the second and third use $`\mathrm{Good}(c_i)`$ and $`\mathrm{Good}(c_j)`$. $`\square`$
 
 ### 4.3 Representations of all diagrams
 
-**Theorem (`initial_all`).** Every diagram $`G`$ has a representation.
+**Theorem (representations of all diagrams).** Every diagram $`G`$ has a representation.
 
 **Proof.** Let $`f := c`$ (the chain).
 
 - $`D`$ is True, so the domain condition is trivial.
-- $`f`$ is strictly increasing (`cC_strictMono`).
-- An atom $`(k, r, p, q)`$ has $`r \le p \lt q`$, so $`c_r \le c_p \lt c_q`$. Applying `chain_R` with $`\eta := c_r`$ gives $`R(k, c_r, c_p, c_q)`$. $`\square`$
+- $`f`$ is strictly increasing (Property 10 of [08](08-closure-chain.md) §7).
+- An atom $`(k, r, p, q)`$ has $`r \le p \lt q`$, so $`c_r \le c_p \lt c_q`$. Applying the theorem of §4.2 with $`\eta := c_r`$ gives $`R(k, c_r, c_p, c_q)`$. $`\square`$
 
-One $`f`$ represents all diagrams at once. In particular it represents `exprDiagram s`, so O7 holds. No bound and no seed condition is needed.
+One $`f`$ represents all diagrams at once. In particular it represents the diagram $`G(s)`$ of every expression, so O7 holds. No bound and no seed condition is needed.
 
 ## 5. Summary and the final theorems
 
-`model_obligations` ([Por/Model.lean](../../Por/Model.lean)) lists the six hypotheses in the same form as the entry theorem.
+By §2–§4, $`(\alpha, \lt, D, R) = (\mathrm{Ord}, \lt, \mathrm{True}, R)`$ satisfies all six hypotheses.
 
-```lean
-theorem model_obligations :
-    WellFounded (α := Ord) (· < ·) ∧
-    (∀ {a b c : Ord}, a < b → b < c → a < c) ∧
-    (∀ {k : ℕ} {index a b : Ord}, R k index a b → a < b) ∧
-    (∀ {k : ℕ} {small large p c : Ord}, small < large → R k large p c → R k small p c) ∧
-    FiniteReflection (α := Ord) (· < ·) (fun _ => True) R ∧
-    (∀ G : Diagram, ∃ f, Representation (α := Ord) (· < ·) (fun _ => True) R G f)
-```
+1. $`\lt`$ on ordinals is well-founded.
+2. $`a \lt b`$ and $`b \lt c`$ imply $`a \lt c`$.
+3. $`R(k, \eta, a, b)`$ implies $`a \lt b`$.
+4. $`\eta' \lt \eta`$ and $`R(k, \eta, p, c)`$ imply $`R(k, \eta', p, c)`$.
+5. Finite reflection ([06](06-combinatorial-layer.md) §4) holds.
+6. Every diagram $`G`$ has a representation.
 
-[Por/WellOrdering.lean](../../Por/WellOrdering.lean) passes it to `OneY.RootIndexed.actual_expansion_wellFounded` and gets `expansion_wellFounded`. The other three theorems pass `expansion_wellFounded` to the corollaries in `OneY.Numeric`.
-
-**Axioms.** All main theorems depend only on `propext`, `Classical.choice` and `Quot.sound` ([README](../../README-en.md) "Axiom audit").
+Applying the entry theorem of [06](06-combinatorial-layer.md) §5 to this, the one-step expansion relation is well-founded (Theorem 1 of [05](05-1y-mountain.md) §7). The other Theorems 2–4 follow from Theorem 1 by combinatorial arguments only.
 
 **Strength.** The proof uses the axiom of choice and the regularity of $`\omega_1`$. The labels are closure points below $`\omega_1`$ whose values are not known. No ordinal bound or notation system is obtained.
 
@@ -140,22 +135,3 @@ theorem model_obligations :
 |---|---|
 | [README](../../README-en.md) "Where the six hypotheses go" | the table of hypotheses and the summary of reflection and the initial labelling |
 | [notes/01-design.md](../../notes/01-design.md) §2.3, §4.2–§4.10 (Japanese) | table of obligations and the proof of each |
-| [Por/Reflection.lean](../../Por/Reflection.lean) | §3 |
-| [Por/Chain.lean](../../Por/Chain.lean) | §4 |
-| [Por/Model.lean](../../Por/Model.lean), [Por/WellOrdering.lean](../../Por/WellOrdering.lean) | §5 |
-| [Audit.lean](../../Audit.lean) | axioms in §5 |
-
-## 7. Lean correspondence
-
-| Concept | Lean | File |
-|---|---|---|
-| reading the matrix | `getLt`, `getRel`, `getTop`, `getLt_diagM`, `getRel_diagM`, `getTop_diagM` | [Por/Reflection.lean](../../Por/Reflection.lean) |
-| bound on symbols | `sigBound`, `atom_layer_lt`, `need_layer_lt` | same |
-| the reflected formula | `reflMat`, `reflMat_iff` | same |
-| O6 | `finiteReflection` | same |
-| one step of absoluteness | `sat_abs` | [Por/Chain.lean](../../Por/Chain.lean) |
-| absoluteness of the top predicates | `top_abs` | same |
-| relations along the chain | `chain_R` | same |
-| O7 | `initial_all` | same |
-| the six together | `model_obligations` | [Por/Model.lean](../../Por/Model.lean) |
-| final theorems | `expansion_wellFounded`, `generated_strictWellOrder`, `descendants_strictWellOrder`, `expansion_chain_reaches_empty` | [Por/WellOrdering.lean](../../Por/WellOrdering.lean) |

@@ -81,7 +81,7 @@ R(k, \eta, a, b) \quad (k \in \mathbb N,\ \eta, a, b \in \mathrm{Ord})
 
 **問題 1：段の添字が 2 次元で超限である.** 段 $`(k, \eta)`$ は $`\mathbb N \times \mathrm{Ord}`$ を辞書式に動く。ラベルが可算なら、段は $`\omega \times \omega_1`$ の形に並ぶ。$`\mathcal R_N`$ の段 $`\Sigma_1, \ldots, \Sigma_N`$ は有限個で、自然数で数える。超限の $`\eta`$ を段の番号にできない。
 
-**問題 2：上端への要求.** 有限反映は「上端 $`\beta`$ への関係 $`R(j, v, w, \beta)`$」も新しいラベルで成り立たせる必要がある（[06](06-combinatorial-layer.md) §4 の `needs`）。$`\beta`$ は構造 $`(\beta; \ldots)`$ の元ではない。$`R`$ の定義を展開して書くと $`\Sigma_1`$ にならない。
+**問題 2：上端への要求.** 有限反映は「上端 $`\beta`$ への関係 $`R(j, v, w, \beta)`$」も新しいラベルで成り立たせる必要がある（[06](06-combinatorial-layer.md) §4 の要求のリスト $`\mathrm{needs}`$）。$`\beta`$ は構造 $`(\beta; \ldots)`$ の元ではない。$`R`$ の定義を展開して書くと $`\Sigma_1`$ にならない。
 
 ## 5. このリポジトリの変更点
 
@@ -109,17 +109,4 @@ R(k, \eta, a, b) \quad (k \in \mathbb N,\ \eta, a, b \in \mathrm{Ord})
 |---|---|
 | [README](../README.md)「証明の形」 | bms-elem-pattern の 1-Y 版であること、段の添字が $`\omega \times \omega_1`$ になること |
 | [notes/01-design.md](../notes/01-design.md) §1、§3.8 | 設計の理由 |
-| [notes/01-design.md](../notes/01-design.md) §6.3 | bms-elem-pattern から持ってきたもの |
-| [Por/Relation.lean](../Por/Relation.lean) の先頭 | 再帰の形の出どころ（bms-elem-pattern の `stage`、`RFix` など） |
-
-## 7. Lean での対応
-
-$`\le_1`$ そのものは、このリポジトリの Lean には無い。対応するのは次のものである。
-
-| 概念 | Lean | ファイル |
-|---|---|---|
-| 関係 $`R`$ | `Por.R` | [Por/Relation.lean](../Por/Relation.lean) |
-| 再帰の鍵 | `Idx`、`ilt` | 同上 |
-| 段の見える記号 | `allowL` | [Por/Formula.lean](../Por/Formula.lean) |
-| 上端述語の解釈 | `topR γ` | [Por/Relation.lean](../Por/Relation.lean) |
-| 内部の関係の解釈 | `relR` | 同上 |
+| [notes/01-design.md](../notes/01-design.md) §6.3 | bms-elem-pattern から持ってきたもの（再帰の形など） |

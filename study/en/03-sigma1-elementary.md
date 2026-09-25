@@ -8,7 +8,7 @@ Prerequisites
 |---|---|
 | [01 Ordinals and ω₁](01-ordinals.md) | ordinal, limit ordinal, $`\{x \mid x \lt \gamma\}`$ |
 
-This note explains the model-theoretic terms used in the definition of the relation $`R`$: first-order structures, $`\Sigma_1`$ formulas, $`\Sigma_1`$-elementary substructures and the Tarski–Vaught test. The second half (§7, §8) explains how Lean represents them.
+This note explains the model-theoretic terms used in the definition of the relation $`R`$: first-order structures, $`\Sigma_1`$ formulas, $`\Sigma_1`$-elementary substructures and the Tarski–Vaught test. §7 and §8 explain the normal form of $`\Sigma_1`$ formulas used in this repository and the way two structures are compared.
 
 ## 1. Languages and structures
 
@@ -137,11 +137,11 @@ To prove $`\Sigma_1`$-elementarity it suffices to check the downward direction.
 
 The general Tarski–Vaught test says the same for all formulas. This repository uses only $`\Sigma_1`$.
 
-**How it is used.** Condition 2 says "$`A`$ is closed under witnesses". The theorem `lam_good` of [08 Closure and chain](08-closure-chain.md) is proved in this form: start from $`\gamma`$, keep adding witnesses of true statements, and take the supremum.
+**How it is used.** Condition 2 says "$`A`$ is closed under witnesses". The theorem (λ(γ) is Good) of [08 Closure and chain](08-closure-chain.md) §6 is proved in this form: start from $`\gamma`$, keep adding witnesses of true statements, and take the supremum.
 
-## 7. Σ₁ formulas in Lean
+## 7. The normal form of Σ₁ formulas
 
-This repository does not define formulas as syntax. As in [notes/01-design.md](../../notes/01-design.md) §3.2 (Japanese), a formula is a 5-tuple.
+The language of this repository consists of $`\lt`$, the ternary symbols $`\mathrm{Rel}_j`$ and the binary symbols $`\mathrm{Top}_j`$ ($`j \in \mathbb N`$) ([07](07-relation-r.md) §2). By §3 the quantifier-free part can be rewritten as a set of atomic diagrams. So a $`\Sigma_1`$ formula is given by the following 5-tuple ([notes/01-design.md](../../notes/01-design.md) §3.2, Japanese).
 
 | Component | Meaning |
 |---|---|
@@ -151,13 +151,13 @@ This repository does not define formulas as syntax. As in [notes/01-design.md](.
 | $`\mathit{bb}`$ | number of existentially quantified variables |
 | $`r`$ | number of parameters |
 
-- `Diag m n` is the type of complete atomic diagrams of $`n`$ points: the bits of $`\lt`$, of the ternary $`\mathrm{Rel}_j`$ and of the binary $`\mathrm{Top}_j`$. It is a finite type.
-- `diagM rel top allow m n v` is the atomic diagram of the sequence of points $`v`$. `rel` and `top` are the interpretations of the symbols. When `allow j a` is false, the bit of $`\mathrm{Top}_j(v_a, \cdot)`$ is not read and is set to false (§8).
-- The sequence of variables is the parameters $`p_0, \ldots, p_{r-1}`$ followed by the witnesses $`y_0, \ldots, y_{\mathit{bb}-1}`$. In Lean it is `cat r p y` ([Por/Tuple.lean](../../Por/Tuple.lean)).
-- `Sat rel top allow M m n D bb r p` says "this $`\Sigma_1`$ formula is true at $`\vec p`$ in the structure of height $`M`$".
+- A **complete atomic diagram** of $`n`$ points consists of the bits of $`\lt`$, of the ternary $`\mathrm{Rel}_j`$ and of the binary $`\mathrm{Top}_j`$ ($`j \lt m`$). Once $`m, n`$ are fixed, there are only finitely many complete atomic diagrams.
+- We write $`\mathrm{diag}(v)`$ for the atomic diagram of a sequence of points $`v`$. The case where some bits are not read and are read as false is treated in §8.
+- The sequence of variables is the parameters $`p_0, \ldots, p_{r-1}`$ followed by the witnesses $`y_0, \ldots, y_{\mathit{bb}-1}`$.
+- In a structure $`\mathfrak A`$ of height $`M`$, the $`\Sigma_1`$ formula $`\varphi`$ is true at $`\vec p`$ in the following sense.
 
 ```math
-\mathrm{Sat}(M, D, \mathit{bb}, r, \vec p) \iff \exists \vec y\ \Bigl(\forall i \lt \mathit{bb}\ \ y_i \lt M\Bigr) \land \mathrm{diag}(p_0, \ldots, p_{r-1}, y_0, \ldots, y_{\mathit{bb}-1}) \in D
+\mathfrak A \models \varphi(\vec p) \iff \exists \vec y\ \Bigl(\forall i \lt \mathit{bb}\ \ y_i \lt M\Bigr) \land \mathrm{diag}(p_0, \ldots, p_{r-1}, y_0, \ldots, y_{\mathit{bb}-1}) \in D
 ```
 
 The condition $`y_i \lt M`$ on the witnesses expresses "the domain is $`\{x \mid x \lt M\}`$".
@@ -170,42 +170,26 @@ The comparison used in this repository differs from the textbook definition in t
 
 **Difference 1: one symbol, two interpretations.** The definition of $`R`$ compares the structure of height $`a`$ with the structure of height $`b`$. The top predicate $`\mathrm{Top}_j`$ is interpreted as "the relation to $`a`$" at height $`a`$ and as "the relation to $`b`$" at height $`b`$. So as it stands, one is not a substructure of the other.
 
-Therefore `ElemL` does not assume a substructure. It only requires that every $`\Sigma_1`$ formula with $`\vec p \lt a`$ has the same truth value on both sides. Taking $`\mathit{bb} = 0`$ (no quantifier), the readable bits (Difference 2 below) of the atomic diagrams of points below $`a`$ agree. So when the agreement holds and both structures are restricted to the language of the readable symbols, the smaller structure is a substructure of the larger one, and a $`\Sigma_1`$-elementary one.
+Therefore this comparison does not assume a substructure. It only requires that every $`\Sigma_1`$ formula with $`\vec p \lt a`$ has the same truth value on both sides. Taking $`\mathit{bb} = 0`$ (no quantifier), the readable bits (Difference 2 below) of the atomic diagrams of points below $`a`$ agree. So when the agreement holds and both structures are restricted to the language of the readable symbols, the smaller structure is a substructure of the larger one, and a $`\Sigma_1`$-elementary one.
 
-**Difference 2: visible bits.** Each formula comes with a rule saying which top-predicate bits it may read. Bits it may not read are read as false. The argument `allow` of `diagM` decides this.
+**Difference 2: visible bits.** Each formula comes with a condition $`\mathrm{allow}(j, a)`$ saying which top-predicate bits it may read. $`\mathrm{allow}(j, a)`$ means "the bits $`\mathrm{Top}_j(v_a, \cdot)`$ of $`\mathrm{Top}_j`$ whose first argument is the point at position $`a`$ may be read". Bits that may not be read are read as false.
 
-| `allow` | Visible bits | Used for |
+| Condition | Visible bits | Used for |
 |---|---|---|
-| `full` | all | the structure of height $`\omega_1`$ (`Good`) |
-| `allowL k S` | $`\mathrm{Top}_j`$ with $`j \lt k`$, and $`\mathrm{Top}_k`$ with first argument at a position in $`S`$ | the structures of level $`(k, \eta)`$ |
+| always true | all | the structure of height $`\omega_1`$ (Good in [08](08-closure-chain.md) §1) |
+| $`\mathrm{allow}_{k,S}(j, a) :\iff j \lt k \lor (j = k \land a \in S)`$ | $`\mathrm{Top}_j`$ with $`j \lt k`$, and $`\mathrm{Top}_k`$ with first argument at a position in $`S`$ | the structures of level $`(k, \eta)`$ ([07](07-relation-r.md) §3) |
 
-In `allowL k S`, visibility depends only on the positions of the variables, not on the values of the points. So the following two lemmas hold.
+With $`\mathrm{allow}_{k,S}`$, visibility depends only on the positions of the variables, not on the values of the points. So the following two lemmas hold.
 
-- `diagM_congr`, `sat_congr`: if two interpretations agree on the visible bits, the atomic diagrams and the truth values agree.
-- `maskD`, `sat_mask`: setting the invisible bits to false is a function `maskD allow` on complete atomic diagrams. So "a formula $`D`$ that reads only visible bits" has the same truth value as "the formula $`\mathrm{maskD}^{-1}(D)`$ that reads everything".
+- **Lemma 1 (same bits, same truth value).** If two interpretations agree on the visible bits, the atomic diagrams and the truth values agree.
+- **Lemma 2 (setting invisible bits to false).** Setting the invisible bits to false is a function $`\mathrm{mask}_{\mathrm{allow}}`$ on complete atomic diagrams. So "a formula $`D`$ that reads only visible bits" has the same truth value as "the formula $`\mathrm{mask}_{\mathrm{allow}}^{-1}(D)`$ that reads everything".
 
-The second lemma translates a level-restricted formula into a formula of the language with all symbols. [08](08-closure-chain.md) and [09](09-obligations.md) use it to compare with the structure of height $`\omega_1`$.
+Lemma 2 translates a level-restricted formula into a formula of the language with all symbols. [08](08-closure-chain.md) and [09](09-obligations.md) use it to compare with the structure of height $`\omega_1`$.
 
 ## 9. Where this repository uses it
 
 | Place | Use |
 |---|---|
 | [README](../../README-en.md) "The relation R" | $`\preccurlyeq_{\Sigma_1}`$ and the structures $`\mathfrak A^{\gamma}_{k,\eta}`$ |
-| [notes/01-design.md](../../notes/01-design.md) §3.2–§3.4 (Japanese) | language, 5-tuples for $`\Sigma_1`$ formulas, `allowL` |
-| [notes/01-design.md](../../notes/01-design.md) §4.7 (Japanese) | `lam_good` in Tarski–Vaught form |
-| [Por/Formula.lean](../../Por/Formula.lean) | all of §7 and §8 |
-| [Por/Closure.lean](../../Por/Closure.lean) | §6 (`lam_good`) |
-
-## 10. Lean correspondence
-
-| Concept | Lean | File |
-|---|---|---|
-| complete atomic diagram | `Diag m n` | [Por/Formula.lean](../../Por/Formula.lean) |
-| types of interpretations | `RelF`, `TopF` | same |
-| atomic diagram of a sequence of points | `diagM` | same |
-| a $`\Sigma_1`$ formula is true | `Sat` | same |
-| visible bits | `full`, `allowL` | same |
-| $`\Sigma_1`$-elementarity at a level | `ElemL` | same |
-| same bits read, same result | `diagM_congr`, `sat_congr` | same |
-| setting invisible bits to false | `maskD`, `diagM_mask`, `sat_mask` | same |
-| joining sequences of variables | `cat`, `cat_left`, `cat_lt`, `cat_bound` | [Por/Tuple.lean](../../Por/Tuple.lean) |
+| [notes/01-design.md](../../notes/01-design.md) §3.2–§3.4 (Japanese) | language, 5-tuples for $`\Sigma_1`$ formulas (§7), visible bits $`\mathrm{allow}_{k,S}`$ of a level (§8) |
+| [notes/01-design.md](../../notes/01-design.md) §4.7 (Japanese) | the proof that λ(γ) is Good, in Tarski–Vaught form (§6) |
