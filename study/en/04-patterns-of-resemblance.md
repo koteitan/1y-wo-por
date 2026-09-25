@@ -6,9 +6,9 @@ Prerequisites
 
 | Note | Terms used here |
 |---|---|
-| [01 Ordinals and ω₁](01-ordinals.md) | ordinal, limit ordinal |
-| [02 Well-founded relations and recursion](02-well-founded.md) | well-founded recursion, guarded recursion |
-| [03 Structures and Σ₁-elementary substructures](03-sigma1-elementary.md) | structures $`(\gamma; \ldots)`$, $`\Sigma_1`$ formulas, $`\preccurlyeq_{\Sigma_1}`$ |
+| [01 Ordinals and ω₁](01-ordinals.md) | ordinal, limit ordinal, $`\mathrm{Ord}`$ |
+| [02 Well-founded relations and recursion](02-well-founded.md) | well-founded recursion, key, guarded recursion, label |
+| [03 Structures and Σ₁-elementary substructures](03-sigma1-elementary.md) | structures $`(\gamma; \ldots)`$, point, $`\Sigma_1`$ formulas, $`\preccurlyeq_{\Sigma_1}`$, top, top predicate, internal relation (§7) |
 
 This note explains the idea of Carlson's patterns of resemblance. It then says how [bms-elem-pattern](https://github.com/koteitan/bms-elem-pattern) used it for BMS. Finally it says why this is not enough for 1-Y as it stands, and what this repository changes.
 
@@ -36,6 +36,10 @@ Carlson studied the extension to $`\le_1, \ldots, \le_N`$ ($`\Sigma_1, \ldots, \
 \mathcal R_N = (\mathrm{Ord}; \le, \le_1, \ldots, \le_N)
 ```
 
+- $`N \ge 1`$ is a natural number.
+- $`\alpha \le_i \beta`$ is obtained from the definition of $`\le_1`$ by replacing $`\preccurlyeq_{\Sigma_1}`$ with elementarity for $`\Sigma_i`$ formulas. A $`\Sigma_i`$ formula starts with a block of existential quantifiers, has $`i`$ alternating blocks of existential and universal quantifiers, and then a quantifier-free formula. This repository does not use $`\Sigma_i`$ for $`i \ge 2`$, so we say no more about it.
+- Each of the relations $`\le_1, \ldots, \le_N`$ is called a **level** of $`\mathcal R_N`$. The level $`\le_i`$ is given by elementarity for $`\Sigma_i`$ formulas.
+
 Reference: T. J. Carlson, Elementary patterns of resemblance, Annals of Pure and Applied Logic 108 (2001), 19–77.
 
 ## 2. Small examples
@@ -59,6 +63,8 @@ In the order-only language, $`(\omega; \le) \preccurlyeq_{\Sigma_1} (\beta; \le)
 
 ## 3. Use in termination proofs
 
+This section uses words that later notes define, and only describes the shape. Columns of an expression, parent–child edges and expansion are defined in [05](05-1y-mountain.md); the way labels are attached and the cut are defined in [06](06-combinatorial-layer.md) §2, §3.
+
 A termination proof for expansion attaches an ordinal label to each column and shows that expansion lowers the labels ([02](02-well-founded.md) §6). The property needed is **finite reflection**.
 
 **The shape of finite reflection.** Let $`\alpha \lt_1 \beta`$. Suppose points $`\vec p`$ below $`\alpha`$ and points $`\vec y`$ below $`\beta`$ satisfy a condition $`\psi(\vec p, \vec y)`$ made of finitely many atomic formulas. Then there are points $`\vec y'`$ below $`\alpha`$ with the same condition $`\psi(\vec p, \vec y')`$.
@@ -67,7 +73,7 @@ A termination proof for expansion attaches an ordinal label to each column and s
 
 In an expansion, $`\vec y`$ is the list of old labels of the columns to be relabelled. If $`\psi`$ says "the labels at the ends of each parent–child edge satisfy $`\le_1`$ (and so on)", then the new labels $`\vec y'`$ satisfy the same edge conditions. Moreover $`\vec y'`$ lies below $`\alpha`$. In an expansion, $`\alpha`$ is the old label of the cut column, and every old label $`\vec y`$ that is replaced is $`\ge \alpha`$. So the new labels are smaller than the old ones.
 
-**Use in bms-elem-pattern.** [bms-elem-pattern](https://github.com/koteitan/bms-elem-pattern) proved termination of BMS with $`\mathcal R_N`$. The label relation of a parent–child edge in row $`k`$ is $`\lt_{k+1}`$. Finite reflection uses the levels $`\Sigma_n`$ and lemmas about continuity and cofinality. The definition of $`\mathcal R_N`$ and examples are in the note [proof/pss/03-patterns.md](https://github.com/koteitan/bms-elem-pattern/blob/main/proof/pss/03-patterns.md) of that repository.
+**Use in bms-elem-pattern.** [bms-elem-pattern](https://github.com/koteitan/bms-elem-pattern) proved termination of BMS with $`\mathcal R_N`$. The label relation of a parent–child edge in row $`k`$ is $`\lt_{k+1}`$. Finite reflection uses the levels $`\Sigma_n`$ and lemmas about continuity and cofinality. This repository does not use these lemmas, so we do not explain them. The definition of $`\mathcal R_N`$ and examples are in the note [proof/pss/03-patterns.md](https://github.com/koteitan/bms-elem-pattern/blob/main/proof/pss/03-patterns.md) of that repository.
 
 ## 4. What is missing for 1-Y
 
@@ -77,21 +83,21 @@ The label relation required by the 1-Y combinatorial layer ([06](06-combinatoria
 R(k, \eta, a, b) \quad (k \in \mathbb N,\ \eta, a, b \in \mathrm{Ord})
 ```
 
-Read it as "in layer $`k`$ with root index $`\eta`$, $`a`$ is stable into $`b`$". $`\eta`$ is the label of the root of the edge's component, an ordinal. This causes two problems.
+Read it as "in layer $`k`$ with root index $`\eta`$, $`a`$ is stable into $`b`$". $`\eta`$ is the label of the root of the edge's component, an ordinal. Layers and roots of components are explained in [05](05-1y-mountain.md) §3, §4, and this reading in [06](06-combinatorial-layer.md) §2. This causes two problems.
 
-**Problem 1: the level index is two-dimensional and transfinite.** The level $`(k, \eta)`$ runs lexicographically over $`\mathbb N \times \mathrm{Ord}`$. With countable labels, the levels are arranged like $`\omega \times \omega_1`$. The levels $`\Sigma_1, \ldots, \Sigma_N`$ of $`\mathcal R_N`$ are finitely many and counted by natural numbers. A transfinite $`\eta`$ cannot serve as a level number.
+**Problem 1: the level index is two-dimensional and transfinite.** In this repository a level index is a pair $`(k, \eta)`$ of a layer $`k`$ and a root index $`\eta`$ (the level $`(k, \eta)`$ is defined in [07](07-relation-r.md) §3). The level $`(k, \eta)`$ runs lexicographically over $`\mathbb N \times \mathrm{Ord}`$. With countable labels, the levels are arranged like $`\omega \times \omega_1`$. The levels $`\Sigma_1, \ldots, \Sigma_N`$ of $`\mathcal R_N`$ are finitely many and counted by natural numbers. A transfinite $`\eta`$ cannot serve as a level number.
 
-**Problem 2: demands toward the top.** Finite reflection must also make "relations $`R(j, v, w, \beta)`$ to the top $`\beta`$" hold for the new labels (the list of demands $`\mathrm{needs}`$ of [06](06-combinatorial-layer.md) §4). $`\beta`$ is not an element of the structure $`(\beta; \ldots)`$. Writing out the definition of $`R`$ does not give a $`\Sigma_1`$ formula.
+**Problem 2: demands toward the top.** The top $`\beta`$ is the label that the old last column had before the expansion ([06](06-combinatorial-layer.md) §3). Finite reflection must also make "relations $`R(j, v, w, \beta)`$ to the top $`\beta`$" ($`j`$ a layer, $`v`$ and $`w`$ the labels of the root and the parent) hold for the new labels (the list of demands $`\mathrm{needs}`$ of [06](06-combinatorial-layer.md) §3). $`\beta`$ is not an element of the structure $`(\beta; \ldots)`$. Writing out the definition of $`R`$ does not give a $`\Sigma_1`$ formula.
 
 ## 5. What this repository changes
 
 As in [notes/01-design.md](../../notes/01-design.md) §3.8 (Japanese), the following changes are made.
 
 1. **Every level is $`\Sigma_1`$.** The strength of a level is decided by the symbols in the language, not by the quantifier complexity.
-2. **Top predicates are atomic symbols.** A structure of height $`\gamma`$ has the symbol $`\mathrm{Top}_j(\xi, x)`$, interpreted as "$`R(j, \xi, x, \gamma)`$". A demand toward the top becomes an atomic formula.
-3. **Level $`(k, \eta)`$ decides which symbols are visible.** All top predicates of layers $`j \lt k`$ are visible. Of layer $`k`$, only those with name $`\xi \lt \eta`$ are visible. A larger $`(k, \eta)`$ sees more symbols, so the relation is stronger.
-4. **Internal relations of every layer are present.** $`\mathrm{Rel}_j(x, y, z) :\iff R(j, x, y, z)`$ for every $`j`$.
-5. **The recursion key is $`(b, k, \eta)`$.** The top $`b`$ is the outermost component ([02](02-well-founded.md) §3).
+2. **Top predicates ([03](03-sigma1-elementary.md) §7) are atomic symbols.** A structure of height $`\gamma`$ has the symbol $`\mathrm{Top}_j(\xi, x)`$, interpreted as "$`R(j, \xi, x, \gamma)`$". A demand toward the top becomes an atomic formula.
+3. **Level $`(k, \eta)`$ decides which symbols are visible.** All top predicates of layers $`j \lt k`$ are visible. Of layer $`k`$, a top predicate $`\mathrm{Top}_k(\xi, x)`$ is visible only if its first argument satisfies $`\xi \lt \eta`$. This $`\xi`$ is called the **name** of the top predicate ([07](07-relation-r.md) §3). A larger $`(k, \eta)`$ sees more symbols, so the relation is stronger.
+4. **Internal relations ([03](03-sigma1-elementary.md) §7) of every layer are present.** $`\mathrm{Rel}_j(x, y, z) :\iff R(j, x, y, z)`$ for every $`j`$.
+5. **The recursion key ([02](02-well-founded.md) §4) is $`(b, k, \eta)`$.** The top $`b`$ is the outermost component ([02](02-well-founded.md) §3).
 
 The resulting relation $`R`$ is not Carlson's $`\mathcal R_N`$ itself, and we do not claim that it coincides with $`\mathcal R_N`$. The definition is given in [07 The relation R](07-relation-r.md).
 

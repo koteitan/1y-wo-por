@@ -6,9 +6,12 @@
 
 | ノート | ここで使う言葉 |
 |---|---|
-| [06 Phyrion 氏の組合せの層](06-combinatorial-layer.md) | 図式、表現、上端のアトム、許される要求、有限反映、6 つの仮定 |
-| [07 関係 R](07-relation-r.md) | $`R`$、定義の式、見えるビット $`\mathrm{allow}_{k,S}`$、狭義性と弱化の定理 |
-| [08 ω₁ より下の閉包と鎖](08-closure-chain.md) | $`\mathfrak B`$、Good、鎖 $`c_t`$ |
+| [01 順序数と ω₁](01-ordinals.md) | 順序数の $`\lt`$ が整礎であること |
+| [02 整礎関係と整礎再帰](02-well-founded.md) | 整礎帰納法 |
+| [03 構造と Σ₁ 初等部分構造](03-sigma1-elementary.md) | $`\Sigma_1`$ 論理式の 5 つ組（§7）、見えないビットを偽にする補題 2（§8） |
+| [06 Phyrion 氏の組合せの層](06-combinatorial-layer.md) | アトム、図式、$`e \in G`$、表現、上端、上端のアトム、要求、切れ目、制御関係、許される要求、有限反映、6 つの仮定 |
+| [07 関係 R](07-relation-r.md) | $`R`$、段、段の論理式、対角と名前付きの上端述語、名前、$`\mathrm{Elem}`$、定義の式、見えるビット $`\mathrm{allow}_{k,S}`$、狭義性と弱化の定理 |
+| [08 ω₁ より下の閉包と鎖](08-closure-chain.md) | $`\mathfrak B`$、$`\mathfrak B{\restriction}\gamma`$、Good、閉包点、鎖 $`c_t`$ |
 
 このノートは、関係 $`R`$ が組合せの層の 6 つの仮定をどう満たすかを説明する。中心は有限反映（§3）と、最初の表現（§4）である。
 
@@ -31,18 +34,18 @@ O5 は表現の定義（[06](06-combinatorial-layer.md) §2）で、義務は無
 
 - O1：順序数の $`\lt`$ は整礎である（[01](01-ordinals.md) §1）。
 - O2：順序数の $`\lt`$ は推移的である。
-- O3：[07](07-relation-r.md) §7 の定理（狭義性）。定義の式の第 2 項である。
+- O3：[07](07-relation-r.md) §7 の定理（狭義性）。定義の式の右辺の 2 番目の条件である。
 - O4：[07](07-relation-r.md) §7 の定理（弱化）は $`\eta' \le \eta`$ で示してある。組合せの層は $`\eta' \lt \eta`$ の版を求める。$`\eta' \lt \eta`$ なら $`\eta' \le \eta`$ なので、そのまま使える。
 
 ## 3. O6：有限反映
 
-**示すこと.** [06](06-combinatorial-layer.md) §4 の仮定の下で、$`g`$ を作る。記号は次のとおりである。$`n`$ は $`G`$ のサイズ、$`f`$ は表現、制御関係は $`R(K, \theta, f(\mathrm{cut}), \beta)`$、要求は $`d = (k_d, r_d, p_d)`$ である。
+**示すこと.** [06](06-combinatorial-layer.md) §4 の仮定の下で、$`g`$ を作る。記号は次のとおりである。$`G`$、$`f`$、$`\mathrm{cut}, K \in \mathbb N`$、$`\theta, \beta \in \mathrm{Ord}`$、$`\mathrm{needs}`$ は [06](06-combinatorial-layer.md) §4 のとおりである。$`n`$ は $`G`$ のサイズ、$`f`$ は表現、制御関係は $`R(K, \theta, f(\mathrm{cut}), \beta)`$、要求は $`d = (k_d, r_d, p_d)`$ である。$`G`$ のアトムを $`e = (k_e, r_e, p_e, q_e)`$ と書く。
 
 **証明.**
 
 1. $`a := f(\mathrm{cut})`$ と置く。[07](07-relation-r.md) §6 の定義の式から $`\theta \le a \lt \beta`$ と $`\mathrm{Elem}(K, \theta, a, \beta)`$ が出る。
 2. 名前の位置を $`S := \{r_d \mid d \in \mathrm{needs},\ k_d = K\}`$ とする。$`k_d = K`$ なら、許される要求（[06](06-combinatorial-layer.md) §4）の第 1 の場合は起きないので、$`r_d \lt \mathrm{cut}`$ かつ $`f(r_d) \lt \theta`$ である。
-3. パラメータは $`f(0), \ldots, f(\mathrm{cut} - 1)`$ とする。$`f`$ は増加なので、どれも $`\lt a`$ である。
+3. パラメータは $`f(0), \ldots, f(\mathrm{cut} - 1)`$ とする。パラメータの数は $`\mathrm{cut}`$（[03](03-sigma1-elementary.md) §7 の 5 つ組の $`r`$）である。$`f`$ は増加なので、どれも $`\lt a`$ である。
 4. 次の $`\Sigma_1`$ 論理式 $`\Phi`$ を作る。$`i \lt \mathrm{cut}`$ なら $`z_i := f(i)`$、$`\mathrm{cut} \le i \lt n`$ なら $`z_i := y_i`$ とする。
 
 ```math
@@ -53,8 +56,8 @@ O5 は表現の定義（[06](06-combinatorial-layer.md) §2）で、義務は無
 6. 高さ $`\beta`$ で $`\Phi`$ は真である。証人を $`y_i := f(i)`$ と取ると $`z = f`$ になる。順序は表現の 2 番目、$`\mathrm{Rel}`$ は表現の 3 番目、$`\mathrm{Top}`$ は要求の仮定（$`R(k_d, f(r_d), f(p_d), \beta)`$）から出る。
 7. 1 の初等性から、高さ $`a`$ でも $`\Phi`$ は真である。その証人 $`y'_i \lt a`$ を取る。
 8. $`g`$ を、$`i \lt \mathrm{cut}`$ なら $`g(i) := f(i)`$、そうでなければ $`g(i) := y'_i`$ と定める。
-   - $`g`$ は増加である（順序の項）。
-   - $`G`$ の各アトムで $`R`$ が成り立つ（$`\mathrm{Rel}`$ の項）。
+   - $`g`$ は増加である（$`\Phi`$ の順序の部分）。
+   - $`G`$ の各アトムで $`R`$ が成り立つ（$`\Phi`$ の $`\mathrm{Rel}`$ の部分）。
    - $`g(i) \lt a`$（左の部分は $`f(i) \lt f(\mathrm{cut})`$、右の部分は証人が $`\lt a`$）。
    - 各要求で $`R(k_d, g(r_d), g(p_d), a)`$（高さ $`a`$ では $`\mathrm{Top}_j(\xi, x)`$ は $`R(j, \xi, x, a)`$）。$`\square`$
 
@@ -74,25 +77,25 @@ O5 は表現の定義（[06](06-combinatorial-layer.md) §2）で、義務は無
 
 ### 4.1 上端述語の絶対性
 
-**定理（上端述語の絶対性）.** $`\mathrm{Good}(\alpha)`$ かつ $`\alpha \lt \omega_1`$ とする。すべての $`j`$ と $`\zeta, x \lt \alpha`$ について次が成り立つ。
+**定理（上端述語の絶対性）.** $`\mathrm{Good}(\delta)`$ かつ $`\delta \lt \omega_1`$ とする。すべての $`j \in \mathbb N`$ と $`\zeta, x \lt \delta`$ について次が成り立つ。
 
 ```math
-R(j, \zeta, x, \alpha) \iff R(j, \zeta, x, \omega_1)
+R(j, \zeta, x, \delta) \iff R(j, \zeta, x, \omega_1)
 ```
 
 **証明.** $`(j, \zeta)`$ について、$`\mathbb N \times \mathrm{Ord}`$ の辞書式順序で整礎帰納法をする（[02](02-well-founded.md) §2）。
 
-1. 定義の式（[07](07-relation-r.md) §6）で両辺を開く。$`\zeta \le x`$ は共通で、$`x \lt \alpha`$ も $`x \lt \omega_1`$ も真である。残りは、段 $`(j, \zeta)`$ の論理式 $`\psi`$（パラメータ $`\lt x`$）について、高さ $`\alpha`$ と高さ $`\omega_1`$ での真偽が一致することである。
-2. $`\psi`$ が読む上端述語のビット $`\mathrm{Top}_i(u, v)`$（$`u, v \lt \alpha`$）は $`(i, u) \prec (j, \zeta)`$ を満たす。帰納法の仮定から、高さ $`\alpha`$ と $`\omega_1`$ で真偽が同じである。
-3. よって高さ $`\alpha`$ の構造は、見えるビットで $`\mathfrak B{\restriction}\alpha`$ と一致する。[03](03-sigma1-elementary.md) §8 の補題 2 で、段の論理式を、見えないビットを偽にした全記号の論理式 $`\psi^*`$ に訳す。
-4. $`\mathrm{Good}(\alpha)`$ から、$`\mathfrak B{\restriction}\alpha \models \psi^* \iff \mathfrak B \models \psi^*`$。
+1. 定義の式（[07](07-relation-r.md) §6）で両辺を開く。$`\zeta \le x`$ は共通で、$`x \lt \delta`$ も $`x \lt \omega_1`$ も真である。残りは、段 $`(j, \zeta)`$ の論理式 $`\psi`$（パラメータ $`\lt x`$、名前 $`\lt \zeta`$）について、高さ $`\delta`$ と高さ $`\omega_1`$ での真偽が一致することである。
+2. $`\psi`$ が読む上端述語のビット $`\mathrm{Top}_i(u, v)`$（$`u, v \lt \delta`$）は $`(i, u) \prec (j, \zeta)`$ を満たす。帰納法の仮定から、高さ $`\delta`$ と $`\omega_1`$ で真偽が同じである。
+3. よって高さ $`\delta`$ の構造は、見えるビットで $`\mathfrak B{\restriction}\delta`$ と一致する。[03](03-sigma1-elementary.md) §8 の補題 2 で、段の論理式を、見えないビットを偽にした全記号の論理式 $`\psi^*`$ に訳す。
+4. $`\mathrm{Good}(\delta)`$ から、$`\mathfrak B{\restriction}\delta \models \psi^* \iff \mathfrak B \models \psi^*`$。
 5. もう一度補題 2 で戻すと、高さ $`\omega_1`$ の段 $`(j, \zeta)`$ の構造での真偽になる。$`\square`$
 
 3 で「見えるかどうかは位置だけで決まる」（[03](03-sigma1-elementary.md) §8）を使う。名前付きの上端述語にした理由はここにある（[notes/01-design.md](../notes/01-design.md) §3.8 の 3）。
 
 ### 4.2 鎖の 2 点は R の関係にある
 
-**定理（鎖の 2 点は R の関係にある）.** $`i \lt j`$、任意の層 $`k`$、$`\eta \le c_i`$ について $`R(k, \eta, c_i, c_j)`$。
+**定理（鎖の 2 点は R の関係にある）.** 自然数 $`i \lt j`$、任意の層 $`k \in \mathbb N`$、順序数 $`\eta \le c_i`$ について $`R(k, \eta, c_i, c_j)`$。
 
 **証明.** $`\eta \le c_i \lt c_j`$ なので、条件の部分は満たされる。段 $`(k, \eta)`$ の論理式 $`\psi`$ と、パラメータ $`\vec p \lt c_i`$ について、次の同値をつなぐ。
 
@@ -106,7 +109,7 @@ R(j, \zeta, x, \alpha) \iff R(j, \zeta, x, \omega_1)
 
 **定理（すべての図式の表現）.** どの図式 $`G`$ にも表現がある。
 
-**証明.** $`f := c`$（鎖）とする。
+**証明.** $`f(t) := c_t`$（鎖、$`t \in \mathbb N`$）とする。
 
 - $`D`$ は True なので、定義域の条件は自明である。
 - $`f`$ は狭義増加である（[08](08-closure-chain.md) §7 の性質 10）。

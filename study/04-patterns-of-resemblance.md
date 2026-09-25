@@ -6,9 +6,9 @@
 
 | ノート | ここで使う言葉 |
 |---|---|
-| [01 順序数と ω₁](01-ordinals.md) | 順序数、極限順序数 |
-| [02 整礎関係と整礎再帰](02-well-founded.md) | 整礎再帰、ガードつきの再帰 |
-| [03 構造と Σ₁ 初等部分構造](03-sigma1-elementary.md) | 構造 $`(\gamma; \ldots)`$、$`\Sigma_1`$ 論理式、$`\preccurlyeq_{\Sigma_1}`$ |
+| [01 順序数と ω₁](01-ordinals.md) | 順序数、極限順序数、$`\mathrm{Ord}`$ |
+| [02 整礎関係と整礎再帰](02-well-founded.md) | 整礎再帰、鍵、ガードつきの再帰、ラベル |
+| [03 構造と Σ₁ 初等部分構造](03-sigma1-elementary.md) | 構造 $`(\gamma; \ldots)`$、点、$`\Sigma_1`$ 論理式、$`\preccurlyeq_{\Sigma_1}`$、上端、上端述語、内部の関係（§7） |
 
 このノートは、Carlson の patterns of resemblance の考え方を説明する。次に、[bms-elem-pattern](https://github.com/koteitan/bms-elem-pattern) が BMS でそれをどう使ったかを述べる。最後に、1-Y でそのままでは足りない理由と、このリポジトリの変更点を述べる。
 
@@ -36,6 +36,10 @@ Carlson はこれを $`\le_1, \ldots, \le_N`$（$`\Sigma_1, \ldots, \Sigma_N`$ �
 \mathcal R_N = (\mathrm{Ord}; \le, \le_1, \ldots, \le_N)
 ```
 
+- $`N \ge 1`$ は自然数である。
+- $`\alpha \le_i \beta`$ は、$`\le_1`$ の定義の $`\preccurlyeq_{\Sigma_1}`$ を、$`\Sigma_i`$ 論理式での初等性に替えたものである。$`\Sigma_i`$ 論理式は、存在量化子のかたまりから始めて、存在量化子と全称量化子のかたまりを交互に $`i`$ 個並べ、その後ろに量化子の無い論理式を置いたものである。このリポジトリは $`\Sigma_i`$（$`i \ge 2`$）を使わないので、これ以上は説明しない。
+- 関係 $`\le_1, \ldots, \le_N`$ のそれぞれを $`\mathcal R_N`$ の **段** と呼ぶ。段 $`\le_i`$ は、$`\Sigma_i`$ 論理式での初等性で決まる。
+
 文献：T. J. Carlson, Elementary patterns of resemblance, Annals of Pure and Applied Logic 108 (2001), 19–77。
 
 ## 2. 小さい例
@@ -59,6 +63,8 @@ $`\omega \le_1 \omega`$ は定義から成り立つ。以上から $`\{\beta \mi
 
 ## 3. 停止性の証明での使い方
 
+この節は、あとのノートで定義する言葉を先に使って、形だけを述べる。式の列、親子の辺、展開は [05](05-1y-mountain.md) で、ラベルの付け方と切れ目は [06](06-combinatorial-layer.md) §2、§3 で定義する。
+
 展開の停止性の証明では、列ごとに順序数のラベルを付け、展開でラベルが下がることを示す（[02](02-well-founded.md) §6）。そこで要る性質は **有限反映** である。
 
 **有限反映の形.** $`\alpha \lt_1 \beta`$ とする。$`\alpha`$ より下の点 $`\vec p`$ と、$`\beta`$ より下の点 $`\vec y`$ が、有限個の原子式の条件 $`\psi(\vec p, \vec y)`$ を満たすとする。すると、$`\alpha`$ より下の点 $`\vec y'`$ で、同じ条件 $`\psi(\vec p, \vec y')`$ を満たすものがある。
@@ -67,7 +73,7 @@ $`\omega \le_1 \omega`$ は定義から成り立つ。以上から $`\{\beta \mi
 
 展開では、付け替える列の古いラベルを $`\vec y`$ として、この形を使う。$`\psi`$ に「親子の辺のラベルが関係 $`\le_1`$ などを満たす」と書いておけば、新しいラベル $`\vec y'`$ も同じ辺の条件を満たす。しかも $`\vec y'`$ は $`\alpha`$ より下にある。展開では $`\alpha`$ は切れ目の列の古いラベルで、付け替える古いラベル $`\vec y`$ はどれも $`\alpha`$ 以上である。したがって新しいラベルは古いラベルより小さい。
 
-**bms-elem-pattern での使い方.** [bms-elem-pattern](https://github.com/koteitan/bms-elem-pattern) は、BMS の停止性を $`\mathcal R_N`$ で示した。行 $`k`$ の親子の辺のラベルの関係を $`\lt_{k+1}`$ にする。有限反映には $`\Sigma_n`$ の段、連続性や共終性の補題を使う。$`\mathcal R_N`$ の定義と例は、同リポジトリのノート [proof/pss/03-patterns.md](https://github.com/koteitan/bms-elem-pattern/blob/main/proof/pss/03-patterns.md) にある。
+**bms-elem-pattern での使い方.** [bms-elem-pattern](https://github.com/koteitan/bms-elem-pattern) は、BMS の停止性を $`\mathcal R_N`$ で示した。行 $`k`$ の親子の辺のラベルの関係を $`\lt_{k+1}`$ にする。有限反映には $`\Sigma_n`$ の段と、連続性や共終性の補題を使う。これらの補題はこのリポジトリでは使わないので、説明しない。$`\mathcal R_N`$ の定義と例は、同リポジトリのノート [proof/pss/03-patterns.md](https://github.com/koteitan/bms-elem-pattern/blob/main/proof/pss/03-patterns.md) にある。
 
 ## 4. 1-Y で足りないもの
 
@@ -77,21 +83,21 @@ $`\omega \le_1 \omega`$ は定義から成り立つ。以上から $`\{\beta \mi
 R(k, \eta, a, b) \quad (k \in \mathbb N,\ \eta, a, b \in \mathrm{Ord})
 ```
 
-「層 $`k`$、根の添字 $`\eta`$ で、$`a`$ は $`b`$ へ安定している」と読む。$`\eta`$ は辺の成分の根のラベルで、順序数である。このため 2 つの問題が起きる。
+「層 $`k`$、根の添字 $`\eta`$ で、$`a`$ は $`b`$ へ安定している」と読む。$`\eta`$ は辺の成分の根のラベルで、順序数である。層と成分の根は [05](05-1y-mountain.md) §3、§4 で、この読み方は [06](06-combinatorial-layer.md) §2 で述べる。このため 2 つの問題が起きる。
 
-**問題 1：段の添字が 2 次元で超限である.** 段 $`(k, \eta)`$ は $`\mathbb N \times \mathrm{Ord}`$ を辞書式に動く。ラベルが可算なら、段は $`\omega \times \omega_1`$ の形に並ぶ。$`\mathcal R_N`$ の段 $`\Sigma_1, \ldots, \Sigma_N`$ は有限個で、自然数で数える。超限の $`\eta`$ を段の番号にできない。
+**問題 1：段の添字が 2 次元で超限である.** このリポジトリでは、段の添字は、層 $`k`$ と根の添字 $`\eta`$ の組 $`(k, \eta)`$ になる（段 $`(k, \eta)`$ は [07](07-relation-r.md) §3 で定義する）。段 $`(k, \eta)`$ は $`\mathbb N \times \mathrm{Ord}`$ を辞書式に動く。ラベルが可算なら、段は $`\omega \times \omega_1`$ の形に並ぶ。$`\mathcal R_N`$ の段 $`\Sigma_1, \ldots, \Sigma_N`$ は有限個で、自然数で数える。超限の $`\eta`$ を段の番号にできない。
 
-**問題 2：上端への要求.** 有限反映は「上端 $`\beta`$ への関係 $`R(j, v, w, \beta)`$」も新しいラベルで成り立たせる必要がある（[06](06-combinatorial-layer.md) §4 の要求のリスト $`\mathrm{needs}`$）。$`\beta`$ は構造 $`(\beta; \ldots)`$ の元ではない。$`R`$ の定義を展開して書くと $`\Sigma_1`$ にならない。
+**問題 2：上端への要求.** 上端 $`\beta`$ は、展開の前に古い最後の列に付いていたラベルである（[06](06-combinatorial-layer.md) §3）。有限反映は「上端 $`\beta`$ への関係 $`R(j, v, w, \beta)`$」（$`j`$ は層、$`v`$ と $`w`$ は根と親のラベル）も新しいラベルで成り立たせる必要がある（[06](06-combinatorial-layer.md) §3 の要求のリスト $`\mathrm{needs}`$）。$`\beta`$ は構造 $`(\beta; \ldots)`$ の元ではない。$`R`$ の定義を展開して書くと $`\Sigma_1`$ にならない。
 
 ## 5. このリポジトリの変更点
 
 [notes/01-design.md](../notes/01-design.md) §3.8 のとおり、次のように変えた。
 
 1. **段はすべて $`\Sigma_1`$ にする.** 段の強さは、量化子の複雑さではなく、言語にある記号で決める。
-2. **上端述語を原子記号にする.** 高さ $`\gamma`$ の構造は、記号 $`\mathrm{Top}_j(\xi, x)`$ を「$`R(j, \xi, x, \gamma)`$」と解釈して持つ。上端への要求は原子式になる。
-3. **段 $`(k, \eta)`$ で見える記号を決める.** 層 $`j \lt k`$ の上端述語は全部見える。層 $`k`$ の上端述語は、名前 $`\xi \lt \eta`$ のものだけ見える。$`(k, \eta)`$ が大きいほど、見える記号が増え、関係は強くなる。
-4. **内部の関係はすべての層で持つ.** $`\mathrm{Rel}_j(x, y, z) :\iff R(j, x, y, z)`$ をすべての $`j`$ について持つ。
-5. **再帰の鍵を $`(b, k, \eta)`$ にする.** 上端 $`b`$ を一番外に置く（[02](02-well-founded.md) §3）。
+2. **上端述語（[03](03-sigma1-elementary.md) §7）を原子記号にする.** 高さ $`\gamma`$ の構造は、記号 $`\mathrm{Top}_j(\xi, x)`$ を「$`R(j, \xi, x, \gamma)`$」と解釈して持つ。上端への要求は原子式になる。
+3. **段 $`(k, \eta)`$ で見える記号を決める.** 層 $`j \lt k`$ の上端述語は全部見える。層 $`k`$ の上端述語 $`\mathrm{Top}_k(\xi, x)`$ は、第 1 引数 $`\xi`$ が $`\xi \lt \eta`$ を満たすものだけ見える。この $`\xi`$ を上端述語の **名前** と呼ぶ（[07](07-relation-r.md) §3）。$`(k, \eta)`$ が大きいほど、見える記号が増え、関係は強くなる。
+4. **内部の関係（[03](03-sigma1-elementary.md) §7）はすべての層で持つ.** $`\mathrm{Rel}_j(x, y, z) :\iff R(j, x, y, z)`$ をすべての $`j`$ について持つ。
+5. **再帰の鍵（[02](02-well-founded.md) §4）を $`(b, k, \eta)`$ にする.** 上端 $`b`$ を一番外に置く（[02](02-well-founded.md) §3）。
 
 こうしてできた関係 $`R`$ は、Carlson の $`\mathcal R_N`$ そのものではない。$`\mathcal R_N`$ と同じだとは主張しない。定義は [07 関係 R](07-relation-r.md) で述べる。
 

@@ -7,9 +7,9 @@ Prerequisites
 | Note | Terms used here |
 |---|---|
 | [02 Well-founded relations and recursion](02-well-founded.md) | lexicographic order, well-founded recursion, guarded recursion |
-| [03 Structures and Σ₁-elementary substructures](03-sigma1-elementary.md) | 5-tuples for $`\Sigma_1`$ formulas (§7), visible bits $`\mathrm{allow}_{k,S}`$ and the comparison of two structures (§8) |
+| [03 Structures and Σ₁-elementary substructures](03-sigma1-elementary.md) | height, point, witness, 5-tuples for $`\Sigma_1`$ formulas and the matrix, top, top predicate, internal relation (§7), position, visible bits $`\mathrm{allow}_{k,S}`$ and the way two structures are compared (§8) |
 | [04 Patterns of resemblance](04-patterns-of-resemblance.md) | the idea of making top predicates atomic symbols |
-| [06 Phyrion's combinatorial layer](06-combinatorial-layer.md) | the role of $`R(k, \eta, a, b)`$, strictness and weakening among the six hypotheses |
+| [06 Phyrion's combinatorial layer](06-combinatorial-layer.md) | layer, edge, demand, representation, the role of $`R(k, \eta, a, b)`$, strictness and weakening among the six hypotheses |
 
 This note explains the definition of the label relation $`R`$ of this repository and the properties that follow directly from it.
 
@@ -17,7 +17,7 @@ This note explains the definition of the label relation $`R`$ of this repository
 
 - $`\mathrm{Ord}`$: all ordinals.
 - Lexicographic order on $`\mathbb N \times \mathrm{Ord}`$: $`(j, \xi) \prec (k, \eta) \iff j \lt k \lor (j = k \land \xi \lt \eta)`$.
-- $`R(k, \eta, a, b)`$: layer $`k \in \mathbb N`$, root index $`\eta`$, lower point $`a`$, upper point $`b`$.
+- $`R(k, \eta, a, b)`$: layer $`k \in \mathbb N`$, root index ([06](06-combinatorial-layer.md) §2) $`\eta \in \mathrm{Ord}`$, lower point $`a \in \mathrm{Ord}`$, upper point $`b \in \mathrm{Ord}`$. $`R`$ is defined in §4. §2 and §3 use $`R`$ in the interpretations of symbols. As §5 explains, this use is not circular.
 
 ## 2. The language
 
@@ -29,27 +29,31 @@ There are three kinds of symbols.
 | $`\mathrm{Rel}_j`$ ($`j \in \mathbb N`$) | 3 | $`\mathrm{Rel}_j(x, y, z) :\iff R(j, x, y, z)`$ |
 | $`\mathrm{Top}_j`$ ($`j \in \mathbb N`$) | 2 | $`\mathrm{Top}_j(\xi, x) :\iff R(j, \xi, x, \gamma)`$ |
 
-$`\mathrm{Rel}_j`$ relates points to points, and $`\mathrm{Top}_j`$ relates a point to the top $`\gamma`$. $`\gamma`$ itself is not in the domain.
+$`\mathrm{Rel}_j`$ relates points to points (an internal relation), and $`\mathrm{Top}_j`$ relates a point to the top $`\gamma`$ (a top predicate) ([03](03-sigma1-elementary.md) §7). $`\gamma`$ itself is not in the domain.
 
 We call the interpretations of the table the **true interpretations**, to distinguish them from the stage interpretations of §5. The true interpretation of the top predicates depends on the height $`\gamma`$.
 
 ## 3. The structure of level (k, η)
 
-**Definition.** The structure of height $`\gamma`$ and level $`(k, \eta)`$ is the following. Its domain is $`\{x \mid x \lt \gamma\}`$.
+**Definition (level).** A pair $`(k, \eta) \in \mathbb N \times \mathrm{Ord}`$ is called a **level**. $`k`$ is the layer and $`\eta`$ the root index. The level decides which top predicates the structure has. Levels are compared by the lexicographic order $`\prec`$ of §1. A level is unrelated to the "one step" of a one-step expansion ([05](05-1y-mountain.md) §7).
+
+**Definition (the structure of level (k, η)).** For an ordinal $`\gamma`$, the structure of height $`\gamma`$ and level $`(k, \eta)`$ is the following. Its domain is $`\{x \mid x \lt \gamma\}`$.
 
 ```math
 \mathfrak A^{\gamma}_{k,\eta} = \bigl(\gamma;\ \lt,\ (\mathrm{Rel}_j)_{j \in \mathbb N},\ (\mathrm{Top}_j)_{j \lt k},\ (\mathrm{Top}_{k,\xi})_{\xi \lt \eta}\bigr)
 ```
 
 - $`\mathrm{Rel}_j`$ is present for every layer $`j`$.
-- $`\mathrm{Top}_j`$ ($`j \lt k`$) is a **diagonal top predicate**. Its first argument can be an ordinary variable.
-- $`\mathrm{Top}_{k,\xi}(x) :\iff R(k, \xi, x, \gamma)`$ is a **named top predicate**. There is one unary symbol for each name $`\xi \lt \eta`$.
+- $`\mathrm{Top}_j`$ ($`j \lt k`$) is a **diagonal top predicate**. "Diagonal" means that the root index $`\xi`$ is not fixed inside the symbol but is taken as the first argument. So the first argument can be an ordinary variable (a parameter or a witness).
+- $`\mathrm{Top}_{k,\xi}(x) :\iff R(k, \xi, x, \gamma)`$ is a **named top predicate**. There is one unary symbol for each $`\xi \lt \eta`$. $`\xi`$ is called the **name** of this symbol.
 - There are no top predicates with $`j \gt k`$.
 
-**Representation by positions.** A named $`\mathrm{Top}_{k,\xi}(x)`$ is represented as the binary $`\mathrm{Top}_k(p_s, x)`$ whose first argument is at a parameter position $`s`$. A formula comes with a set $`S`$ of positions, and $`s \in S`$ requires $`s \lt r`$ and $`p_s \lt \eta`$. The visible bits are decided by $`\mathrm{allow}_{k,S}`$ ([03](03-sigma1-elementary.md) §8).
+A **formula of level $`(k, \eta)`$** is a $`\Sigma_1`$ formula of the language of this structure.
+
+**Representation by positions.** A named $`\mathrm{Top}_{k,\xi}(x)`$ is represented as the binary $`\mathrm{Top}_k(p_s, x)`$ whose first argument is at a parameter position $`s`$ ([03](03-sigma1-elementary.md) §8). A formula comes with a set $`S \subseteq \mathbb N`$ of positions, and $`s \in S`$ requires $`s \lt r`$ and $`p_s \lt \eta`$. Here $`r`$ is the number of parameters (the $`r`$ of the 5-tuple of [03](03-sigma1-elementary.md) §7). The visible bits are decided by $`\mathrm{allow}_{k,S}`$ ([03](03-sigma1-elementary.md) §8).
 
 ```math
-\mathrm{allow}_{k,S}(j, a) \iff j \lt k \ \lor\ (j = k \land a \in S)
+\mathrm{allow}_{k,S}(j, s) \iff j \lt k \ \lor\ (j = k \land s \in S)
 ```
 
 **Example.** At level $`(2, \omega)`$, consider
@@ -70,7 +74,7 @@ We call the interpretations of the table the **true interpretations**, to distin
 R(k, \eta, a, b) \iff \eta \le a \ \land\ a \lt b \ \land\ \mathfrak A^{a}_{k,\eta} \preccurlyeq_{\Sigma_1} \mathfrak A^{b}_{k,\eta}
 ```
 
-Here $`\mathfrak A^{a}_{k,\eta} \preccurlyeq_{\Sigma_1} \mathfrak A^{b}_{k,\eta}`$ means that for every $`\Sigma_1`$ formula $`\varphi`$ of level $`(k, \eta)`$ and all parameters $`\vec p \lt a`$ (names $`\lt \eta`$),
+Here $`\mathfrak A^{a}_{k,\eta} \preccurlyeq_{\Sigma_1} \mathfrak A^{b}_{k,\eta}`$ means that for every $`\Sigma_1`$ formula $`\varphi`$ of level $`(k, \eta)`$ and all parameters $`\vec p \lt a`$ (with $`p_s \lt \eta`$ at the positions $`s \in S`$ (§3) used for names),
 
 ```math
 \mathfrak A^{a}_{k,\eta} \models \varphi(\vec p) \iff \mathfrak A^{b}_{k,\eta} \models \varphi(\vec p)
@@ -78,13 +82,13 @@ Here $`\mathfrak A^{a}_{k,\eta} \preccurlyeq_{\Sigma_1} \mathfrak A^{b}_{k,\eta}
 
 We write $`\mathrm{Elem}(k, \eta, a, b)`$ for this comparison (with the true interpretations). The top predicates of the two structures are different ($`R`$ to $`a`$ and $`R`$ to $`b`$) (Difference 1 of [03](03-sigma1-elementary.md) §8).
 
-About the condition $`\eta \le a`$: edges and demands all have "root $`\le`$ parent", so in an increasing labelling it always holds.
+About the condition $`\eta \le a`$: atoms and demands all have "root $`\le`$ parent" ([06](06-combinatorial-layer.md) §1, §3), so in a representation (whose labels increase) it always holds.
 
 ## 5. The recursion
 
 The right side reads $`R`$ itself. We use well-founded recursion on the lexicographic order $`\lhd`$ of keys $`(b, k, \eta)`$ ([02](02-well-founded.md) §3), defining all $`a`$ at once.
 
-**What the right side reads.** Only three kinds, all with smaller keys.
+**What the right side reads.** Only three kinds, all with smaller keys. In the table, $`\mathfrak A^{a}`$ and $`\mathfrak A^{b}`$ abbreviate $`\mathfrak A^{a}_{k,\eta}`$ and $`\mathfrak A^{b}_{k,\eta}`$.
 
 | What is read | Key | Why smaller |
 |---|---|---|
@@ -92,7 +96,7 @@ The right side reads $`R`$ itself. We use well-founded recursion on the lexicogr
 | a top predicate $`\mathrm{Top}_j(\xi, x)`$ of $`\mathfrak A^{a}`$ | $`(a, j, \xi)`$ | $`a \lt b`$ |
 | a visible top predicate of $`\mathfrak A^{b}`$ | $`(b, j, \xi)`$ | $`j \lt k`$, or $`j = k`$ and $`\xi \lt \eta`$ |
 
-**Guarded recursion.** The value at key $`t = (b, k, \eta)`$ is the set of $`a`$ with $`R(k, \eta, a, b)`$. It is defined with the following **stage interpretations**. Each of the three contains, as a guard, the condition that the key is smaller ([02](02-well-founded.md) §5).
+**Guarded recursion.** The value at key $`t = (b, k, \eta)`$ is the set of $`a`$ with $`R(k, \eta, a, b)`$. It is defined with the following **stage interpretations**. The superscript $`\mathrm{st}`$ marks a stage interpretation. Each of the three contains, as a guard, the condition that the key is smaller ([02](02-well-founded.md) §5).
 
 | Stage interpretation | Formula |
 |---|---|
@@ -128,9 +132,9 @@ R(k, \eta, a, b) \iff \eta \le a \land a \lt b \land \mathrm{Elem}(k, \eta, a, b
 
 ## 7. Properties that follow directly
 
-**Theorem (strictness).** $`R(k, \eta, a, b)`$ implies $`a \lt b`$. This is the second conjunct of the defining equation. It is the strictness of [06](06-combinatorial-layer.md) §5.
+**Theorem (strictness).** $`R(k, \eta, a, b)`$ implies $`a \lt b`$. This is the second condition on the right side of the defining equation. It is the strictness of [06](06-combinatorial-layer.md) §5.
 
-**Theorem (lower bound of the index).** $`R(k, \eta, a, b)`$ implies $`\eta \le a`$. This is the first conjunct of the defining equation.
+**Theorem (lower bound of the index).** $`R(k, \eta, a, b)`$ implies $`\eta \le a`$. This is the first condition on the right side of the defining equation.
 
 **Theorem (weakening).** If $`\eta' \le \eta`$ and $`R(k, \eta, p, c)`$, then $`R(k, \eta', p, c)`$.
 
@@ -150,7 +154,7 @@ R(j, \xi, x, a) \iff R(j, \xi, x, b)
 
 **Reason.** As in the example of [03](03-sigma1-elementary.md) §5.
 
-- If $`a = 0`$: $`\exists y\ \neg(y \lt y)`$ ($`n = 1`$, $`\mathit{bb} = 1`$, $`r = 0`$, the matrix is all atomic diagrams) is true at height $`b`$ and false at height 0.
+- If $`a = 0`$: $`\exists y\ \neg(y \lt y)`$ ($`m = 0`$, $`n = 1`$, $`\mathit{bb} = 1`$, $`r = 0`$, the matrix is the set of complete atomic diagrams with $`[v_0 \lt v_0] = 0`$) is true at height $`b`$ and false at height 0.
 - If $`a = \gamma + 1`$: $`\exists y\ (\gamma \lt y)`$ with parameter $`\gamma \lt a`$ is true at height $`b`$ ($`y = \gamma + 1 \lt b`$) and false at height $`a`$.
 
 Both contradict $`\mathrm{Elem}`$. The combinatorial layer does not use this property.
@@ -160,7 +164,7 @@ Both contradict $`\mathrm{Elem}`$. The combinatorial layer does not use this pro
 The following properties are expected to hold but are not proved here. The combinatorial layer does not use them ([notes/01-design.md](../../notes/01-design.md) §4.11, Japanese).
 
 - Transitivity: $`R(k, \eta, a, b) \land R(k, \eta, b, c) \implies R(k, \eta, a, c)`$.
-- Monotonicity in the index: if $`(k, \eta) \preceq (k', \eta')`$, $`\eta \le a`$ and $`R(k', \eta', a, b)`$, then $`R(k, \eta, a, b)`$.
+- Monotonicity in the index: if $`(k, \eta) \preceq (k', \eta')`$ ($`\prec`$ or equal), $`\eta \le a`$ and $`R(k', \eta', a, b)`$, then $`R(k, \eta, a, b)`$.
 - Locality: $`R`$ with top $`\le \delta`$ is determined by the recursion below $`\delta + 1`$.
 
 ## 9. Where this repository uses it

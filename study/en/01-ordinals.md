@@ -4,7 +4,7 @@
 
 Prerequisites: none
 
-This note explains the ordinals used as labels and the ordinal $`\omega_1`$ used as a bound for the labels. The facts that are used are the regularity in §5 and the enumeration in §6.
+This note explains the ordinals used as labels and the ordinal $`\omega_1`$ used as a bound for the labels. A label is an ordinal used in the proof that expansion terminates. Labels are defined in [02](02-well-founded.md) §6 and [06](06-combinatorial-layer.md) §2. The facts that are used are the regularity in §5 and the enumeration in §6.
 
 ## 1. Well-orders and ordinals
 
@@ -29,7 +29,8 @@ In increasing order:
 ```
 
 - $`\omega`$ is the order type of the natural numbers. $`\omega = \{0, 1, 2, \ldots\}`$.
-- The ordinals are well-ordered by $`\lt`$. Every collection of ordinals has a least element.
+- The ordinals are well-ordered by $`\lt`$. Every nonempty collection of ordinals has a least element.
+- We write $`\mathrm{Ord}`$ for the class of all ordinals.
 
 ## 2. Successors and limits
 
@@ -60,7 +61,7 @@ This property is used in an example of [03 Structures and Σ₁-elementary subst
 | $`\{0, 1, 2, \ldots\}`$ | $`\omega`$ |
 | $`\{\omega, \omega+1, \omega+2, \ldots\}`$ | $`\omega \cdot 2`$ |
 
-To get an ordinal strictly above all $`y_i`$, use $`\sup_{i} (y_i + 1)`$. Indeed $`y_i \lt y_i + 1 \le \sup_i (y_i + 1)`$. The height of witnesses in [08 Closure and chain](08-closure-chain.md) §3 has this form.
+To get an ordinal strictly above all $`y_i`$, use $`\sup_{i} (y_i + 1)`$. Indeed $`y_i \lt y_i + 1 \le \sup_i (y_i + 1)`$. The "height of witnesses" defined in [08 Closure and chain](08-closure-chain.md) §3 has this form.
 
 ## 4. Countability and ω₁
 
@@ -109,19 +110,19 @@ The right side is a countable union of countable sets. The terms with $`\alpha_n
 
 ## 6. Enumerating a countable ordinal
 
-If $`0 \lt \gamma \lt \omega_1`$, the set $`\{\beta \mid \beta \lt \gamma\}`$ is nonempty and countable, so there is a surjection $`e_\gamma : \mathbb N \to \gamma`$. Choose one with the axiom of choice and call it $`e_\gamma`$.
+If $`0 \lt \gamma \lt \omega_1`$, the set $`\{\beta \mid \beta \lt \gamma\}`$ is nonempty and countable, so there is a surjection $`e_\gamma : \mathbb N \to \gamma`$. Choose one with the axiom of choice and call it $`e_\gamma`$. For $`\gamma = 0`$ there is no ordinal below $`\gamma`$. In this case let $`e_0`$ be the function $`\mathbb N \to \mathrm{Ord}`$ whose value is $`0`$ at every $`t`$. The values of $`e_0`$ are never used.
 
 **Theorem (enumeration).** If $`\gamma \lt \omega_1`$ and $`a \lt \gamma`$, then $`e_\gamma(t) = a`$ for some $`t \in \mathbb N`$.
 
-With this, finitely many parameters below $`\gamma`$ can be written as a finite list of natural numbers.
+With this, finitely many ordinals below $`\gamma`$ can be written as a finite list of natural numbers. These ordinals are later used as parameters of formulas (defined in [03](03-sigma1-elementary.md) §2), so we call them parameters here too.
 
 **Definition (coding parameters).** For a list of natural numbers $`l = (l_0, l_1, \ldots)`$, let $`\mathrm{params}_\gamma(l)(i) := e_\gamma(l_i)`$ (outside the list, read $`l_i := 0`$).
 
-**Theorem (existence of a code).** If $`\gamma \lt \omega_1`$ and $`p_0, \ldots, p_{k-1} \lt \gamma`$, then there is a list $`l`$ of natural numbers with $`\mathrm{params}_\gamma(l)(i) = p_i`$ for all $`i \lt k`$.
+**Theorem (existence of a code).** If $`\gamma \lt \omega_1`$, $`k \in \mathbb N`$ and $`p_0, \ldots, p_{k-1} \lt \gamma`$, then there is a list $`l`$ of natural numbers with $`\mathrm{params}_\gamma(l)(i) = p_i`$ for all $`i \lt k`$.
 
 **Example.** Let $`\gamma = \omega + 1`$, and suppose the chosen enumeration is $`e_\gamma(0) = \omega`$, $`e_\gamma(t+1) = t`$. The parameters $`(3, \omega, 0)`$ are given by $`l = (4, 0, 1)`$.
 
-**Why it is needed.** In [08 Closure and chain](08-closure-chain.md) we take a supremum over all formulas with parameters below $`\gamma`$. Instead of running over tuples of ordinals, we run over lists $`l`$ of natural numbers. Then the index set is the set of all pairs of a formula and a finite list of natural numbers. This set does not depend on $`\gamma`$ and is countable ([08](08-closure-chain.md) §2). So the theorem of §5 applies directly.
+**Why it is needed.** In [08 Closure and chain](08-closure-chain.md) we take a supremum over all formulas (defined in [03](03-sigma1-elementary.md) §2) with parameters below $`\gamma`$. Instead of running over tuples of ordinals, we run over lists $`l`$ of natural numbers. Then the index set is the set of all pairs of a formula and a finite list of natural numbers. This set does not depend on $`\gamma`$ and is countable ([08](08-closure-chain.md) §2). So the theorem of §5 applies directly.
 
 ## 7. Where this repository uses it
 
@@ -129,4 +130,4 @@ With this, finitely many parameters below $`\gamma`$ can be written as a finite 
 |---|---|
 | [README](../../README-en.md) "The relation R" | labels are ordinals, the order is $`\lt`$ |
 | [README](../../README-en.md) "Where the six hypotheses go" | the label order $`\lt`$ is well-founded and transitive (§1) |
-| [notes/01-design.md](../../notes/01-design.md) §3.6, §4.7 (Japanese) | $`\omega_1`$, the enumeration $`e_\gamma`$, closure points lie below $`\omega_1`$ (regularity of §5) |
+| [notes/01-design.md](../../notes/01-design.md) §3.6, §4.7 (Japanese) | $`\omega_1`$, the enumeration $`e_\gamma`$, closure points ([08](08-closure-chain.md) §5) lie below $`\omega_1`$ (regularity of §5) |

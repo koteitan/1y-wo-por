@@ -7,8 +7,8 @@ Prerequisites
 | Note | Terms used here |
 |---|---|
 | [01 Ordinals and ω₁](01-ordinals.md) | $`\omega_1`$, regularity, the enumeration $`e_\gamma`$, coding parameters $`\mathrm{params}_\gamma`$ |
-| [03 Structures and Σ₁-elementary substructures](03-sigma1-elementary.md) | Tarski–Vaught test, 5-tuples for $`\Sigma_1`$ formulas (§7), visible bits (§8) |
-| [07 The relation R](07-relation-r.md) | $`R`$, the symbols $`\mathrm{Rel}_j`$, $`\mathrm{Top}_j`$ and their true interpretations |
+| [03 Structures and Σ₁-elementary substructures](03-sigma1-elementary.md) | witness, Tarski–Vaught test, 5-tuples for $`\Sigma_1`$ formulas and the matrix, complete atomic diagram (§7), visible bits (§8) |
+| [07 The relation R](07-relation-r.md) | $`R`$, the symbols $`\mathrm{Rel}_j`$, $`\mathrm{Top}_j`$ and their true interpretations, diagonal top predicate |
 
 This note explains how to build points below $`\omega_1`$ that are closed under $`\Sigma_1`$ witnesses. The idea is the one of the Löwenheim–Skolem theorem: add witnesses and take the supremum. The chain of these points gives the first labels in [09](09-obligations.md).
 
@@ -20,9 +20,9 @@ This note explains how to build points below $`\omega_1`$ that are closed under 
 \mathfrak B = \bigl(\omega_1;\ \lt,\ (\mathrm{Rel}_j)_{j \in \mathbb N},\ (\mathrm{Top}^{\omega_1}_j)_{j \in \mathbb N}\bigr), \qquad \mathrm{Top}^{\omega_1}_j(\xi, x) :\iff R(j, \xi, x, \omega_1)
 ```
 
-It has the top predicates of every layer, all diagonal. All bits are visible ([03](03-sigma1-elementary.md) §8).
+It has the top predicates of every layer, all diagonal ([07](07-relation-r.md) §3). All bits are visible ([03](03-sigma1-elementary.md) §8).
 
-**Definition (Good).** Let $`\mathfrak B{\restriction}\gamma`$ be $`\mathfrak B`$ with its domain restricted to $`\{x \mid x \lt \gamma\}`$. The top predicates remain those toward $`\omega_1`$.
+**Definition (Good).** For an ordinal $`\gamma \le \omega_1`$, let $`\mathfrak B{\restriction}\gamma`$ be $`\mathfrak B`$ with its domain restricted to $`\{x \mid x \lt \gamma\}`$. The top predicates remain those toward $`\omega_1`$.
 
 ```math
 \mathrm{Good}(\gamma) :\iff \mathfrak B{\restriction}\gamma \preccurlyeq_{\Sigma_1} \mathfrak B
@@ -42,7 +42,7 @@ This is why a formula uses finitely many symbols (bound $`m`$). If formulas coul
 
 ## 3. Height of witnesses
 
-**Definition (height of witnesses).** For a formula $`\varphi = (m, n, D, \mathit{bb}, r)`$ and parameters $`\vec p`$:
+**Definition (height of witnesses).** For a formula $`\varphi = (m, n, D, \mathit{bb}, r) \in \mathcal F`$ and a list $`\vec p`$ of parameters below $`\omega_1`$ ($`\varphi`$ reads the first $`r`$ of them, $`p_0, \ldots, p_{r-1}`$):
 
 - if $`\mathfrak B \models \varphi(\vec p)`$, choose one tuple of witnesses $`y_0, \ldots, y_{\mathit{bb}-1} \lt \omega_1`$ with the axiom of choice and let $`h(\varphi, \vec p) := \sup_{i \lt \mathit{bb}} (y_i + 1)`$;
 - otherwise let $`h(\varphi, \vec p) := 0`$.
@@ -61,7 +61,7 @@ All chosen witnesses lie below $`h(\varphi, \vec p)`$.
 \mathrm{next}(\gamma) := \max\Bigl(\gamma,\ \sup_{(\varphi, l)} h\bigl(\varphi, \mathrm{params}_\gamma(l)\bigr)\Bigr) + 1
 ```
 
-The supremum runs over all $`(\varphi, l) \in \mathcal F \times \mathbb N^{\lt\omega}`$. $`\mathrm{params}_\gamma(l)`$ is the parameter tuple coded by a list of natural numbers, as in [01](01-ordinals.md) §6.
+The supremum runs over all $`(\varphi, l) \in \mathcal F \times \mathbb N^{\lt\omega}`$. $`\mathrm{params}_\gamma(l)`$ is the parameter tuple coded by a list of natural numbers, as in [01](01-ordinals.md) §6. For $`\gamma = 0`$, $`e_0`$ is also as in [01](01-ordinals.md) §6.
 
 | Property | Statement | Reason |
 |---|---|---|
@@ -79,13 +79,15 @@ The supremum runs over all $`(\varphi, l) \in \mathcal F \times \mathbb N^{\lt\o
 \mathrm{next}^0(\gamma) := \gamma, \quad \mathrm{next}^{t+1}(\gamma) := \mathrm{next}\bigl(\mathrm{next}^t(\gamma)\bigr), \qquad \lambda(\gamma) := \sup_{t \in \mathbb N} \mathrm{next}^t(\gamma)
 ```
 
+Here $`t \in \mathbb N`$. The sequence $`\mathrm{next}^0(\gamma), \mathrm{next}^1(\gamma), \ldots`$ is called the **tower** from $`\gamma`$. An ordinal of the form $`\lambda(\gamma)`$ is called a **closure point**.
+
 | Property | Statement |
 |---|---|
 | Property 4 | $`\gamma \lt \omega_1 \implies \mathrm{next}^t(\gamma) \lt \omega_1`$ |
 | Property 5 | $`t \le t' \implies \mathrm{next}^t(\gamma) \le \mathrm{next}^{t'}(\gamma)`$ |
 | Property 6 | $`\gamma \lt \omega_1 \implies \lambda(\gamma) \lt \omega_1`$ (supremum of countably many) |
 | Property 7 | $`\gamma \lt \lambda(\gamma)`$ |
-| Property 8 | if $`p_0, \ldots, p_{k-1} \lt \lambda(\gamma)`$, then all are $`\lt \mathrm{next}^t(\gamma)`$ for some $`t`$ |
+| Property 8 | if $`k \in \mathbb N`$ and $`p_0, \ldots, p_{k-1} \lt \lambda(\gamma)`$, then all are $`\lt \mathrm{next}^t(\gamma)`$ for some $`t`$ |
 
 Property 8 is proved by induction on $`k`$. Each $`p_i`$ is below the supremum, so $`p_i \lt \mathrm{next}^{t_i}(\gamma)`$ for some $`t_i`$. Take $`t := \max_i t_i`$.
 

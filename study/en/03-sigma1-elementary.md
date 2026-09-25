@@ -12,7 +12,7 @@ This note explains the model-theoretic terms used in the definition of the relat
 
 ## 1. Languages and structures
 
-**Definition (language).** A **language** is a collection of relation symbols, each with a fixed number of arguments (its arity). This repository uses no function symbols and no constant symbols.
+**Definition (language).** A **language** is a collection of relation symbols, each with a fixed number of arguments (its arity). A symbol of arity 1, 2 or 3 is called **unary**, **binary** or **ternary**. This repository uses no function symbols and no constant symbols.
 
 **Definition (structure).** A **structure** $`\mathfrak A`$ for a language $`L`$ consists of a set $`A`$ (the domain, possibly empty) and an interpretation $`P^{\mathfrak A} \subseteq A^n`$ of each symbol $`P`$ of arity $`n`$.
 
@@ -31,7 +31,7 @@ Example: $`(4; \lt)`$ has domain $`\{0, 1, 2, 3\}`$, and its relation is $`\lt`$
 | $`\{\lt\}`$ | $`(\gamma; \lt)`$ | $`\{x \mid x \lt \gamma\}`$ |
 | $`\{\lt, E\}`$ ($`E`$ binary) | $`(\omega; \lt, E)`$, $`E(x, y) :\iff y = x + 1`$ | natural numbers |
 
-Every structure in this repository has a domain of the form $`\{x \mid x \lt \gamma\}`$. We call $`\gamma`$ the **height** of the structure.
+Every structure in this repository has a domain of the form $`\{x \mid x \lt \gamma\}`$. We call $`\gamma`$ the **height** of the structure. The elements of the domain are called **points**.
 
 ## 2. Formulas and Σ₁ formulas
 
@@ -46,25 +46,29 @@ Every structure in this repository has a domain of the form $`\{x \mid x \lt \ga
 **Definition (Σ₁ formula).** A formula of the form
 
 ```math
-\exists y_1 \cdots \exists y_b\ \psi(\vec p, y_1, \ldots, y_b)
+\exists y_1 \cdots \exists y_{\mathit{bb}}\ \psi(\vec p, y_1, \ldots, y_{\mathit{bb}})
 ```
 
-with $`\psi`$ quantifier-free, that is, only existential quantifiers in front, is a **$`\Sigma_1`$ formula**. $`\vec p`$ are free variables; later elements of the domain (**parameters**) are put in their place.
+with $`\psi`$ quantifier-free, that is, only existential quantifiers in front, is a **$`\Sigma_1`$ formula**. $`\mathit{bb} \in \mathbb N`$ is the number of existentially quantified variables. $`\vec p`$ are free variables; later elements of the domain (**parameters**) are put in their place. A letter with an arrow, such as $`\vec p`$ or $`\vec y`$, stands for a finite list of variables (or elements).
 
 | Formula | Kind |
 |---|---|
-| $`p \lt q`$ | quantifier-free (also $`\Sigma_1`$, with $`b = 0`$) |
+| $`p \lt q`$ | quantifier-free (also $`\Sigma_1`$, with $`\mathit{bb} = 0`$) |
 | $`\exists y\ (p \lt y)`$ | $`\Sigma_1`$ |
 | $`\exists y\ \exists z\ (p \lt y \land y \lt z \land E(y, z))`$ | $`\Sigma_1`$ |
 | $`\forall y\ (y \lt p \lor p \lt y \lor y = p)`$ | not $`\Sigma_1`$ |
 
-**Definition (satisfaction).** For a structure $`\mathfrak A`$ and parameters $`\vec p \in A`$, $`\mathfrak A \models \varphi(\vec p)`$ means "$`\varphi`$ is true in $`\mathfrak A`$ at $`\vec p`$". A quantifier $`\exists y`$ ranges over the domain $`A`$.
+**Definition (satisfaction).** For a structure $`\mathfrak A`$ and parameters $`\vec p \in A`$ (each entry an element of $`A`$), $`\mathfrak A \models \varphi(\vec p)`$ means "$`\varphi`$ is true in $`\mathfrak A`$ at $`\vec p`$". A quantifier $`\exists y`$ ranges over the domain $`A`$.
 
 Example: $`(\omega; \lt) \models \exists y\ (3 \lt y)`$ is true. $`(4; \lt) \models \exists y\ (3 \lt y)`$ is false, because the domain of $`(4; \lt)`$ is $`\{0, 1, 2, 3\}`$.
 
+**Definition (witness).** If $`\mathfrak A \models \exists \vec y\ \psi(\vec p, \vec y)`$, a list $`\vec y`$ of elements of $`A`$ that makes $`\psi(\vec p, \vec y)`$ true is called a **witness**.
+
 ## 3. Atomic diagrams
 
-**Definition (atomic diagram).** The **atomic diagram** of a tuple $`v_0, \ldots, v_{n-1}`$ is the table of truth values of all atomic formulas applied to them.
+**Definition (atomic diagram).** The **atomic diagram** of a tuple $`v_0, \ldots, v_{n-1}`$ is the table of truth values of all atomic formulas applied to them. We write it $`\mathrm{diag}(v_0, \ldots, v_{n-1})`$.
+
+**Notation (bit).** The truth value of an atomic formula $`\varphi`$, written 1 for true and 0 for false, is called the **bit** of $`\varphi`$ and is written $`[\varphi]`$. An atomic diagram is the list of bits in a fixed order.
 
 The truth value of a quantifier-free formula depends only on the atomic diagram. So a quantifier-free $`\psi`$ can be rewritten as "the atomic diagram lies in a set $`D`$".
 
@@ -116,7 +120,7 @@ We write $`\mathfrak A \preccurlyeq_{\Sigma_1} \mathfrak B`$.
 **Proof.**
 
 - If $`\alpha = \gamma + 1`$: $`\exists y\ (\gamma \lt y)`$ with parameter $`\gamma`$ is true in $`\beta`$ ($`y = \gamma + 1`$) and false in $`\alpha`$. So it fails.
-- If $`\alpha`$ is a limit: suppose a $`\Sigma_1`$ formula $`\exists \vec y\ \psi(\vec p, \vec y)`$ is true in $`\beta`$. Move its witnesses $`\vec y`$ into $`\alpha`$, keeping their positions relative to the parameters.
+- If $`\alpha`$ is a limit: suppose a $`\Sigma_1`$ formula $`\exists \vec y\ \psi(\vec p, \vec y)`$ is true in $`\beta`$. Move its witnesses $`\vec y`$ into $`\alpha`$, keeping their order relative to the parameters.
   - Witnesses below the largest parameter are already in $`\alpha`$. Keep them.
   - There are finitely many witnesses above the largest parameter (when there are no parameters, count all witnesses here). Since $`\alpha`$ is a limit, there are infinitely many elements of $`\alpha`$ above the largest parameter ([01](01-ordinals.md) §2). Put the witnesses there in the same order.
   - Moving them does not change the $`\lt`$ bits, that is, the atomic diagram. So $`\psi`$ is true in $`\alpha`$.
@@ -141,19 +145,24 @@ The general Tarski–Vaught test says the same for all formulas. This repository
 
 ## 7. The normal form of Σ₁ formulas
 
-The language of this repository consists of $`\lt`$, the ternary symbols $`\mathrm{Rel}_j`$ and the binary symbols $`\mathrm{Top}_j`$ ($`j \in \mathbb N`$) ([07](07-relation-r.md) §2). By §3 the quantifier-free part can be rewritten as a set of atomic diagrams. So a $`\Sigma_1`$ formula is given by the following 5-tuple ([notes/01-design.md](../../notes/01-design.md) §3.2, Japanese).
+The language of this repository consists of $`\lt`$, the ternary symbols $`\mathrm{Rel}_j`$ and the binary symbols $`\mathrm{Top}_j`$ ($`j \in \mathbb N`$). The interpretations of the symbols are fixed in [07](07-relation-r.md) §2. Here we use only the following.
+
+- In the structure of height $`\gamma`$, $`\mathrm{Rel}_j`$ is a relation between points. We call $`\mathrm{Rel}_j`$ the **internal relations**.
+- In the structure of height $`\gamma`$, $`\mathrm{Top}_j`$ is a relation from points to $`\gamma`$, which lies outside the domain. This $`\gamma`$ is called the **top**, and $`\mathrm{Top}_j`$ is called a **top predicate**. The interpretation of a top predicate differs for each height $`\gamma`$.
+
+ By §3 the quantifier-free part can be rewritten as a set of atomic diagrams. So a $`\Sigma_1`$ formula is given by the following 5-tuple. $`m, n, \mathit{bb}, r`$ are natural numbers ([notes/01-design.md](../../notes/01-design.md) §3.2, Japanese).
 
 | Component | Meaning |
 |---|---|
 | $`m`$ | bound on symbols: $`\mathrm{Rel}_j`$ and $`\mathrm{Top}_j`$ only with $`j \lt m`$ |
-| $`n`$ | number of variables the atomic diagram reads |
-| $`D`$ | a set of atomic diagrams (the matrix) |
+| $`n`$ | number of variables the atomic diagram reads; $`n \le r + \mathit{bb}`$ |
+| $`D`$ | a set of complete atomic diagrams (defined below); it expresses the quantifier-free part; $`D`$ is called the **matrix** of the formula |
 | $`\mathit{bb}`$ | number of existentially quantified variables |
 | $`r`$ | number of parameters |
 
 - A **complete atomic diagram** of $`n`$ points consists of the bits of $`\lt`$, of the ternary $`\mathrm{Rel}_j`$ and of the binary $`\mathrm{Top}_j`$ ($`j \lt m`$). Once $`m, n`$ are fixed, there are only finitely many complete atomic diagrams.
-- We write $`\mathrm{diag}(v)`$ for the atomic diagram of a sequence of points $`v`$. The case where some bits are not read and are read as false is treated in §8.
-- The sequence of variables is the parameters $`p_0, \ldots, p_{r-1}`$ followed by the witnesses $`y_0, \ldots, y_{\mathit{bb}-1}`$.
+- We write $`\mathrm{diag}(v)`$ for the atomic diagram of a sequence of points $`v`$ (§3). The case where some bits are not read and are read as false is treated in §8.
+- The sequence of variables is the parameters $`p_0, \ldots, p_{r-1}`$ followed by the witnesses $`y_0, \ldots, y_{\mathit{bb}-1}`$. The matrix reads the first $`n`$ entries of this list.
 - In a structure $`\mathfrak A`$ of height $`M`$, the $`\Sigma_1`$ formula $`\varphi`$ is true at $`\vec p`$ in the following sense.
 
 ```math
@@ -162,34 +171,36 @@ The language of this repository consists of $`\lt`$, the ternary symbols $`\math
 
 The condition $`y_i \lt M`$ on the witnesses expresses "the domain is $`\{x \mid x \lt M\}`$".
 
-**Example.** $`\exists y\ (p_0 \lt y)`$ has $`m = 0`$, $`n = 2`$, $`\mathit{bb} = 1`$, $`r = 1`$, and $`D`$ is the set of atomic diagrams whose $`\lt`$ bit from point 0 to point 1 is true. It is true at height $`M`$ exactly when $`p_0 + 1 \lt M`$.
+**Example.** $`\exists y\ (p_0 \lt y)`$ has $`m = 0`$, $`n = 2`$, $`\mathit{bb} = 1`$, $`r = 1`$, and $`D`$ is the set of complete atomic diagrams whose bit $`[v_0 \lt v_1]`$ is 1 ($`v_0 = p_0`$, $`v_1 = y`$). It is true at height $`M`$ exactly when $`p_0 + 1 \lt M`$.
 
 ## 8. Comparing two structures, and visible bits
 
 The comparison used in this repository differs from the textbook definition in two ways.
 
-**Difference 1: one symbol, two interpretations.** The definition of $`R`$ compares the structure of height $`a`$ with the structure of height $`b`$. The top predicate $`\mathrm{Top}_j`$ is interpreted as "the relation to $`a`$" at height $`a`$ and as "the relation to $`b`$" at height $`b`$. So as it stands, one is not a substructure of the other.
+**Difference 1: one symbol, two interpretations.** The definition of $`R`$ ([07](07-relation-r.md) §4) compares the structure of height $`a`$ with the structure of height $`b`$ (ordinals $`a \lt b`$). The top predicate $`\mathrm{Top}_j`$ is interpreted as "the relation to $`a`$" at height $`a`$ and as "the relation to $`b`$" at height $`b`$. So as it stands, one is not a substructure of the other.
 
 Therefore this comparison does not assume a substructure. It only requires that every $`\Sigma_1`$ formula with $`\vec p \lt a`$ has the same truth value on both sides. Taking $`\mathit{bb} = 0`$ (no quantifier), the readable bits (Difference 2 below) of the atomic diagrams of points below $`a`$ agree. So when the agreement holds and both structures are restricted to the language of the readable symbols, the smaller structure is a substructure of the larger one, and a $`\Sigma_1`$-elementary one.
 
-**Difference 2: visible bits.** Each formula comes with a condition $`\mathrm{allow}(j, a)`$ saying which top-predicate bits it may read. $`\mathrm{allow}(j, a)`$ means "the bits $`\mathrm{Top}_j(v_a, \cdot)`$ of $`\mathrm{Top}_j`$ whose first argument is the point at position $`a`$ may be read". Bits that may not be read are read as false.
+**Difference 2: visible bits.** The index of a variable in the list of variables of §7 is called its **position**. The value of the variable at position $`s`$ is written $`v_s`$. Each formula comes with a condition $`\mathrm{allow}(j, s)`$ ($`j, s \in \mathbb N`$) saying which top-predicate bits it may read. $`\mathrm{allow}(j, s)`$ means "the bits $`[\mathrm{Top}_j(v_s, \cdot)]`$ of $`\mathrm{Top}_j`$ whose first argument is the point at position $`s`$ may be read". Bits that may be read are called **visible bits**, and the others **invisible bits**. Invisible bits are read as false.
 
 | Condition | Visible bits | Used for |
 |---|---|---|
-| always true | all | the structure of height $`\omega_1`$ (Good in [08](08-closure-chain.md) §1) |
-| $`\mathrm{allow}_{k,S}(j, a) :\iff j \lt k \lor (j = k \land a \in S)`$ | $`\mathrm{Top}_j`$ with $`j \lt k`$, and $`\mathrm{Top}_k`$ with first argument at a position in $`S`$ | the structures of level $`(k, \eta)`$ ([07](07-relation-r.md) §3) |
+| always true | all | the structure of height $`\omega_1`$ (Good, defined in [08](08-closure-chain.md) §1) |
+| $`\mathrm{allow}_{k,S}(j, s) :\iff j \lt k \lor (j = k \land s \in S)`$ | $`\mathrm{Top}_j`$ with $`j \lt k`$, and $`\mathrm{Top}_k`$ with first argument at a position in $`S`$ | the structures of level $`(k, \eta)`$ (defined in [07](07-relation-r.md) §3) |
+
+In $`\mathrm{allow}_{k,S}`$, $`k \in \mathbb N`$ is a layer number and $`S \subseteq \mathbb N`$ is a set of positions. How layers, levels $`(k, \eta)`$ and $`S`$ are used is explained in [07](07-relation-r.md) §3.
 
 With $`\mathrm{allow}_{k,S}`$, visibility depends only on the positions of the variables, not on the values of the points. So the following two lemmas hold.
 
 - **Lemma 1 (same bits, same truth value).** If two interpretations agree on the visible bits, the atomic diagrams and the truth values agree.
-- **Lemma 2 (setting invisible bits to false).** Setting the invisible bits to false is a function $`\mathrm{mask}_{\mathrm{allow}}`$ on complete atomic diagrams. So "a formula $`D`$ that reads only visible bits" has the same truth value as "the formula $`\mathrm{mask}_{\mathrm{allow}}^{-1}(D)`$ that reads everything".
+- **Lemma 2 (setting invisible bits to false).** Setting the invisible bits to false is a function $`\mathrm{mask}_{\mathrm{allow}}`$ on complete atomic diagrams. So "the formula with matrix $`D`$ that reads only visible bits" has the same truth value as "the formula with matrix $`\mathrm{mask}_{\mathrm{allow}}^{-1}(D)`$ that reads everything".
 
-Lemma 2 translates a level-restricted formula into a formula of the language with all symbols. [08](08-closure-chain.md) and [09](09-obligations.md) use it to compare with the structure of height $`\omega_1`$.
+Lemma 2 translates a formula of a level $`(k, \eta)`$ ([07](07-relation-r.md) §3) into a formula of the language with all symbols. [08](08-closure-chain.md) and [09](09-obligations.md) use it to compare with the structure of height $`\omega_1`$.
 
 ## 9. Where this repository uses it
 
 | Place | Use |
 |---|---|
-| [README](../../README-en.md) "The relation R" | $`\preccurlyeq_{\Sigma_1}`$ and the structures $`\mathfrak A^{\gamma}_{k,\eta}`$ |
+| [README](../../README-en.md) "The relation R" | $`\preccurlyeq_{\Sigma_1}`$ and the structures $`\mathfrak A^{\gamma}_{k,\eta}`$ (defined in [07](07-relation-r.md) §3) |
 | [notes/01-design.md](../../notes/01-design.md) §3.2–§3.4 (Japanese) | language, 5-tuples for $`\Sigma_1`$ formulas (§7), visible bits $`\mathrm{allow}_{k,S}`$ of a level (§8) |
 | [notes/01-design.md](../../notes/01-design.md) §4.7 (Japanese) | the proof that λ(γ) is Good, in Tarski–Vaught form (§6) |

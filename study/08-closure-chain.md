@@ -7,8 +7,8 @@
 | ノート | ここで使う言葉 |
 |---|---|
 | [01 順序数と ω₁](01-ordinals.md) | $`\omega_1`$、正則性、数え上げ $`e_\gamma`$、パラメータの符号 $`\mathrm{params}_\gamma`$ |
-| [03 構造と Σ₁ 初等部分構造](03-sigma1-elementary.md) | Tarski–Vaught 判定法、$`\Sigma_1`$ 論理式の 5 つ組（§7）、見えるビット（§8） |
-| [07 関係 R](07-relation-r.md) | $`R`$、記号 $`\mathrm{Rel}_j`$、$`\mathrm{Top}_j`$ とその真の解釈 |
+| [03 構造と Σ₁ 初等部分構造](03-sigma1-elementary.md) | 証人、Tarski–Vaught 判定法、$`\Sigma_1`$ 論理式の 5 つ組と行列、完全な原子図式（§7）、見えるビット（§8） |
+| [07 関係 R](07-relation-r.md) | $`R`$、記号 $`\mathrm{Rel}_j`$、$`\mathrm{Top}_j`$ とその真の解釈、対角の上端述語 |
 
 このノートは、$`\omega_1`$ より下に「$`\Sigma_1`$ の証人で閉じた点」を作る方法を説明する。これは Löwenheim–Skolem の定理と同じ考え方で、証人を足して上限を取る。できた点を並べた鎖が、[09](09-obligations.md) で最初のラベルになる。
 
@@ -20,9 +20,9 @@
 \mathfrak B = \bigl(\omega_1;\ \lt,\ (\mathrm{Rel}_j)_{j \in \mathbb N},\ (\mathrm{Top}^{\omega_1}_j)_{j \in \mathbb N}\bigr), \qquad \mathrm{Top}^{\omega_1}_j(\xi, x) :\iff R(j, \xi, x, \omega_1)
 ```
 
-上端述語はすべての層で、対角で持つ。すべてのビットが見える（[03](03-sigma1-elementary.md) §8）。
+上端述語はすべての層で、対角（[07](07-relation-r.md) §3）で持つ。すべてのビットが見える（[03](03-sigma1-elementary.md) §8）。
 
-**定義（Good）.** $`\mathfrak B{\restriction}\gamma`$ を、$`\mathfrak B`$ の領域を $`\{x \mid x \lt \gamma\}`$ に制限したものとする。上端述語は $`\omega_1`$ へのもののままである。
+**定義（Good）.** 順序数 $`\gamma \le \omega_1`$ について、$`\mathfrak B{\restriction}\gamma`$ を、$`\mathfrak B`$ の領域を $`\{x \mid x \lt \gamma\}`$ に制限したものとする。上端述語は $`\omega_1`$ へのもののままである。
 
 ```math
 \mathrm{Good}(\gamma) :\iff \mathfrak B{\restriction}\gamma \preccurlyeq_{\Sigma_1} \mathfrak B
@@ -42,7 +42,7 @@ $`\mathfrak B{\restriction}\gamma`$ は $`\mathfrak B`$ の本当の部分構造
 
 ## 3. 証人の高さ
 
-**定義（証人の高さ）.** 論理式 $`\varphi = (m, n, D, \mathit{bb}, r)`$ とパラメータ $`\vec p`$ について：
+**定義（証人の高さ）.** 論理式 $`\varphi = (m, n, D, \mathit{bb}, r) \in \mathcal F`$ と、$`\omega_1`$ より下のパラメータの列 $`\vec p`$ について（$`\varphi`$ は最初の $`r`$ 個 $`p_0, \ldots, p_{r-1}`$ を読む）：
 
 - $`\mathfrak B \models \varphi(\vec p)`$ なら、証人 $`y_0, \ldots, y_{\mathit{bb}-1} \lt \omega_1`$ を選択公理で 1 組選び、$`h(\varphi, \vec p) := \sup_{i \lt \mathit{bb}} (y_i + 1)`$ とする。
 - そうでなければ $`h(\varphi, \vec p) := 0`$ とする。
@@ -53,15 +53,15 @@ $`\mathfrak B{\restriction}\gamma`$ は $`\mathfrak B`$ の本当の部分構造
 
 選んだ証人はどれも $`h(\varphi, \vec p)`$ より下にある。
 
-## 4. 閉包の 1 段
+## 4. 閉包の 1 ステップ
 
-**定義（閉包の 1 段）.**
+**定義（閉包の 1 ステップ）.**
 
 ```math
 \mathrm{next}(\gamma) := \max\Bigl(\gamma,\ \sup_{(\varphi, l)} h\bigl(\varphi, \mathrm{params}_\gamma(l)\bigr)\Bigr) + 1
 ```
 
-上限は $`(\varphi, l) \in \mathcal F \times \mathbb N^{\lt\omega}`$ の全体を動く。$`\mathrm{params}_\gamma(l)`$ は [01](01-ordinals.md) §6 の、自然数の列で表したパラメータである。
+上限は $`(\varphi, l) \in \mathcal F \times \mathbb N^{\lt\omega}`$ の全体を動く。$`\mathrm{params}_\gamma(l)`$ は [01](01-ordinals.md) §6 の、自然数の列で表したパラメータである。$`\gamma = 0`$ のときの $`e_0`$ も [01](01-ordinals.md) §6 のとおりである。
 
 | 性質 | 内容 | 理由 |
 |---|---|---|
@@ -79,13 +79,15 @@ $`\mathfrak B{\restriction}\gamma`$ は $`\mathfrak B`$ の本当の部分構造
 \mathrm{next}^0(\gamma) := \gamma, \quad \mathrm{next}^{t+1}(\gamma) := \mathrm{next}\bigl(\mathrm{next}^t(\gamma)\bigr), \qquad \lambda(\gamma) := \sup_{t \in \mathbb N} \mathrm{next}^t(\gamma)
 ```
 
+$`t \in \mathbb N`$ である。列 $`\mathrm{next}^0(\gamma), \mathrm{next}^1(\gamma), \ldots`$ を $`\gamma`$ からの **塔** と呼ぶ。$`\lambda(\gamma)`$ の形の順序数を **閉包点** と呼ぶ。
+
 | 性質 | 内容 |
 |---|---|
 | 性質 4 | $`\gamma \lt \omega_1 \implies \mathrm{next}^t(\gamma) \lt \omega_1`$ |
 | 性質 5 | $`t \le t' \implies \mathrm{next}^t(\gamma) \le \mathrm{next}^{t'}(\gamma)`$ |
 | 性質 6 | $`\gamma \lt \omega_1 \implies \lambda(\gamma) \lt \omega_1`$（可算個の上限） |
 | 性質 7 | $`\gamma \lt \lambda(\gamma)`$ |
-| 性質 8 | $`p_0, \ldots, p_{k-1} \lt \lambda(\gamma)`$ なら、ある $`t`$ で全部 $`\lt \mathrm{next}^t(\gamma)`$ |
+| 性質 8 | $`k \in \mathbb N`$、$`p_0, \ldots, p_{k-1} \lt \lambda(\gamma)`$ なら、ある $`t`$ で全部 $`\lt \mathrm{next}^t(\gamma)`$ |
 
 性質 8 は $`k`$ についての帰納法で示す。各 $`p_i`$ は上限より小さいので、ある $`t_i`$ で $`p_i \lt \mathrm{next}^{t_i}(\gamma)`$ である。$`t := \max_i t_i`$ を取る。
 

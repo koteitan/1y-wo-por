@@ -7,16 +7,17 @@ Prerequisites
 | Note | Terms used here |
 |---|---|
 | [02 Well-founded relations and recursion](02-well-founded.md) | well-founded, accessible, termination by labels (§6) |
-| [05 The 1-Y sequence and its mountain](05-1y-mountain.md) | expression, layer, row, parent, root of a component, bad root, expansion |
+| [03 Structures and Σ₁-elementary substructures](03-sigma1-elementary.md) | the notation $`(A; P_1, \ldots)`$ for structures (§1) |
+| [05 The 1-Y sequence and its mountain](05-1y-mountain.md) | expression, length, layer, row, parent, parent–child edge, root of a component, bad root, expansion, block |
 
 This note explains the part of Phyrion's proof that does not use the meaning of the labels (the combinatorial layer). This layer takes the label set $`\alpha`$, an order $`\lt`$, a domain $`D`$ and a relation $`R`$ as arguments, and proves well-foundedness of expansion from six hypotheses about them. This repository uses the theorem of this layer as it is.
 
 ## 1. Diagrams
 
-**Definition (atom).** An **atom** is a 4-tuple of natural numbers $`e = (k, r, p, q) \in \mathbb N^4`$. It represents one parent–child edge.
+**Definition (atom).** An **atom** is a 4-tuple of natural numbers $`e = (k, r, p, q) \in \mathbb N^4`$. It represents one parent–child edge ([05](05-1y-mountain.md) §3).
 
 - $`k \in \mathbb N`$: the layer number.
-- $`r \in \mathbb N`$: the column number of the root, that is, the root of the child's component in the row of the edge. It is not a row number.
+- $`r \in \mathbb N`$: the column number of the root, that is, the root of the child's component in the row of the edge. It is not a row number. [05](05-1y-mountain.md) wrote rows as $`r`$, but in this note $`r`$ is the root column and rows are written $`\ell`$.
 - $`p \in \mathbb N`$: the column number of the parent.
 - $`q \in \mathbb N`$: the column number of the child.
 
@@ -24,18 +25,20 @@ None of them is a label (an ordinal); they are all numbers. Labels are attached 
 
 It is **valid** for size $`n`$ if $`r \le p \lt q \lt n`$.
 
-**Definition (diagram).** A **diagram** is a size $`n`$ together with a finite list of valid atoms. $`n \in \mathbb N`$ is the number of columns, and the columns are numbered $`0, 1, \ldots, n - 1`$.
+**Definition (diagram).** A **diagram** is a size $`n`$ together with a finite list of valid atoms. $`n \in \mathbb N`$ is the number of columns, and the columns are numbered $`0, 1, \ldots, n - 1`$. We write $`e \in G`$ when $`e`$ is in the list of atoms of the diagram $`G`$.
 
 - In the diagram of an expression $`s = (s_0, \ldots, s_{n-1})`$, $`n`$ is the length of the expression.
 - Every row of every layer of the mountain has the same columns $`0, \ldots, n - 1`$. The number of columns does not change from row to row. Higher rows seem to have fewer columns only because a column of value 0 is read as "not in that row" ([05](05-1y-mountain.md) §3); such a column keeps its number.
 
-**The diagram of an expression.** The diagram $`G(s)`$ of an expression $`s`$ has one atom for each parent–child edge in every layer and every row. If column $`c`$ has parent $`p`$ in layer $`k`$, row $`r`$, it contains the atom
+**Definition (prefix).** Let $`m \le n`$. The **prefix of size $`m`$** of a diagram $`G`$ of size $`n`$ is the diagram of size $`m`$ that keeps only the atoms $`(k, r, p, q)`$ of $`G`$ with $`q \lt m`$.
+
+**The diagram of an expression.** The diagram $`G(s)`$ of an expression $`s`$ has one atom for each parent–child edge in every layer and every row. If column $`c`$ has parent $`p`$ in layer $`k`$, row $`\ell`$, it contains the atom
 
 ```math
-(k,\ \mathrm{root}_{k,r}(c),\ p,\ c)
+(k,\ \mathrm{root}_{k,\ell}(c),\ p,\ c)
 ```
 
-where $`\mathrm{root}_{k,r}(c)`$ is the root of the component of $`c`$ in layer $`k`$, row $`r`$.
+where $`\mathrm{root}_{k,\ell}(c)`$ is the root of the component of $`c`$ in layer $`k`$, row $`\ell`$ ([05](05-1y-mountain.md) §3).
 
 | Expression | Atoms $`(k, r, p, q)`$ |
 |---|---|
@@ -105,7 +108,7 @@ Choose one structure of labels $`(\alpha; \lt, D, R)`$ and keep it fixed (for th
 - $`\alpha`$ is the set of labels (the domain).
 - $`\lt`$ is an order on $`\alpha`$.
 - $`D`$ is a subset of $`\alpha`$, the labels that may be used. $`D(x)`$ means $`x \in D`$.
-- $`R(k, \eta, a, b)`$ is a relation of four arguments: $`k`$ is a natural number and $`\eta, a, b`$ are elements of $`\alpha`$. Read it as "in layer $`k`$ with root index $`\eta`$, $`a`$ is stable into $`b`$".
+- $`R(k, \eta, a, b)`$ is a relation of four arguments: $`k`$ is a natural number and $`\eta, a, b`$ are elements of $`\alpha`$. Read it as "in layer $`k`$ with root index $`\eta`$, $`a`$ is stable into $`b`$". In the definition of a representation below, $`\eta`$ receives the label of the root column, $`a`$ the label of the parent, and $`b`$ the label of the child. That is why $`\eta`$ is called the **root index**. This is only a reading; what $`R`$ is does not matter here (§7).
 
 **Definition (representation).** A function $`f : \mathbb N \to \alpha`$ is a **representation** of a diagram $`G`$ of size $`n`$ if the following three conditions hold.
 
@@ -123,7 +126,7 @@ f(0) \lt f(1) \lt f(2), \quad R(0, f(0), f(0), f(1)), \quad R(0, f(0), f(1), f(2
 
 ## 3. Demands toward the top
 
-**Definition (top atom).** A **top atom** is $`d = (k, r, p)`$; it is valid for size $`n`$ if $`r \le p \lt n`$. It holds for a top $`\beta \in \alpha`$ if $`R(k, f(r), f(p), \beta)`$.
+**Definition (top atom).** A **top atom** is a triple of natural numbers $`d = (k, r, p)`$; it is valid for size $`n`$ if $`r \le p \lt n`$. A label $`\beta \in \alpha`$ of a point outside the diagram is called a **top**. For a function $`f : \mathbb N \to \alpha`$, $`d`$ holds for the top $`\beta`$ if $`R(k, f(r), f(p), \beta)`$.
 
 A top atom is an edge to a point $`\beta`$ outside the diagram. In an expansion, the label of the old last column plays the role of $`\beta`$.
 
@@ -145,30 +148,33 @@ Here $`\beta = f(2)`$ is the label of column 2, which is now outside.
 
 **Definition (demand).** When a top atom $`d = (k_d, r_d, p_d)`$ is used as the condition "hold for the top", $`d`$ is called a **demand**. A demand $`d`$ is satisfied for a top $`\beta`$ if $`d`$ holds for $`\beta`$, that is, $`R(k_d, f(r_d), f(p_d), \beta)`$. A finite list of demands is written $`\mathrm{needs}`$.
 
-Unlike atoms, demands are not part of the diagram $`G`$. Finite reflection of §4 receives $`\mathrm{needs}`$ besides the diagram $`G`$. It guarantees that the demands satisfied for the top $`\beta`$ before the reflection are satisfied for the new top $`f(\mathrm{cut})`$ after it.
+Unlike atoms, demands are not part of the diagram $`G`$. Finite reflection of §4 receives $`\mathrm{needs}`$ besides the diagram $`G`$. It guarantees that the demands satisfied for the top $`\beta`$ before the reflection are satisfied for the new top $`f(\mathrm{cut})`$ after it ($`\mathrm{cut}`$ is the cut, described in "Demands in an expansion" below and in §4).
 
-**Demands in an expansion.** In an expansion, $`\mathrm{needs}`$ is built as follows. Let $`x`$ be the last column and $`y`$ the bad root (layer $`K`$, row $`d`$). At step $`i`$, the column to be added next, $`m = x + i \cdot (x - y)`$, is taken as the top, and the edges from column $`m`$ to its parents in the mountain of $`s[N]`$ become demands in this range only:
+**Demands in an expansion.** In an expansion, $`\mathrm{needs}`$ is built as follows. Let $`x`$ be the last column and $`y`$ the bad root (layer $`K`$, row $`\ell`$). A representation of the diagram of $`s[N]`$ is built by adding the blocks ([05](05-1y-mountain.md) §6) one at a time (§6). For $`i = 0, 1, \ldots, N - 1`$, the procedure that adds block $`i + 1`$ is called **step $`i`$**.
 
-- layer $`k \lt K`$: the edges of all rows;
-- layer $`K`$: the edges of the rows below row $`d`$;
-- layer $`k \gt K`$: none.
+- At step $`i`$, the first column of block $`i`$, $`\mathrm{cut} := y + i \cdot (x - y)`$, is called the **cut**.
+- The column to be added next, $`m := x + i \cdot (x - y)`$ (the first column of block $`i + 1`$), is taken as the top.
+- The edges from column $`m`$ to its parents in the mountain of $`s[N]`$ become demands in this range only:
+  - layer $`k \lt K`$: the edges of all rows;
+  - layer $`K`$: the edges of the rows below row $`\ell`$;
+  - layer $`k \gt K`$: none.
 
-The edge of layer $`K`$, row $`d`$ is the edge of the bad root. It is passed not as a demand but as the control relation $`R(K, \theta, f(\mathrm{cut}), \beta)`$ (hypothesis 5 of §4).
+The edge of layer $`K`$, row $`\ell`$ is the edge of the bad root, and it is not made a demand. Instead, the relation $`R(K, \theta, f(\mathrm{cut}), \beta)`$ is passed to finite reflection of §4 (hypothesis 5). A relation of this form is called the **control relation**, and $`\theta \in \alpha`$ is called its **index**. At step 0, $`\theta = f(\rho)`$, where $`\rho`$ is the root of the component of $`x`$ in layer $`K`$, row $`\ell`$ ([05](05-1y-mountain.md) §3). The $`\theta`$ of later steps is described in §6.
 
-**Example 2 (the first step of the expansion of $`(1, 2, 4)`$).** $`x = 2`$, the bad root is $`y = 1`$ (layer $`K = 0`$, row $`d = 1`$), and $`s[N] = (1, 2, \ldots, N + 2)`$. Look at step $`i = 0`$.
+**Example 2 (the first step of the expansion of $`(1, 2, 4)`$).** $`x = 2`$, the bad root is $`y = 1`$ (layer $`K = 0`$, row $`\ell = 1`$), and $`s[N] = (1, 2, \ldots, N + 2)`$. Look at step $`i = 0`$.
 
 - The diagram $`G`$ is the diagram of $`(1, 2)`$: size 2, atom $`(0, 0, 0, 1)`$. $`f`$ is the original representation, $`\beta = f(2)`$, and the cut is $`\mathrm{cut} = y = 1`$.
-- The top is column $`m = 2`$. In the mountain of $`s[N]`$, the parent of column 2 is column 1 in row 0 (root column 0), and there is none in row 1. We look only at the rows $`0 \lt d = 1`$ of layer 0, so $`\mathrm{needs} = [(0, 0, 1)]`$. It holds for $`\beta = f(2)`$ by the original atom $`(0, 0, 1, 2)`$.
-- The original atom $`(0, 1, 1, 2)`$ is the edge of the bad root and is not a demand. It becomes the control relation $`R(0, f(1), f(1), f(2))`$ ($`\theta = f(1)`$).
-- The demand $`(0, 0, 1)`$ is admissible (§4): $`k_d = 0 = K`$, $`r_d = 0 \lt \mathrm{cut} = 1`$, and $`f(0) \lt f(1) = \theta`$.
-- The $`g`$ given by finite reflection has $`g(0) = f(0)`$ and $`g(1) \lt f(1)`$, and the demand holds for the top $`f(\mathrm{cut}) = f(1)`$, that is, $`R(0, g(0), g(1), f(1))`$.
+- The top is column $`m = 2`$. In the mountain of $`s[N]`$, the parent of column 2 is column 1 in row 0 (root column 0), and there is none in row 1. We look only at the rows $`0 \lt \ell = 1`$ of layer 0, so $`\mathrm{needs} = [(0, 0, 1)]`$. It holds for $`\beta = f(2)`$ by the original atom $`(0, 0, 1, 2)`$.
+- The original atom $`(0, 1, 1, 2)`$ is the edge of the bad root and is not a demand. It becomes the control relation $`R(0, f(1), f(1), f(2))`$. The root of column 2 in layer 0, row 1 is column 1, so $`\rho = 1`$ and $`\theta = f(1)`$.
+- The demand $`(0, 0, 1)`$ is admissible (defined in §4): $`k_d = 0 = K`$, $`r_d = 0 \lt \mathrm{cut} = 1`$, and $`f(0) \lt f(1) = \theta`$.
+- The $`g`$ given by finite reflection (§4) has $`g(0) = f(0)`$ and $`g(1) \lt f(1)`$, and the demand holds for the top $`f(\mathrm{cut}) = f(1)`$, that is, $`R(0, g(0), g(1), f(1))`$.
 - Column 2 of the new diagram gets $`f(\mathrm{cut}) = f(1)`$ (§6), so the labels are $`(g(0), g(1), f(1))`$. The atoms of the diagram of $`(1, 2, 3)`$ are $`(0, 0, 0, 1)`$ and $`(0, 0, 1, 2)`$, and the latter is exactly the demand above. In this way a demand becomes an edge of the new diagram.
 
-**Definition (bound).** $`f`$ is **bounded by** $`\beta`$ if $`f(i) \lt \beta`$ for all $`i \lt n`$.
+**Definition (bound).** Let $`n \in \mathbb N`$, $`f : \mathbb N \to \alpha`$ and $`\beta \in \alpha`$. $`f`$ is **bounded by** $`\beta`$ if $`f(i) \lt \beta`$ for all $`i \lt n`$.
 
 ## 4. Finite reflection
 
-**Definition (admissible demand).** For a layer $`K`$, a cut $`\mathrm{cut}`$ and an index $`\theta`$, a top atom $`d = (k_d, r_d, p_d)`$ is **admissible** if one of the following holds.
+**Definition (admissible demand).** For a layer $`K \in \mathbb N`$, a cut $`\mathrm{cut} \in \mathbb N`$, an index $`\theta \in \alpha`$ and a function $`f : \mathbb N \to \alpha`$, a top atom $`d = (k_d, r_d, p_d)`$ is **admissible** if one of the following holds.
 
 - $`k_d \lt K`$ (a lower layer).
 - $`k_d = K`$ and $`r_d \lt \mathrm{cut}`$ and $`f(r_d) \lt \theta`$ (the same layer, the root before the cut, and the root's label below $`\theta`$).
@@ -181,7 +187,7 @@ For every diagram $`G`$, function $`f : \mathbb N \to \alpha`$, natural numbers 
 2. $`f`$ is a representation of $`G`$.
 3. $`D(\beta)`$.
 4. $`f`$ is bounded by $`\beta`$.
-5. The control relation $`R(K, \theta, f(\mathrm{cut}), \beta)`$ holds.
+5. The control relation (§3) $`R(K, \theta, f(\mathrm{cut}), \beta)`$ holds.
 6. Every element of the list of demands $`\mathrm{needs}`$ is valid.
 7. Every element is admissible.
 8. Every element holds for the top $`\beta`$.
@@ -197,7 +203,7 @@ Then there is a function $`g : \mathbb N \to \alpha`$ with the following four pr
 
 ## 5. The six hypotheses
 
-The main theorem of the combinatorial layer (below, the **entry theorem**) has these six hypotheses.
+The main theorem of the combinatorial layer (below, the **entry theorem**) has these six hypotheses. The letters in the table range over $`k \in \mathbb N`$ and $`\eta, \eta', a, b, c, p \in \alpha`$.
 
 | Name | Statement |
 |---|---|
@@ -212,25 +218,29 @@ The conclusion is "the one-step expansion relation is well-founded" (Theorem 1 o
 
 ## 6. Descent of the last label
 
-**Definition (last representation).** If the size $`n`$ of $`G`$ is positive and $`G`$ has a representation $`f`$ with $`f(n-1) = a`$, we write $`\mathrm{Last}(G, a)`$.
+**Definition (last representation).** For a representation $`f`$ of a diagram $`G`$ of size $`n \gt 0`$, the label $`f(n-1)`$ of the last column is called the **last label** of $`f`$. If the size $`n`$ of $`G`$ is positive and $`G`$ has a representation $`f`$ with $`f(n-1) = a`$, we write $`\mathrm{Last}(G, a)`$ ($`a \in \alpha`$).
 
 **Theorem (the last label goes down).** Suppose $`G(s)`$ has a representation with last label $`\beta`$, and $`s[N]`$ is nonempty. Then for some $`b \lt \beta`$, $`G(s[N])`$ has a representation with last label $`b`$.
 
-**Outline of the proof.** Let $`x`$ be the last column of $`s`$.
+**Outline of the proof.** Let $`x`$ be the last column of $`s`$, and call $`G(s)`$ the old diagram. Let $`f`$ be a representation of $`G(s)`$ with last label $`\beta = f(x)`$.
 
 1. No bad root: $`s[N]`$ is $`s`$ without its last column. The new diagram is a prefix of the old one. The same $`f`$ is a representation, and the new last label $`f(x-1)`$ is below $`f(x) = \beta`$.
-2. Bad root $`y`$ (layer $`K`$, row $`d`$):
-   - The diagrams are numbered $`i = 0, 1, \ldots, N`$. Diagram $`i`$ has size $`x + i \cdot (x - y)`$.
+2. Bad root $`y`$ (layer $`K`$, row $`\ell`$):
+   - For $`i = 0, 1, \ldots, N`$, the prefix (§1) of $`G(s[N])`$ of size $`x + i \cdot (x - y)`$ is called diagram $`i`$. Diagram $`i`$ consists of the edges of columns $`0, \ldots, y - 1`$ and blocks $`0, \ldots, i`$. Diagram $`N`$ is $`G(s[N])`$ itself.
    - Diagram $`i = 0`$ has size $`x`$ and is a prefix of the old diagram (it does not contain the last column $`x`$). $`f`$ is a representation of it, bounded by $`\beta = f(x)`$.
-   - The edge at the bad root gives $`R(K, f(\rho), f(y), f(x))`$, where $`\rho`$ is the root of the component of $`x`$ in layer $`K`$, row $`d`$. This is the first control relation.
-   - Going from diagram $`i`$ to diagram $`i + 1`$ uses finite reflection once. The cut is the start of block $`i`$, $`\mathrm{cut} = y + i \cdot (x - y)`$.
+   - The edge at the bad root gives $`R(K, f(\rho), f(y), f(x))`$, where $`\rho`$ is the root of the component of $`x`$ in layer $`K`$, row $`\ell`$. This is the first control relation, with index $`\theta = f(\rho)`$.
+   - Let $`f_i`$ be the representation of diagram $`i`$ ($`f_0 = f`$). Step $`i`$ (§3), going from diagram $`i`$ to diagram $`i + 1`$, uses finite reflection once. The cut is the start of block $`i`$, $`\mathrm{cut} = y + i \cdot (x - y)`$.
    - Hypothesis 8 of finite reflection (every demand holds for the top $`\beta`$) is checked with **templates**. The templates are the edges from the old last column $`x`$ to its parents, made into top atoms by removing the child (built as in Example 1 of §3). Every diagram of every step is bounded above by $`\beta = f(x)`$, so no column of a diagram has the label $`\beta`$. So the templates remain edges to the outside point $`\beta`$.
      - At $`i = 0`$ the templates hold for $`\beta`$, because the edges $`(k, r, p, x)`$ to column $`x`$ hold in the original representation.
      - When a step is taken, the root and parent column numbers of the templates are moved in the same way as the labels. Columns left of the cut stay; columns from the cut on move to the new block. The moved columns carry their old labels, so the templates keep holding for $`\beta`$.
-     - Each demand $`d = (k, r_d, p)`$ of step $`i`$ ("Demands in an expansion" of §3) has a template $`s = (k, r_s, p)`$ with the same layer and parent. The roots are in one of two cases.
-       - $`r_d = r_s`$: $`d`$ and $`s`$ are equal, so $`d`$ holds for $`\beta`$.
-       - $`r_d \lt \mathrm{cut} \le r_s`$ (the root of the demand lies in an earlier block than the root of the template): the labels satisfy $`f(r_d) \lt f(r_s)`$. Weakening turns $`R(k, f(r_s), f(p), \beta)`$ into $`R(k, f(r_d), f(p), \beta)`$.
-   - Let $`m`$ be the size of diagram $`i`$ and $`f_i`$ its labelling. The $`g`$ from the reflection equals $`f_i`$ left of the cut and lies entirely below $`f_i(\mathrm{cut})`$. The new diagram has $`m + (m - \mathrm{cut})`$ columns. Column $`c \lt m`$ gets $`g(c)`$, and column $`c \ge m`$ gets the old label $`f_i(\mathrm{cut} + c - m)`$. So $`f_i(\mathrm{cut}), \ldots, f_i(m-1)`$ appear unchanged at the right end. This gives a representation of the diagram that is one block longer.
+     - Each demand $`d = (k, r_d, p)`$ of step $`i`$ ("Demands in an expansion" of §3) has a template $`\tau = (k, r_\tau, p)`$ with the same layer and parent. (The letter $`s`$ is used for expressions, so we write a template as $`\tau`$.) The roots are in one of two cases.
+       - $`r_d = r_\tau`$: $`d`$ and $`\tau`$ are equal, so $`d`$ holds for $`\beta`$.
+       - $`r_d \lt \mathrm{cut} \le r_\tau`$ (the root of the demand lies in an earlier block than the root of the template): the labels satisfy $`f_i(r_d) \lt f_i(r_\tau)`$. Weakening turns $`R(k, f_i(r_\tau), f_i(p), \beta)`$ into $`R(k, f_i(r_d), f_i(p), \beta)`$.
+   - The control relation carries over like the templates. Let the control relation of step $`i`$ be $`R(K, f_i(\rho_i), f_i(\mathrm{cut}), \beta)`$ ($`\rho_0 = \rho`$, $`\rho_i \le \mathrm{cut}`$). For the next step, $`\rho_{i+1}`$ is the column $`\rho_i`$ moved in the same way as the template columns, and the cut becomes the start of the next block. Both columns carry the old labels $`f_i(\rho_i)`$ and $`f_i(\mathrm{cut})`$ unchanged, so the same relation is the control relation of the next step. Its index is $`\theta = f_{i+1}(\rho_{i+1})`$.
+   - Let $`m`$ be the size of diagram $`i`$. The $`g`$ from the reflection equals $`f_i`$ left of the cut and lies entirely below $`f_i(\mathrm{cut})`$. The new diagram has $`m + (m - \mathrm{cut})`$ columns. Column $`c \lt m`$ gets $`g(c)`$, and column $`c \ge m`$ gets the old label $`f_i(\mathrm{cut} + c - m)`$. So $`f_i(\mathrm{cut}), \ldots, f_i(m-1)`$ appear unchanged at the right end. The labelling built this way is called the **splice** of $`g`$ and $`f_i`$. This gives a representation of the diagram that is one block longer. The atoms of the new diagram are of three kinds, and each holds for the spliced labels.
+     - Atoms of diagram $`i`$: they hold because $`g`$ is a representation.
+     - Old atoms whose column numbers are moved in the same way as the templates (copies): the moved columns carry their old labels, so they hold. However, the root of a copy may be a column before the block it was copied into (a column number below $`m`$). This is the case "the root moves to an earlier block". Then the root column $`r`$ before copying lies at or after the cut. The new root's label is below $`f_i(\mathrm{cut})`$, so it is smaller than $`f_i(\mathrm{cut}) \le f_i(r)`$. Weakening is used there.
+     - Edges that come from demands (child at column $`m`$): the demands hold for the top $`f_i(\mathrm{cut})`$, and column $`m`$ has the label $`f_i(\mathrm{cut})`$, so they hold.
    - After $`N`$ repetitions we get a representation of the diagram of $`s[N]`$ bounded by $`\beta`$.
    - The new last label is below $`\beta`$. $`\square`$
 
@@ -251,8 +261,8 @@ The conclusion is "the one-step expansion relation is well-founded" (Theorem 1 o
 
 The combinatorial layer does not ask why finite reflection holds. Supplying $`(\alpha; \lt, D, R)`$ with the six hypotheses is the job of the **semantic layer**.
 
-- Phyrion's semantic layer: $`D`$ is a condition corresponding to admissible ordinals, and $`R`$ is $`\Sigma_1`$ preservation of a truth tower over the constructible universe $`L`$.
-- The semantic layer of this repository: $`\alpha = \mathrm{Ord}`$, $`D = \mathrm{True}`$, and $`R`$ is the relation of [07 The relation R](07-relation-r.md). The proofs are in [09 Discharging the obligations](09-obligations.md).
+- Phyrion's semantic layer: $`D`$ is a condition corresponding to admissible ordinals, and $`R`$ is $`\Sigma_1`$ preservation of a truth tower over the constructible universe $`L`$. Admissible ordinals, the constructible universe and truth towers are not used in this repository, so we do not define them.
+- The semantic layer of this repository: $`\alpha = \mathrm{Ord}`$, $`D = \mathrm{True}`$ ($`D(x)`$ holds for every $`x`$), and $`R`$ is the relation of [07 The relation R](07-relation-r.md). The proofs are in [09 Discharging the obligations](09-obligations.md).
 
 ## 8. Where this repository uses it
 

@@ -6,7 +6,7 @@ Prerequisites
 
 | Note | Terms used here |
 |---|---|
-| [01 Ordinals and ω₁](01-ordinals.md) | ordinal, infinite descending sequence, $`\lt`$ is well-founded |
+| [01 Ordinals and ω₁](01-ordinals.md) | ordinal, $`\mathrm{Ord}`$, infinite descending sequence, $`\lt`$ is well-founded |
 
 This note explains three things: well-founded relations, well-founded recursion, and termination by decreasing labels. The definition of the relation $`R`$ ([07](07-relation-r.md)) has the form of §4 and §5. The whole proof ([06](06-combinatorial-layer.md)) has the form of §6.
 
@@ -27,7 +27,7 @@ That $`x`$ is accessible means "every sequence that follows $`\prec`$ backwards 
 | $`\lt`$ on $`\mathbb Z`$ | no |
 | lexicographic order on 1-Y expressions | no |
 
-The last row. In the lexicographic order of expressions a proper prefix is smaller, and otherwise the first differing entry decides. So there is an infinite descending sequence.
+The last row. A 1-Y expression is a finite sequence of positive integers, defined in [05](05-1y-mountain.md) §1. In the lexicographic order of expressions a proper prefix is smaller, and otherwise the first differing entry decides. So there is an infinite descending sequence.
 
 ```math
 (1,2) \gt (1,1,2) \gt (1,1,1,2) \gt (1,1,1,1,2) \gt \cdots
@@ -47,7 +47,7 @@ Then $`P(x)`$ holds for every $`x`$.
 
 **Proof.** Suppose the set of $`x`$ where $`P`$ fails is nonempty. Take a minimal element $`x`$. For $`y \prec x`$, $`P(y)`$ holds. By the assumption $`P(x)`$ holds, a contradiction. $`\square`$
 
-The absoluteness of the top predicates in [09 Discharging the obligations](09-obligations.md) §4.1 uses it with the lexicographic order on $`\mathbb N \times \mathrm{Ord}`$.
+The theorem of [09 Discharging the obligations](09-obligations.md) §4.1 uses it with the lexicographic order on $`\mathbb N \times \mathrm{Ord}`$.
 
 ## 3. Lexicographic products
 
@@ -69,15 +69,17 @@ For triples, use this theorem twice.
 (b', k', \eta') \lhd (b, k, \eta) \iff b' \lt b\ \lor\ \bigl(b' = b \land (k', \eta') \prec (k, \eta)\bigr)
 ```
 
-Here $`(k', \eta') \prec (k, \eta)`$ is the lexicographic order on $`\mathbb N \times \mathrm{Ord}`$. This is the order of the recursion keys $`(b, k, \eta) \in \mathrm{Ord} \times \mathbb N \times \mathrm{Ord}`$ of the relation $`R`$. By the theorem above, $`\lhd`$ is well-founded.
+Here $`(k', \eta') \prec (k, \eta)`$ is the lexicographic order on $`\mathbb N \times \mathrm{Ord}`$. This is the order of the keys (defined in §4) $`(b, k, \eta) \in \mathrm{Ord} \times \mathbb N \times \mathrm{Ord}`$ used in the well-founded recursion that defines the relation $`R`$ (defined in [07](07-relation-r.md)). By the theorem above, $`\lhd`$ is well-founded.
 
 ## 4. Well-founded recursion
 
-**Theorem (well-founded recursion).** Let $`\prec`$ be a well-founded relation on $`T`$. Suppose a rule $`G`$ takes $`t \in T`$ and "the values at keys smaller than $`t`$" and returns the value at $`t`$. Then there is exactly one function $`F`$ with
+**Theorem (well-founded recursion).** Let $`\prec`$ be a well-founded relation on $`T`$. In well-founded recursion the elements of $`T`$ are called **keys**. Suppose a rule $`G`$ takes $`t \in T`$ and "the values at keys smaller than $`t`$" and returns the value at $`t`$. Then there is exactly one function $`F`$ with
 
 ```math
 F(t) = G\bigl(t,\ F{\restriction}\{t' \mid t' \prec t\}\bigr)
 ```
+
+Here $`F{\restriction}X`$ is the function $`F`$ with its domain restricted to the set $`X`$.
 
 **Example (Ackermann function).** Use the lexicographic order on $`\mathbb N \times \mathbb N`$ as the key order.
 
@@ -95,19 +97,19 @@ The rule $`G`$ may read only the values $`F(t')`$ at keys $`t'`$ with $`t' \prec
 
 ## 5. Guarded recursion
 
-In the definition of $`R`$, which keys are read depends on the values of variables inside a formula. Before writing the definition we cannot say that the keys read are smaller. So we proceed as follows.
+In the definition of $`R`$ ([07](07-relation-r.md)), which keys are read depends on the values of variables inside a formula (defined in [03](03-sigma1-elementary.md) §2). Before writing the definition we cannot say that the keys read are smaller. So we proceed as follows.
 
 1. Write each value to be read as "the key is smaller $`\land`$ $`\mathrm{IH}(\text{key})`$". We call the first condition a **guard**. Where the key is not smaller, this expression is false.
 2. By the theorem of §4, get the defining equation $`F(t) = G(t, F{\restriction}\{t' \mid t' \prec t\})`$. At this stage the right side still contains the guards.
 3. Show that the guard is always true wherever the right side actually reads a value. Then the equation without guards follows.
 
-In [07 The relation R](07-relation-r.md), step 1 is the stage interpretations of §5, step 2 is the guarded equation of §5, and step 3 is the lemma (removing the guards) and the theorem (defining equation) of §6.
+In [07 The relation R](07-relation-r.md), step 1 is the stage interpretations of §5 (defined in [07](07-relation-r.md) §5), step 2 is the guarded equation of §5, and step 3 is the lemma (removing the guards) and the theorem (defining equation) of §6.
 
 **A small example.** On $`\mathbb N`$ consider a definition of the form $`F(n) := 1 + \sum_{i \in S_n} F(i)`$, where $`S_n`$ is a given finite set for each $`n`$ that may contain numbers $`\ge n`$. So as it stands, this is not a well-founded recursion. Written with the guard, $`F(n) := 1 + \sum_{i \in S_n,\ i \lt n} F(i)`$, it is defined by well-founded recursion. If $`S_n \subseteq \{0, \ldots, n-1\}`$ is shown separately, the equation without the guard, $`F(n) = 1 + \sum_{i \in S_n} F(i)`$, holds.
 
 ## 6. Termination by labels
 
-We show that a one-step relation $`\to`$ on a set $`X`$ of states is well-founded, using labels from a well-founded order $`(L, \lt)`$.
+Consider a relation $`\to`$ on a set $`X`$ of states. Read $`s \to t`$ as "state $`s`$ moves to state $`t`$ in one step". We show that $`\to`$ is well-founded, using a well-founded order $`(L, \lt)`$. The elements of $`L`$ are called **labels**.
 
 **Theorem (termination by labels).** Suppose a relation $`\mathrm{valid}(s, a)`$ between states and labels satisfies:
 
@@ -120,7 +122,7 @@ Then $`\to`$ is well-founded. That is, there is no infinite sequence $`s_0 \to s
 
 The important point is that a state need not have a unique label. We only use "some label can be attached" and "after one step, a smaller label can be attached".
 
-The 1-Y proof uses it as follows ([06](06-combinatorial-layer.md)).
+The 1-Y proof uses it as follows ([06](06-combinatorial-layer.md)). Of the words in the table, expression and expansion $`s[N]`$ are defined in [05](05-1y-mountain.md), and diagram, representation and last label in [06](06-combinatorial-layer.md) §1, §2, §6.
 
 | General form | 1-Y |
 |---|---|
