@@ -177,6 +177,20 @@ The edge of layer $`K`$, row $`\ell`$ is the edge of the bad root, and it is not
 - $`k_d \lt K`$ (a lower layer).
 - $`k_d = K`$ and $`r_d \lt \mathrm{cut}`$ and $`f(r_d) \lt \theta`$ (the same layer, the root before the cut, and the root's label below $`\theta`$).
 
+**Example.** At the first step ($`i = 0`$) of an expansion, $`K`$, $`\mathrm{cut}`$ and $`\theta`$ are determined by the bad root ("Demands in an expansion" of §3). $`f`$ is the original representation, whose labels increase with the column.
+
+- $`(1, 2, 4)`$: the bad root is layer $`K = 0`$, row 1, column $`y = 1`$, so $`\mathrm{cut} = 1`$ and $`\theta = f(1)`$ (Example 2 of §3).
+- $`(1, 3)`$: the bad root is layer $`K = 1`$, row 0, column $`y = 0`$ ([05](05-1y-mountain.md) §5), so $`\mathrm{cut} = 0`$. The root of the last column 1 in layer 1, row 0 is column 0, so $`\theta = f(0)`$. The demands are the layer-0 edges from column 1 of $`s[N]`$ to its parents. In $`(1, 3)[2] = (1, 2, 4)`$, the parent of column 1 is column 0 in row 0 of layer 0 (root column 0), and there is none in row 1. So $`\mathrm{needs} = [(0, 0, 0)]`$.
+
+| Expression | Top atom $`d`$ | Admissible? | Reason |
+|---|---|---|---|
+| $`(1, 2, 4)`$ | $`(0, 0, 1)`$ | yes (second case) | $`k_d = 0 = K`$, $`r_d = 0 \lt 1 = \mathrm{cut}`$, $`f(0) \lt f(1) = \theta`$ |
+| $`(1, 2, 4)`$ | $`(0, 1, 1)`$ | no | $`k_d = K`$, but $`r_d = 1`$ is not before $`\mathrm{cut} = 1`$ |
+| $`(1, 3)`$ | $`(0, 0, 0)`$ | yes (first case) | $`k_d = 0 \lt 1 = K`$; no condition on the root or labels is needed |
+| $`(1, 3)`$ | $`(1, 0, 0)`$ | no | $`k_d = K`$, but $`r_d = 0`$ is not before $`\mathrm{cut} = 0`$ |
+
+The two non-admissible ones are the edges of the bad roots ($`(0, 1, 1, 2)`$ and $`(1, 0, 0, 1)`$) with the child removed. These edges are not made demands; they are passed as the control relation.
+
 **Definition (finite reflection).** A structure of labels $`(\alpha; \lt, D, R)`$ satisfies **finite reflection** if the following holds.
 
 For every diagram $`G`$, function $`f : \mathbb N \to \alpha`$, natural numbers $`\mathrm{cut}, K`$, labels $`\theta, \beta \in \alpha`$ and list $`\mathrm{needs}`$ of top atoms, assume that all of the following eight hypotheses hold.
