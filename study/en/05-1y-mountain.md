@@ -151,6 +151,8 @@ and, if $`k \ge 1`$, $`t_{k-1}(c) := v^k_0(c)`$. Parents are columns to the left
 
 This formula is the difference $`v_{r+1}(c) = v_r(c) - v_r(\mathrm{par}_r(c))`$ of §3 run backwards: the value in the top row $`h'_k(c)`$ is the top value $`t_k(c)`$, and each row down adds the value of the parent. The row-0 values of layer $`k + 1`$ were the top values of layer $`k`$ (§4), so the top values of layer $`k`$ are the row-0 values $`v^{k+1}_0`$ of layer $`k + 1`$.
 
+---
+
 **Example 1 ($`(1)[2]`$).** An example with no bad root. The last column is $`x = 0`$; there is no column to its left, so it has no parent in row 0. As in §5, if the last column has no parent in row 0, there is no bad root. So the last column is deleted, and $`(1)[2] = ()`$. For every $`N`$, $`(1)[N] = ()`$.
 
 **Branches used.** (0).
@@ -452,19 +454,24 @@ This formula is the difference $`v_{r+1}(c) = v_r(c) - v_r(\mathrm{par}_r(c))`$ 
 
 The table lists the expansions of a few expressions.
 
-| Expression $`s`$ | $`N`$ | $`s[N]`$ |
-|---|---|---|
-| $`(1)`$ | 5 | $`()`$ |
-| $`(1, 2)`$ | 3 | $`(1, 1, 1, 1)`$ |
-| $`(1, 2, 3)`$ | 0 | $`(1, 2)`$ |
-| $`(1, 2, 3)`$ | 1 | $`(1, 2, 2)`$ |
-| $`(1, 2, 3)`$ | 2 | $`(1, 2, 2, 2)`$ |
-| $`(1, 2, 2)`$ | 2 | $`(1, 2, 1, 2, 1, 2)`$ |
-| $`(1, 2, 4)`$ | 2 | $`(1, 2, 3, 4)`$ |
-| $`(1, 2, 4)`$ | 3 | $`(1, 2, 3, 4, 5)`$ |
-| $`(1, 3)`$ | 2 | $`(1, 2, 4)`$ |
-| $`(1, 3)`$ | 3 | $`(1, 2, 4, 8)`$ |
-| $`(1, 2, 4, 3)`$ | 2 | $`(1, 2, 4, 2, 4, 2, 4)`$ |
+"Branches used" lists the numbers of the branches (step 1) that set a parent, and (0) when there is no bad root. ★ marks the expression that is lexicographically smallest, among the expressions reachable from a seed by expansion (§7), that uses that branch (checked with $`N = 2`$).
+
+| Expression $`s`$ | $`N`$ | $`s[N]`$ | Branches used |
+|---|---|---|---|
+| $`(1)`$ | 5 | $`()`$ | (0)★ |
+| $`(1, 2)`$ | 3 | $`(1, 1, 1, 1)`$ | none |
+| $`(1, 2, 2)`$ | 2 | $`(1, 2, 1, 2, 1, 2)`$ | (2-2)★ |
+| $`(1, 2, 3)`$ | 0 | $`(1, 2)`$ | none |
+| $`(1, 2, 3)`$ | 1 | $`(1, 2, 2)`$ | (2-3-2) |
+| $`(1, 2, 3)`$ | 2 | $`(1, 2, 2, 2)`$ | (2-3-2)★ |
+| $`(1, 2, 4)`$ | 2 | $`(1, 2, 3, 4)`$ | (2-3-1)★ |
+| $`(1, 2, 4)`$ | 3 | $`(1, 2, 3, 4, 5)`$ | (2-3-1) |
+| $`(1, 2, 4, 3)`$ | 2 | $`(1, 2, 4, 2, 4, 2, 4)`$ | (2-2), (2-3-2) |
+| $`(1, 3)`$ | 2 | $`(1, 2, 4)`$ | (3-2-1-2)★, (3-2-1-3)★ |
+| $`(1, 3)`$ | 3 | $`(1, 2, 4, 8)`$ | (3-2-1-2), (3-2-1-3) |
+| $`(1, 3, 2)`$ | 2 | $`(1, 3, 1, 3, 1, 3)`$ | (1-2)★, (2-2) |
+| $`(1, 3, 2, 5)`$ | 2 | $`(1, 3, 2, 4, 8)`$ | (3-2-1-1)★, (3-2-1-2), (3-2-1-3) |
+| $`(1, 3, 4, 2, 5, 6, 5)`$ | 2 | $`(1, 3, 4, 2, 5, 6, 4, 9, 10, 8, 17, 18)`$ | (2-2), (3-2-1-1), (3-2-1-2), (3-2-1-3), (3-2-2)★ |
 
 In the example $`(1, 3)`$ the copying happens in layer 1, so the values are not a plain repetition.
 
