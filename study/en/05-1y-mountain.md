@@ -286,66 +286,67 @@ This formula is the difference $`v_{r+1}(c) = v_r(c) - v_r(\mathrm{par}_r(c))`$ 
 
    For example, column 3 starts from the top value $`t_0(3) = 3`$: row 2 is $`3 + v_2(2) = 7`$, row 1 is $`3 + v_1(2) + v_2(2) = 13`$, and row 0 is $`3 + v_0(2) + v_1(2) + v_2(2) = 3 + 9 + 6 + 4 = 22`$. So $`(1, 3, 9, 23)[2] = (1, 3, 9, 22, 50, 110, 238)`$.
 
-**Example 4 ($`(1, 3, 4, 2, 5, 11, 6, 8, 12, 5)[2]`$).** In layer 0, columns that lie above $`z`$ and columns that do not are mixed.
+**Example 4 ($`(1, 3, 4, 2, 5, 6, 5)[2]`$).** In layer 0, columns that lie above $`z`$ and columns that do not are mixed.
 
 1. **The original mountain.** The row-0 values of layer 2 are all 1, and there are no parents from layer 2 up.
 
-   | layer 0 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
-   |---|---|---|---|---|---|---|---|---|---|---|
-   | row 3 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 1 | 0 |
-   | row 2 | 0 | 0 | 0 | 0 | 2 | 3 ← 4 | 0 | 1 | 2 ← 7 | 2 |
-   | row 1 | 0 | 2 | 1 | 1 | 3 ← 3 | 6 ← 4 | 1 | 2 ← 6 | 4 ← 7 | 3 ← 3 |
-   | row 0 | 1 | 3 ← 0 | 4 ← 1 | 2 ← 0 | 5 ← 3 | 11 ← 4 | 6 ← 4 | 8 ← 6 | 12 ← 7 | 5 ← 3 |
+   | layer 0 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 |
+   |---|---|---|---|---|---|---|---|
+   | row 2 | 0 | 0 | 0 | 0 | 2 | 0 | 2 |
+   | row 1 | 0 | 2 | 1 | 1 | 3 ← 3 | 1 | 3 ← 3 |
+   | row 0 | 1 | 3 ← 0 | 4 ← 1 | 2 ← 0 | 5 ← 3 | 6 ← 4 | 5 ← 3 |
 
-   | layer 1 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
-   |---|---|---|---|---|---|---|---|---|---|---|
-   | row 1 | 0 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 1 |
-   | row 0 | 1 | 2 ← 0 | 1 | 1 | 2 ← 3 | 1 | 1 | 1 | 1 | 2 ← 3 |
+   | layer 1 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 |
+   |---|---|---|---|---|---|---|---|
+   | row 1 | 0 | 1 | 0 | 0 | 1 | 0 | 1 |
+   | row 0 | 1 | 2 ← 0 | 1 | 1 | 2 ← 3 | 1 | 2 ← 3 |
 
-2. **The bad root.** The last column is $`x = 9`$. In layer 0, row 0 has parent 3 and $`5 \ne 2 + 1`$; row 1 has parent 3 and $`3 \ne 1 + 1`$. In layer 1, row 0 has parent 3 and $`2 = 1 + 1`$. So $`K = 1`$, $`d = 0`$, $`z = 3`$. $`L = 6`$ and $`W = 9 + 2 \cdot 6 = 21`$; block 1 is columns 9–14 and block 2 is columns 15–20.
+2. **The bad root.** The last column is $`x = 6`$. In layer 0, row 0 has parent 3 and $`5 \ne 2 + 1`$; row 1 has parent 3 and $`3 \ne 1 + 1`$; row 2 has no parent. In layer 1, row 0 has parent 3 and $`2 = 1 + 1`$. So $`K = 1`$, $`d = 0`$, $`z = 3`$. $`L = 3`$ and $`W = 6 + 2 \cdot 3 = 12`$; block 1 is columns 6–8 and block 2 is columns 9–11.
 
 3. **Copy the mountain.**
-   - Layer 1 (branch $`k = K`$): columns 9 and 15 ($`j = 0`$) have height $`h_1(3) = 0`$ and no parents. The other new columns copy columns 4–8. In layer 1 only column 4 has a parent (3), so column 10 has parent $`m_1(3) = 9`$ and column 16 has parent $`m_2(3) = 15`$.
+   - Layer 1 (branch $`k = K`$): columns 6 and 9 ($`j = 0`$) have height $`h_1(3) = 0`$ and no parents. The other new columns copy columns 4 and 5. In layer 1 only column 4 has a parent (3), so column 7 has parent $`m_1(3) = 6`$ and column 10 has parent $`m_2(3) = 9`$.
 
-   | layer 1 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 |
-   |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-   | row 1 |   | ○ |   |   | ○ |   |   |   |   |   | ○ |   |   |   |   |   | ○ |   |   |   |   |
-   | row 0 | ○ | ← 0 | ○ | ○ | ← 3 | ○ | ○ | ○ | ○ | ○ | ← 9 | ○ | ○ | ○ | ○ | ○ | ← 15 | ○ | ○ | ○ | ○ |
+   | layer 1 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+   |---|---|---|---|---|---|---|---|---|---|---|---|---|
+   | row 1 |   | ○ |   |   | ○ |   |   | ○ |   |   | ○ |   |
+   | row 0 | ○ | ← 0 | ○ | ○ | ← 3 | ○ | ○ | ← 6 | ○ | ○ | ← 9 | ○ |
 
-   - Layer 0 (branch $`k \lt K`$): $`f = h_0(3) = 1`$ and $`e = h_0(9) - 1 = 1`$. In row 1, columns 4, 5, 9 have root column 3 and lie above $`z`$; columns 6, 7, 8 have root column 6 and do not.
-     - Columns 10, 11 ($`\sigma = 4, 5`$, $`b = 1`$): they lie above $`z`$, so they grow by 1 row, to heights 3 and 4. Column 10 has parent 9 and column 11 has parent 10 in every row.
-     - Columns 12, 13, 14 ($`\sigma = 6, 7, 8`$, $`b = 1`$): they do not lie above $`z`$ and are copied as they are, with parents $`m_1(4) = 10`$, $`m_1(6) = 12`$, $`m_1(7) = 13`$.
-     - Column 15 ($`j = 0`$, $`\sigma = x = 9`$, $`b = 1`$): it lies above $`z`$, so its height is $`2 + 1 = 3`$, with parent 9 in every row.
-     - Columns 16–20 ($`b = 2`$): columns 16, 17 grow by 2 rows to heights 4, 5, with parents 15, 16. Columns 18, 19, 20 are copied as they are, with parents $`m_2(4) = 16`$, $`m_2(6) = 18`$, $`m_2(7) = 19`$.
+   - Layer 0 (branch $`k \lt K`$): $`f = h_0(3) = 1`$ and $`e = h_0(6) - 1 = 1`$. In row 1, columns 4 and 6 have root column 3 and lie above $`z`$. Column 5 has no parent in row 1, so its root is column 5 itself and it does not lie above $`z`$.
+     - Column 6 ($`\sigma = x`$, $`b = 0`$): unchanged.
+     - Column 7 ($`\sigma = 4`$, $`b = 1`$): it lies above $`z`$ and grows by 1 row, to height $`2 + 1 = 3`$. The parent is $`m_1(3) = 6`$ in row 0, $`\mathrm{par}_{0,1}(4) + 3 = 6`$ in row 1, and $`\mathrm{par}_{0,2-1}(4) + 3 = 6`$ in row 2.
+     - Column 8 ($`\sigma = 5`$, $`b = 1`$): it does not lie above $`z`$ and is copied as it is: height 1, parent $`m_1(4) = 7`$.
+     - Column 9 ($`j = 0`$, $`\sigma = x = 6`$, $`b = 1`$): it lies above $`z`$, so its height is $`2 + 1 = 3`$, with parent 6 in every row.
+     - Column 10 ($`\sigma = 4`$, $`b = 2`$): grows by 2 rows to height 4, with parent 9 in every row.
+     - Column 11 ($`\sigma = 5`$, $`b = 2`$): copied as it is: height 1, parent $`m_2(4) = 10`$.
 
-   | layer 0 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 |
-   |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-   | row 5 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | ○ |   |   |   |
-   | row 4 |   |   |   |   |   |   |   |   |   |   |   | ○ |   |   |   |   | ○ | ← 16 |   |   |   |
-   | row 3 |   |   |   |   |   | ○ |   |   | ○ |   | ○ | ← 10 |   |   | ○ | ○ | ← 15 | ← 16 |   |   | ○ |
-   | row 2 |   |   |   |   | ○ | ← 4 |   | ○ | ← 7 | ○ | ← 9 | ← 10 |   | ○ | ← 13 | ← 9 | ← 15 | ← 16 |   | ○ | ← 19 |
-   | row 1 |   | ○ | ○ | ○ | ← 3 | ← 4 | ○ | ← 6 | ← 7 | ← 3 | ← 9 | ← 10 | ○ | ← 12 | ← 13 | ← 9 | ← 15 | ← 16 | ○ | ← 18 | ← 19 |
-   | row 0 | ○ | ← 0 | ← 1 | ← 0 | ← 3 | ← 4 | ← 4 | ← 6 | ← 7 | ← 3 | ← 9 | ← 10 | ← 10 | ← 12 | ← 13 | ← 9 | ← 15 | ← 16 | ← 16 | ← 18 | ← 19 |
+   | layer 0 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+   |---|---|---|---|---|---|---|---|---|---|---|---|---|
+   | row 4 |   |   |   |   |   |   |   |   |   |   | ○ |   |
+   | row 3 |   |   |   |   |   |   |   | ○ |   | ○ | ← 9 |   |
+   | row 2 |   |   |   |   | ○ |   | ○ | ← 6 |   | ← 6 | ← 9 |   |
+   | row 1 |   | ○ | ○ | ○ | ← 3 | ○ | ← 3 | ← 6 | ○ | ← 6 | ← 9 | ○ |
+   | row 0 | ○ | ← 0 | ← 1 | ← 0 | ← 3 | ← 4 | ← 3 | ← 6 | ← 7 | ← 6 | ← 9 | ← 10 |
 
 4. **Rebuild the values.** There are no parents from layer 2 up, so $`t_1`$ is all 1. First the values of layer 1:
 
-   | layer 1 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 |
-   |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-   | row 1 |   | 1 |   |   | 1 |   |   |   |   |   | 1 |   |   |   |   |   | 1 |   |   |   |   |
-   | row 0 | 1 | 2 ← 0 | 1 | 1 | 2 ← 3 | 1 | 1 | 1 | 1 | 1 | 2 ← 9 | 1 | 1 | 1 | 1 | 1 | 2 ← 15 | 1 | 1 | 1 | 1 |
+   | layer 1 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+   |---|---|---|---|---|---|---|---|---|---|---|---|---|
+   | row 1 |   | 1 |   |   | 1 |   |   | 1 |   |   | 1 |   |
+   | row 0 | 1 | 2 ← 0 | 1 | 1 | 2 ← 3 | 1 | 1 | 2 ← 6 | 1 | 1 | 2 ← 9 | 1 |
 
    Its row-0 values are the top values $`t_0`$ of layer 0.
 
-   | layer 0 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 |
-   |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-   | row 5 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | 1 |   |   |   |
-   | row 4 |   |   |   |   |   |   |   |   |   |   |   | 1 |   |   |   |   | 2 | 3 ← 16 |   |   |   |
-   | row 3 |   |   |   |   |   | 1 |   |   | 1 |   | 2 | 3 ← 10 |   |   | 1 | 1 | 3 ← 15 | 6 ← 16 |   |   | 1 |
-   | row 2 |   |   |   |   | 2 | 3 ← 4 |   | 1 | 2 ← 7 | 1 | 3 ← 9 | 6 ← 10 |   | 1 | 2 ← 13 | 2 ← 9 | 5 ← 15 | 11 ← 16 |   | 1 | 2 ← 19 |
-   | row 1 |   | 2 | 1 | 1 | 3 ← 3 | 6 ← 4 | 1 | 2 ← 6 | 4 ← 7 | 2 ← 3 | 5 ← 9 | 11 ← 10 | 1 | 2 ← 12 | 4 ← 13 | 4 ← 9 | 9 ← 15 | 20 ← 16 | 1 | 2 ← 18 | 4 ← 19 |
-   | row 0 | 1 | 3 ← 0 | 4 ← 1 | 2 ← 0 | 5 ← 3 | 11 ← 4 | 6 ← 4 | 8 ← 6 | 12 ← 7 | 4 ← 3 | 9 ← 9 | 20 ← 10 | 10 ← 10 | 12 ← 12 | 16 ← 13 | 8 ← 9 | 17 ← 15 | 37 ← 16 | 18 ← 16 | 20 ← 18 | 24 ← 19 |
+   | layer 0 | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+   |---|---|---|---|---|---|---|---|---|---|---|---|---|
+   | row 4 |   |   |   |   |   |   |   |   |   |   | 2 |   |
+   | row 3 |   |   |   |   |   |   |   | 2 |   | 1 | 3 ← 9 |   |
+   | row 2 |   |   |   |   | 2 |   | 1 | 3 ← 6 |   | 2 ← 6 | 5 ← 9 |   |
+   | row 1 |   | 2 | 1 | 1 | 3 ← 3 | 1 | 2 ← 3 | 5 ← 6 | 1 | 4 ← 6 | 9 ← 9 | 1 |
+   | row 0 | 1 | 3 ← 0 | 4 ← 1 | 2 ← 0 | 5 ← 3 | 6 ← 4 | 4 ← 3 | 9 ← 6 | 10 ← 7 | 8 ← 6 | 17 ← 9 | 18 ← 10 |
 
-   So $`(1, 3, 4, 2, 5, 11, 6, 8, 12, 5)[2] = (1, 3, 4, 2, 5, 11, 6, 8, 12, 4, 9, 20, 10, 12, 16, 8, 17, 37, 18, 20, 24)`$.
+   For example, column 7 starts from the top value $`t_0(7) = 2`$: row 2 is $`2 + v_2(6) = 3`$, row 1 is $`2 + v_1(6) + v_2(6) = 5`$, and row 0 is $`2 + v_0(6) + v_1(6) + v_2(6) = 2 + 4 + 2 + 1 = 9`$. So $`(1, 3, 4, 2, 5, 6, 5)[2] = (1, 3, 4, 2, 5, 6, 4, 9, 10, 8, 17, 18)`$.
+
+**Example 5 ($`(1)[2]`$).** An example with no bad root. The last column is $`x = 0`$; there is no column to its left, so it has no parent in row 0. As in §5, if the last column has no parent in row 0, there is no bad root. So the last column is deleted, and $`(1)[2] = ()`$. For every $`N`$, $`(1)[N] = ()`$.
 
 The table lists the expansions of a few expressions.
 
