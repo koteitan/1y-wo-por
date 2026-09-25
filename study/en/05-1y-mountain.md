@@ -142,7 +142,7 @@ For $`(1, 2, 4, 3)`$ all top values of layer 0 are 1, so layers 1 and above have
    | 1 |   | ○ | ← 1 | ← 2 | ← 1 | ← 2 | ← 5 | ← 1 | ← 5 | ← 8 | ← 1 |
    | 0 | ○ | ← 0 | ← 1 | ← 2 | ← 3 | ← 2 | ← 5 | ← 6 | ← 5 | ← 8 | ← 9 |
 
-   - Column 5: copied from column 2. In rows 0 and 1 its parent is the parent 2 of column 5 ($`x`$) moved by $`3 \cdot 0`$, i.e. 2. In row 2 it has no parent, like column 2.
+   - Column 5: copied from column 2. In rows 0 and 1 its parent is the parent 2 of the original last column $`x = 5`$ moved by $`3 \cdot 0`$, i.e. 2. In row 2 it has no parent, like column 2.
    - Column 6: copied from column 3. The parent 2 is at least $`z`$, so it moves by 3 to 5.
    - Column 7: copied from column 4. The row-0 parent 3 moves to 6; the row-1 parent 1 is left of $`z`$ and stays.
    - Columns 8–10: as columns 5–7, with shift 6 (column 8 takes the parent of $`x`$ moved by 3, i.e. 5).
