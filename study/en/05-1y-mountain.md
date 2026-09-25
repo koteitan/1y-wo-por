@@ -133,6 +133,20 @@ For $`(1, 2, 4, 3)`$ all top values of layer 0 are 1, so layers 1 and above have
    - If the copied column's parent $`p`$ has $`p \lt z`$, it stays. If $`p \ge z`$, it moves right by $`3 i`$.
    - The first column of a block (the copy of column $`z`$) takes, in the rows below the bad row 2, the parent of the last column $`x`$ moved by $`3 (i - 1)`$ by the same rule (moved if it is at least $`z`$, kept if it is left of $`z`$). From row 2 up it copies the parents of column $`z`$ (none here). So its height is 2, the same as column $`z`$.
 
+   The mountain after copying only is as follows; there are no values yet. "← $`p`$" means the parent is column $`p`$, "○" is the top row of the column (the row of its height, with no parent), and a blank is above the column's height. Columns 0–4 are the original mountain.
+
+   | row | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+   |---|---|---|---|---|---|---|---|---|---|---|---|
+   | 3 |   |   |   | ○ |   |   | ○ |   |   | ○ |   |
+   | 2 |   |   | ○ | ← 2 | ○ | ○ | ← 5 | ○ | ○ | ← 8 | ○ |
+   | 1 |   | ○ | ← 1 | ← 2 | ← 1 | ← 2 | ← 5 | ← 1 | ← 5 | ← 8 | ← 1 |
+   | 0 | ○ | ← 0 | ← 1 | ← 2 | ← 3 | ← 2 | ← 5 | ← 6 | ← 5 | ← 8 | ← 9 |
+
+   - Column 5: copied from column 2. In rows 0 and 1 its parent is the parent 2 of column 5 ($`x`$) moved by $`3 \cdot 0`$, i.e. 2. In row 2 it has no parent, like column 2.
+   - Column 6: copied from column 3. The parent 2 is at least $`z`$, so it moves by 3 to 5.
+   - Column 7: copied from column 4. The row-0 parent 3 moves to 6; the row-1 parent 1 is left of $`z`$ and stays.
+   - Columns 8–10: as columns 5–7, with shift 6 (column 8 takes the parent of $`x`$ moved by 3, i.e. 5).
+
 4. **Rebuild the values.** The top value of each column comes from the layers above. Here layer 1 is all 1, so every top value is 1. The values are set from the top row down by the formula below, where $`h(c)`$ is the height of column $`c`$.
 
    ```math
