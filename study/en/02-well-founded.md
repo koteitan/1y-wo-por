@@ -109,7 +109,7 @@ In [07 The relation R](07-relation-r.md), step 1 is the stage interpretations of
 
 ## 6. Termination by labels
 
-Consider a relation $`\to`$ on a set $`X`$. For $`s, t \in X`$, read $`s \to t`$ as "$`s`$ moves to $`t`$ in one step". We show that $`\to`$ is well-founded, using a well-founded order $`(L, \lt)`$. The elements of $`L`$ are called **labels**.
+Consider a binary relation $`\to`$ on a set $`X`$ (write $`s \to t`$ when $`s, t \in X`$ are in this relation). In 1-Y, $`s \to t`$ becomes the relation "$`t`$ is an expansion of $`s`$" ([06](06-combinatorial-layer.md) §6). We show that $`\to`$ is well-founded, using a well-founded order $`(L, \lt)`$. The elements of $`L`$ are called **labels**.
 
 **Theorem (termination by labels).** Suppose a relation $`\mathrm{valid}(s, a)`$ between elements of $`X`$ and labels ($`s \in X`$, $`a \in L`$) satisfies:
 
