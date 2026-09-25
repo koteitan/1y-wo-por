@@ -24,7 +24,10 @@ None of them is a label (an ordinal); they are all numbers. Labels are attached 
 
 It is **valid** for size $`n`$ if $`r \le p \lt q \lt n`$.
 
-**Definition (diagram).** A **diagram** is a size $`n`$ together with a finite list of valid atoms. $`n`$ is the number of columns.
+**Definition (diagram).** A **diagram** is a size $`n`$ together with a finite list of valid atoms. $`n \in \mathbb N`$ is the number of columns, and the columns are numbered $`0, 1, \ldots, n - 1`$.
+
+- In the diagram of an expression $`s = (s_0, \ldots, s_{n-1})`$, $`n`$ is the length of the expression.
+- Every row of every layer of the mountain has the same columns $`0, \ldots, n - 1`$. The number of columns does not change from row to row. Higher rows seem to have fewer columns only because a column of value 0 is read as "not in that row" ([05](05-1y-mountain.md) §3); such a column keeps its number.
 
 **The diagram of an expression.** The diagram $`G(s)`$ of an expression $`s`$ has one atom for each parent–child edge in every layer and every row. If column $`c`$ has parent $`p`$ in layer $`k`$, row $`r`$, it contains the atom
 
