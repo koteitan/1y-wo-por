@@ -127,6 +127,39 @@ f(0) \lt f(1) \lt f(2), \quad R(0, f(0), f(0), f(1)), \quad R(0, f(0), f(1), f(2
 
 A top atom is an edge to a point $`\beta`$ outside the diagram. In an expansion, the label of the old last column plays the role of $`\beta`$.
 
+**Difference from ordinary atoms.** A top atom is an atom $`(k, r, p, q)`$ with the child $`q`$ removed. The child is not a column of the diagram but a point outside it, whose label we write $`\beta`$.
+
+| | atom | top atom |
+|---|---|---|
+| form | $`(k, r, p, q)`$ | $`(k, r, p)`$ |
+| child | column $`q`$ of the diagram | a point outside the diagram (label $`\beta`$) |
+| valid | $`r \le p \lt q \lt n`$ | $`r \le p \lt n`$ |
+| holds | $`R(k, f(r), f(p), f(q))`$ | $`R(k, f(r), f(p), \beta)`$ |
+
+**Example 1 (the form).** The atoms of $`(1, 2, 4)`$ are $`(0, 0, 0, 1)`$, $`(0, 0, 1, 2)`$, $`(0, 1, 1, 2)`$ (§1). Remove the last column 2 and consider the diagram of columns 0, 1 only (size 2). The two edges to column 2 now have their child outside the diagram, so we write them as top atoms.
+
+- $`(0, 0, 1)`$: it holds when $`R(0, f(0), f(1), \beta)`$.
+- $`(0, 1, 1)`$: it holds when $`R(0, f(1), f(1), \beta)`$.
+
+Here $`\beta = f(2)`$ is the label of column 2, which is now outside.
+
+**The list of demands.** In an expansion, a list $`\mathrm{needs}`$ of top atoms (the **demands**) is passed to finite reflection of §4. Let $`x`$ be the last column and $`y`$ the bad root (layer $`K`$, row $`d`$). At step $`i`$, the column to be added next, $`m = x + i \cdot (x - y)`$, is taken as the top, and the edges from column $`m`$ to its parents in the mountain of $`s[N]`$ become demands in this range only:
+
+- layer $`k \lt K`$: the edges of all rows;
+- layer $`K`$: the edges of the rows below row $`d`$;
+- layer $`k \gt K`$: none.
+
+The edge of layer $`K`$, row $`d`$ is the edge of the bad root. It is passed not as a demand but as the control relation $`R(K, \theta, f(\mathrm{cut}), \beta)`$.
+
+**Example 2 (the first step of the expansion of $`(1, 2, 4)`$).** $`x = 2`$, the bad root is $`y = 1`$ (layer $`K = 0`$, row $`d = 1`$), and $`s[N] = (1, 2, \ldots, N + 2)`$. Look at step $`i = 0`$.
+
+- The diagram $`G`$ is the diagram of $`(1, 2)`$: size 2, atom $`(0, 0, 0, 1)`$. $`f`$ is the original representation, $`\beta = f(2)`$, and the cut is $`\mathrm{cut} = y = 1`$.
+- The top is column $`m = 2`$. In the mountain of $`s[N]`$, the parent of column 2 is column 1 in row 0 (root column 0), and there is none in row 1. We look only at the rows $`0 \lt d = 1`$ of layer 0, so $`\mathrm{needs} = [(0, 0, 1)]`$. It holds for $`\beta = f(2)`$ by the original atom $`(0, 0, 1, 2)`$.
+- The original atom $`(0, 1, 1, 2)`$ is the edge of the bad root and is not a demand. It becomes the control relation $`R(0, f(1), f(1), f(2))`$ ($`\theta = f(1)`$).
+- The demand $`(0, 0, 1)`$ is admissible (§4): $`k_d = 0 = K`$, $`r_d = 0 \lt \mathrm{cut} = 1`$, and $`f(0) \lt f(1) = \theta`$.
+- The $`g`$ given by finite reflection has $`g(0) = f(0)`$ and $`g(1) \lt f(1)`$, and the demand holds for the top $`f(\mathrm{cut}) = f(1)`$, that is, $`R(0, g(0), g(1), f(1))`$.
+- Column 2 of the new diagram gets $`f(\mathrm{cut}) = f(1)`$ (§6), so the labels are $`(g(0), g(1), f(1))`$. The atoms of the diagram of $`(1, 2, 3)`$ are $`(0, 0, 0, 1)`$ and $`(0, 0, 1, 2)`$, and the latter is exactly the demand above. In this way a demand becomes an edge of the new diagram.
+
 **Definition (bound).** $`f`$ is **bounded by** $`\beta`$ if $`f(i) \lt \beta`$ for all $`i \lt n`$.
 
 ## 4. Finite reflection
