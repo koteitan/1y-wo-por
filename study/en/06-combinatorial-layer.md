@@ -275,7 +275,7 @@ The general form of [02](02-well-founded.md) §6 is applied as follows.
 
 | General form | 1-Y |
 |---|---|
-| state | expression $`s`$ |
+| element of $`X`$ | expression $`s`$ |
 | $`s \to t`$ | nontrivial one-step expansion ($`t = s[N] \ne s`$) |
 | label | ordinal |
 | $`\mathrm{valid}(s, a)`$ | the diagram of $`s`$ has a representation whose last label is $`a`$ |

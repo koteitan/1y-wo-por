@@ -109,18 +109,18 @@ In [07 The relation R](07-relation-r.md), step 1 is the stage interpretations of
 
 ## 6. Termination by labels
 
-Consider a relation $`\to`$ on a set $`X`$ of states. Read $`s \to t`$ as "state $`s`$ moves to state $`t`$ in one step". We show that $`\to`$ is well-founded, using a well-founded order $`(L, \lt)`$. The elements of $`L`$ are called **labels**.
+Consider a relation $`\to`$ on a set $`X`$. For $`s, t \in X`$, read $`s \to t`$ as "$`s`$ moves to $`t`$ in one step". We show that $`\to`$ is well-founded, using a well-founded order $`(L, \lt)`$. The elements of $`L`$ are called **labels**.
 
-**Theorem (termination by labels).** Suppose a relation $`\mathrm{valid}(s, a)`$ between states and labels satisfies:
+**Theorem (termination by labels).** Suppose a relation $`\mathrm{valid}(s, a)`$ between elements of $`X`$ and labels ($`s \in X`$, $`a \in L`$) satisfies:
 
-- every state $`s`$ has a label $`a`$ with $`\mathrm{valid}(s, a)`$;
+- every $`s \in X`$ has a label $`a`$ with $`\mathrm{valid}(s, a)`$;
 - if $`\mathrm{valid}(s, a)`$ and $`s \to t`$, then $`\mathrm{valid}(t, b)`$ for some $`b \lt a`$.
 
 Then $`\to`$ is well-founded. That is, there is no infinite sequence $`s_0 \to s_1 \to s_2 \to \cdots`$.
 
 **Proof.** By well-founded induction on $`a`$, show "if $`\mathrm{valid}(s, a)`$ then $`s`$ is accessible". If $`s \to t`$, then $`t`$ has a label $`b \lt a`$, so $`t`$ is accessible by the induction hypothesis. $`\square`$
 
-The important point is that a state need not have a unique label. We only use "some label can be attached" and "after one step, a smaller label can be attached".
+The important point is that an element of $`X`$ need not have a unique label. We only use "some label can be attached" and "after one step, a smaller label can be attached".
 
 How the 1-Y proof uses it is described in [06](06-combinatorial-layer.md) §6.
 
