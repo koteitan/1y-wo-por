@@ -120,7 +120,7 @@ Then $`\to`$ is well-founded. That is, there is no infinite sequence $`s_0 \to s
 
 **Proof.** By well-founded induction on $`a`$, show "if $`\mathrm{valid}(s, a)`$ then $`s`$ is accessible". If $`s \to t`$, then $`t`$ has a label $`b \lt a`$, so $`t`$ is accessible by the induction hypothesis. $`\square`$
 
-The important point is that an element of $`X`$ need not have a unique label. We only use "some label can be attached" and "after one step, a smaller label can be attached".
+The important point is that an element of $`X`$ need not have a unique label. We only use "every $`s`$ can be given some label" and "if $`s \to t`$, then $`t`$ can be given a smaller label".
 
 How the 1-Y proof uses it is described in [06](06-combinatorial-layer.md) §6.
 
