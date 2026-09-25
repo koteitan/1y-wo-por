@@ -12,7 +12,7 @@ This note explains the model-theoretic terms used in the definition of the relat
 
 ## 1. Languages and structures
 
-**Definition (language).** A **language** is a collection of relation symbols, each with a fixed number of arguments (its arity). A symbol of arity 1, 2 or 3 is called **unary**, **binary** or **ternary**. This repository uses no function symbols and no constant symbols.
+**Definition (language).** A **language** is a collection of relation symbols, each with a fixed number of arguments (its arity). This repository uses no function symbols and no constant symbols.
 
 **Definition (structure).** A **structure** $`\mathfrak A`$ for a language $`L`$ consists of a set $`A`$ (the domain, possibly empty) and an interpretation $`P^{\mathfrak A} \subseteq A^n`$ of each symbol $`P`$ of arity $`n`$.
 
@@ -29,7 +29,7 @@ Example: $`(4; \lt)`$ has domain $`\{0, 1, 2, 3\}`$, and its relation is $`\lt`$
 |---|---|---|
 | $`\{\lt\}`$ | $`(\omega; \lt)`$ | natural numbers |
 | $`\{\lt\}`$ | $`(\gamma; \lt)`$ | $`\{x \mid x \lt \gamma\}`$ |
-| $`\{\lt, E\}`$ ($`E`$ binary) | $`(\omega; \lt, E)`$, $`E(x, y) :\iff y = x + 1`$ | natural numbers |
+| $`\{\lt, E\}`$ ($`E`$ of arity 2) | $`(\omega; \lt, E)`$, $`E(x, y) :\iff y = x + 1`$ | natural numbers |
 
 Every structure in this repository has a domain of the form $`\{x \mid x \lt \gamma\}`$. We call $`\gamma`$ the **height** of the structure. The elements of the domain are called **points**.
 
@@ -145,9 +145,9 @@ The general Tarski–Vaught test says the same for all formulas. This repository
 
 ## 7. The normal form of Σ₁ formulas
 
-The language of this repository consists of $`\lt`$, the ternary symbols $`\mathrm{Rel}_j`$ and the binary symbols $`\mathrm{Top}_j`$ ($`j \in \mathbb N`$). The interpretations of the symbols are fixed in [07](07-relation-r.md) §2. Here we use only the following.
+The language of this repository consists of $`\lt`$, the symbols $`\mathrm{Rel}_j`$ of arity 3 and the symbols $`\mathrm{Top}_j`$ of arity 2 ($`j \in \mathbb N`$). The interpretations of the symbols are fixed in [07](07-relation-r.md) §2. Here we use only the following.
 
-- In the structure of height $`\gamma`$, $`\mathrm{Rel}_j`$ is a relation between points. We call $`\mathrm{Rel}_j`$ the **internal relations**.
+- In the structure of height $`\gamma`$, $`\mathrm{Rel}_j`$ is a relation between points.
 - In the structure of height $`\gamma`$, $`\mathrm{Top}_j`$ is a relation from points to $`\gamma`$, which lies outside the domain. This $`\gamma`$ is called the **top**, and $`\mathrm{Top}_j`$ is called a **top predicate**. The interpretation of a top predicate differs for each height $`\gamma`$.
 
  By §3 the quantifier-free part can be rewritten as a set of atomic diagrams. So a $`\Sigma_1`$ formula is given by the following 5-tuple. $`m, n, \mathit{bb}, r`$ are natural numbers ([notes/01-design.md](../../notes/01-design.md) §3.2, Japanese).
@@ -160,7 +160,7 @@ The language of this repository consists of $`\lt`$, the ternary symbols $`\math
 | $`\mathit{bb}`$ | number of existentially quantified variables |
 | $`r`$ | number of parameters |
 
-- A **complete atomic diagram** of $`n`$ points consists of the bits of $`\lt`$, of the ternary $`\mathrm{Rel}_j`$ and of the binary $`\mathrm{Top}_j`$ ($`j \lt m`$). Once $`m, n`$ are fixed, there are only finitely many complete atomic diagrams.
+- A **complete atomic diagram** of $`n`$ points consists of the bits of $`\lt`$, of $`\mathrm{Rel}_j`$ (arity 3) and of $`\mathrm{Top}_j`$ (arity 2) ($`j \lt m`$). Once $`m, n`$ are fixed, there are only finitely many complete atomic diagrams.
 - We write $`\mathrm{diag}(v)`$ for the atomic diagram of a sequence of points $`v`$ (§3). The case where some bits are not read and are read as false is treated in §8.
 - The sequence of variables is the parameters $`p_0, \ldots, p_{r-1}`$ followed by the witnesses $`y_0, \ldots, y_{\mathit{bb}-1}`$. The matrix reads the first $`n`$ entries of this list.
 - In a structure $`\mathfrak A`$ of height $`M`$, the $`\Sigma_1`$ formula $`\varphi`$ is true at $`\vec p`$ in the following sense.

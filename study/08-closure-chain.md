@@ -49,7 +49,7 @@ $`\mathfrak B{\restriction}\gamma`$ は $`\mathfrak B`$ の本当の部分構造
 
 **定理（証人の高さは ω₁ より下）.** $`h(\varphi, \vec p) \lt \omega_1`$。
 
-**証明.** 有限個の $`y_i + 1`$ の最大値で、どれも $`\omega_1`$ より下である（[01](01-ordinals.md) §4 の性質 2）。$`\square`$
+**証明.** 有限個の $`y_i + 1`$ の最大値で、どれも $`\omega_1`$ より下である（[01](01-ordinals.md) §4）。$`\square`$
 
 選んだ証人はどれも $`h(\varphi, \vec p)`$ より下にある。
 
@@ -61,7 +61,7 @@ $`\mathfrak B{\restriction}\gamma`$ は $`\mathfrak B`$ の本当の部分構造
 \mathrm{next}(\gamma) := \max\Bigl(\gamma,\ \sup_{(\varphi, l)} h\bigl(\varphi, \mathrm{params}_\gamma(l)\bigr)\Bigr) + 1
 ```
 
-上限は $`(\varphi, l) \in \mathcal F \times \mathbb N^{\lt\omega}`$ の全体を動く。$`\mathrm{params}_\gamma(l)`$ は [01](01-ordinals.md) §6 の、自然数の列で表したパラメータである。$`\gamma = 0`$ のときの $`e_0`$ も [01](01-ordinals.md) §6 のとおりである。
+上限は $`(\varphi, l) \in \mathcal F \times \mathbb N^{\lt\omega}`$ の全体を動く。$`\mathrm{params}_\gamma(l)`$ は [01](01-ordinals.md) §6 の、自然数の列で表したパラメータである。
 
 | 性質 | 内容 | 理由 |
 |---|---|---|
@@ -71,15 +71,15 @@ $`\mathfrak B{\restriction}\gamma`$ は $`\mathfrak B`$ の本当の部分構造
 
 **性質 3 の証明.** [01](01-ordinals.md) §6 の定理（符号の存在）から、$`\vec p = \mathrm{params}_\gamma(l)`$ となる列 $`l`$ がある。$`(\varphi, l)`$ について選んだ証人は、$`h(\varphi, \mathrm{params}_\gamma(l))`$ より下にある。これは上限の項の 1 つなので、$`\mathrm{next}(\gamma)`$ より下である。$`\square`$
 
-## 5. 塔と λ
+## 5. λ
 
-**定義（塔と λ）.**
+**定義（λ）.**
 
 ```math
 \mathrm{next}^0(\gamma) := \gamma, \quad \mathrm{next}^{t+1}(\gamma) := \mathrm{next}\bigl(\mathrm{next}^t(\gamma)\bigr), \qquad \lambda(\gamma) := \sup_{t \in \mathbb N} \mathrm{next}^t(\gamma)
 ```
 
-$`t \in \mathbb N`$ である。列 $`\mathrm{next}^0(\gamma), \mathrm{next}^1(\gamma), \ldots`$ を $`\gamma`$ からの **塔** と呼ぶ。$`\lambda(\gamma)`$ の形の順序数を **閉包点** と呼ぶ。
+$`t \in \mathbb N`$ である。$`\lambda(\gamma)`$ の形の順序数を **閉包点** と呼ぶ。
 
 | 性質 | 内容 |
 |---|---|

@@ -8,7 +8,7 @@ Prerequisites
 |---|---|
 | [02 Well-founded relations and recursion](02-well-founded.md) | well-founded, accessible, termination by labels (§6) |
 | [03 Structures and Σ₁-elementary substructures](03-sigma1-elementary.md) | the notation $`(A; P_1, \ldots)`$ for structures (§1) |
-| [05 The 1-Y sequence and its mountain](05-1y-mountain.md) | expression, length, layer, row, parent, parent–child edge, root of a component, bad root, expansion, block |
+| [05 The 1-Y sequence and its mountain](05-1y-mountain.md) | expression, layer, row, parent, parent–child edge, root of a component, bad root, expansion, block |
 
 This note explains the part of Phyrion's proof that does not use the meaning of the labels (the combinatorial layer). This layer takes the label set $`\alpha`$, an order $`\lt`$, a domain $`D`$ and a relation $`R`$ as arguments, and proves well-foundedness of expansion from six hypotheses about them. This repository uses the theorem of this layer as it is.
 
@@ -146,9 +146,7 @@ A top atom is an edge to a point $`\beta`$ outside the diagram. In an expansion,
 
 Here $`\beta = f(2)`$ is the label of column 2, which is now outside.
 
-**Definition (demand).** When a top atom $`d = (k_d, r_d, p_d)`$ is used as the condition "hold for the top", $`d`$ is called a **demand**. A demand $`d`$ is satisfied for a top $`\beta`$ if $`d`$ holds for $`\beta`$, that is, $`R(k_d, f(r_d), f(p_d), \beta)`$. A finite list of demands is written $`\mathrm{needs}`$.
-
-Unlike atoms, demands are not part of the diagram $`G`$. Finite reflection of §4 receives $`\mathrm{needs}`$ besides the diagram $`G`$. It guarantees that the demands satisfied for the top $`\beta`$ before the reflection are satisfied for the new top $`f(\mathrm{cut})`$ after it ($`\mathrm{cut}`$ is the cut, described in "Demands in an expansion" below and in §4).
+**Definition (demand).** A top atom $`d = (k_d, r_d, p_d)`$ that is passed to finite reflection of §4 separately from the diagram $`G`$ is called a **demand**. A finite list of demands is written $`\mathrm{needs}`$. Finite reflection guarantees that the demands that hold for the top $`\beta`$ before the reflection hold for the new top $`f(\mathrm{cut})`$ after it ($`\mathrm{cut}`$ is the cut defined below).
 
 **Demands in an expansion.** In an expansion, $`\mathrm{needs}`$ is built as follows. Let $`x`$ be the last column and $`y`$ the bad root (layer $`K`$, row $`\ell`$). A representation of the diagram of $`s[N]`$ is built by adding the blocks ([05](05-1y-mountain.md) §6) one at a time (§6). For $`i = 0, 1, \ldots, N - 1`$, the procedure that adds block $`i + 1`$ is called **step $`i`$**.
 
@@ -218,7 +216,7 @@ The conclusion is "the one-step expansion relation is well-founded" (Theorem 1 o
 
 ## 6. Descent of the last label
 
-**Definition (last representation).** For a representation $`f`$ of a diagram $`G`$ of size $`n \gt 0`$, the label $`f(n-1)`$ of the last column is called the **last label** of $`f`$. If the size $`n`$ of $`G`$ is positive and $`G`$ has a representation $`f`$ with $`f(n-1) = a`$, we write $`\mathrm{Last}(G, a)`$ ($`a \in \alpha`$).
+**Definition (last label).** For a representation $`f`$ of a diagram of size $`n \gt 0`$, the label $`f(n-1)`$ of the last column is called the **last label** of $`f`$.
 
 **Theorem (the last label goes down).** Suppose $`G(s)`$ has a representation with last label $`\beta`$, and $`s[N]`$ is nonempty. Then for some $`b \lt \beta`$, $`G(s[N])`$ has a representation with last label $`b`$.
 
@@ -230,16 +228,16 @@ The conclusion is "the one-step expansion relation is well-founded" (Theorem 1 o
    - Diagram $`i = 0`$ has size $`x`$ and is a prefix of the old diagram (it does not contain the last column $`x`$). $`f`$ is a representation of it, bounded by $`\beta = f(x)`$.
    - The edge at the bad root gives $`R(K, f(\rho), f(y), f(x))`$, where $`\rho`$ is the root of the component of $`x`$ in layer $`K`$, row $`\ell`$. This is the first control relation, with index $`\theta = f(\rho)`$.
    - Let $`f_i`$ be the representation of diagram $`i`$ ($`f_0 = f`$). Step $`i`$ (§3), going from diagram $`i`$ to diagram $`i + 1`$, uses finite reflection once. The cut is the start of block $`i`$, $`\mathrm{cut} = y + i \cdot (x - y)`$.
-   - Hypothesis 8 of finite reflection (every demand holds for the top $`\beta`$) is checked with **templates**. The templates are the edges from the old last column $`x`$ to its parents, made into top atoms by removing the child (built as in Example 1 of §3). Every diagram of every step is bounded above by $`\beta = f(x)`$, so no column of a diagram has the label $`\beta`$. So the templates remain edges to the outside point $`\beta`$.
-     - At $`i = 0`$ the templates hold for $`\beta`$, because the edges $`(k, r, p, x)`$ to column $`x`$ hold in the original representation.
-     - When a step is taken, the root and parent column numbers of the templates are moved in the same way as the labels. Columns left of the cut stay; columns from the cut on move to the new block. The moved columns carry their old labels, so the templates keep holding for $`\beta`$.
-     - Each demand $`d = (k, r_d, p)`$ of step $`i`$ ("Demands in an expansion" of §3) has a template $`\tau = (k, r_\tau, p)`$ with the same layer and parent. (The letter $`s`$ is used for expressions, so we write a template as $`\tau`$.) The roots are in one of two cases.
+   - Hypothesis 8 of finite reflection (every demand holds for the top $`\beta`$) is checked with the edges $`(k, r, p, x)`$ from the old last column $`x`$ to its parents. Removing the child $`x`$ from such an edge gives a top atom $`(k, r, p)`$ (built as in Example 1 of §3). Every diagram of every step is bounded above by $`\beta = f(x)`$, so no column of a diagram has the label $`\beta`$. So these top atoms remain edges to the outside point $`\beta`$.
+     - At $`i = 0`$ these top atoms hold for $`\beta`$, because the edges $`(k, r, p, x)`$ hold in the original representation.
+     - When a step is taken, the root and parent column numbers of these top atoms are moved in the same way as the labels. Columns left of the cut stay; columns from the cut on move to the new block. The moved columns carry their old labels, so they keep holding for $`\beta`$.
+     - For each demand $`d = (k, r_d, p)`$ of step $`i`$ ("Demands in an expansion" of §3), one of these moved top atoms has the same layer and parent; call it $`\tau = (k, r_\tau, p)`$. The roots are in one of two cases.
        - $`r_d = r_\tau`$: $`d`$ and $`\tau`$ are equal, so $`d`$ holds for $`\beta`$.
-       - $`r_d \lt \mathrm{cut} \le r_\tau`$ (the root of the demand lies in an earlier block than the root of the template): the labels satisfy $`f_i(r_d) \lt f_i(r_\tau)`$. Weakening turns $`R(k, f_i(r_\tau), f_i(p), \beta)`$ into $`R(k, f_i(r_d), f_i(p), \beta)`$.
-   - The control relation carries over like the templates. Let the control relation of step $`i`$ be $`R(K, f_i(\rho_i), f_i(\mathrm{cut}), \beta)`$ ($`\rho_0 = \rho`$, $`\rho_i \le \mathrm{cut}`$). For the next step, $`\rho_{i+1}`$ is the column $`\rho_i`$ moved in the same way as the template columns, and the cut becomes the start of the next block. Both columns carry the old labels $`f_i(\rho_i)`$ and $`f_i(\mathrm{cut})`$ unchanged, so the same relation is the control relation of the next step. Its index is $`\theta = f_{i+1}(\rho_{i+1})`$.
-   - Let $`m`$ be the size of diagram $`i`$. The $`g`$ from the reflection equals $`f_i`$ left of the cut and lies entirely below $`f_i(\mathrm{cut})`$. The new diagram has $`m + (m - \mathrm{cut})`$ columns. Column $`c \lt m`$ gets $`g(c)`$, and column $`c \ge m`$ gets the old label $`f_i(\mathrm{cut} + c - m)`$. So $`f_i(\mathrm{cut}), \ldots, f_i(m-1)`$ appear unchanged at the right end. The labelling built this way is called the **splice** of $`g`$ and $`f_i`$. This gives a representation of the diagram that is one block longer. The atoms of the new diagram are of three kinds, and each holds for the spliced labels.
+       - $`r_d \lt \mathrm{cut} \le r_\tau`$ (the root of the demand lies in an earlier block than the root of $`\tau`$): the labels satisfy $`f_i(r_d) \lt f_i(r_\tau)`$. Weakening turns $`R(k, f_i(r_\tau), f_i(p), \beta)`$ into $`R(k, f_i(r_d), f_i(p), \beta)`$.
+   - The control relation carries over in the same way. Let the control relation of step $`i`$ be $`R(K, f_i(\rho_i), f_i(\mathrm{cut}), \beta)`$ ($`\rho_0 = \rho`$, $`\rho_i \le \mathrm{cut}`$). For the next step, $`\rho_{i+1}`$ is the column $`\rho_i`$ moved in the same way as above, and the cut becomes the start of the next block. Both columns carry the old labels $`f_i(\rho_i)`$ and $`f_i(\mathrm{cut})`$ unchanged, so the same relation is the control relation of the next step. Its index is $`\theta = f_{i+1}(\rho_{i+1})`$.
+   - Let $`m`$ be the size of diagram $`i`$. The $`g`$ from the reflection equals $`f_i`$ left of the cut and lies entirely below $`f_i(\mathrm{cut})`$. The new diagram has $`m + (m - \mathrm{cut})`$ columns. Column $`c \lt m`$ gets $`g(c)`$, and column $`c \ge m`$ gets the old label $`f_i(\mathrm{cut} + c - m)`$. So $`f_i(\mathrm{cut}), \ldots, f_i(m-1)`$ appear unchanged at the right end. The labels of $`g`$ and $`f_i`$ spliced this way form a representation of the diagram that is one block longer. The atoms of the new diagram are of three kinds, and each holds for the spliced labels.
      - Atoms of diagram $`i`$: they hold because $`g`$ is a representation.
-     - Old atoms whose column numbers are moved in the same way as the templates (copies): the moved columns carry their old labels, so they hold. However, the root of a copy may be a column before the block it was copied into (a column number below $`m`$). This is the case "the root moves to an earlier block". Then the root column $`r`$ before copying lies at or after the cut. The new root's label is below $`f_i(\mathrm{cut})`$, so it is smaller than $`f_i(\mathrm{cut}) \le f_i(r)`$. Weakening is used there.
+     - Old atoms copied by moving their column numbers in the same way: the moved columns carry their old labels, so they hold. However, the root of a copied atom may be a column before the block it was copied into (a column number below $`m`$). This is the case "the root moves to an earlier block". Then the root column $`r`$ before copying lies at or after the cut. The new root's label is below $`f_i(\mathrm{cut})`$, so it is smaller than $`f_i(\mathrm{cut}) \le f_i(r)`$. Weakening is used there.
      - Edges that come from demands (child at column $`m`$): the demands hold for the top $`f_i(\mathrm{cut})`$, and column $`m`$ has the label $`f_i(\mathrm{cut})`$, so they hold.
    - After $`N`$ repetitions we get a representation of the diagram of $`s[N]`$ bounded by $`\beta`$.
    - The new last label is below $`\beta`$. $`\square`$
@@ -251,7 +249,7 @@ The conclusion is "the one-step expansion relation is well-founded" (Theorem 1 o
 | well-foundedness | the induction on the last label |
 | transitivity | order and bound of the spliced labels |
 | strictness | $`f(\mathrm{cut}) \lt \beta`$ from the control relation |
-| weakening | edges whose root moves to an earlier block, and demands whose root lies in an earlier block than the template's |
+| weakening | edges whose root moves to an earlier block, and demands with $`r_d \lt r_\tau`$ |
 | finite reflection | once per block |
 | initial representation | the start of the induction |
 
@@ -261,7 +259,7 @@ The conclusion is "the one-step expansion relation is well-founded" (Theorem 1 o
 
 The combinatorial layer does not ask why finite reflection holds. Supplying $`(\alpha; \lt, D, R)`$ with the six hypotheses is the job of the **semantic layer**.
 
-- Phyrion's semantic layer: $`D`$ is a condition corresponding to admissible ordinals, and $`R`$ is $`\Sigma_1`$ preservation of a truth tower over the constructible universe $`L`$. Admissible ordinals, the constructible universe and truth towers are not used in this repository, so we do not define them.
+- Phyrion's semantic layer: it gives a $`D`$ and an $`R`$ different from those of this repository.
 - The semantic layer of this repository: $`\alpha = \mathrm{Ord}`$, $`D = \mathrm{True}`$ ($`D(x)`$ holds for every $`x`$), and $`R`$ is the relation of [07 The relation R](07-relation-r.md). The proofs are in [09 Discharging the obligations](09-obligations.md).
 
 ## 8. Where this repository uses it

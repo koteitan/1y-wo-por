@@ -93,17 +93,17 @@ A(m+1, n+1) &= A\bigl(m,\ A(m+1, n)\bigr).
 
 The keys called on the right, $`(m, 1)`$, $`(m+1, n)`$ and $`(m, \cdot)`$, are all lexicographically smaller than the key on the left. So well-founded recursion defines $`A`$.
 
-The rule $`G`$ may read only the values $`F(t')`$ at keys $`t'`$ with $`t' \prec t`$. Below we write $`\mathrm{IH}(t')`$ for such a "value at a smaller key". At a key $`t'`$ that is not $`\prec t`$, $`\mathrm{IH}(t')`$ is not defined.
+The rule $`G`$ may read only the values $`F(t')`$ at keys $`t'`$ with $`t' \prec t`$.
 
 ## 5. Guarded recursion
 
 In the definition of $`R`$ ([07](07-relation-r.md)), which keys are read depends on the values of variables inside a formula (defined in [03](03-sigma1-elementary.md) §2). Before writing the definition we cannot say that the keys read are smaller. So we proceed as follows.
 
-1. Write each value to be read as "the key is smaller $`\land`$ $`\mathrm{IH}(\text{key})`$". We call the first condition a **guard**. Where the key is not smaller, this expression is false.
+1. Wherever the value at a key $`t'`$ is read, write "$`t' \prec t \land F(t')`$". We call the first condition $`t' \prec t`$ a **guard**. Where the key is not smaller, this expression is false.
 2. By the theorem of §4, get the defining equation $`F(t) = G(t, F{\restriction}\{t' \mid t' \prec t\})`$. At this stage the right side still contains the guards.
 3. Show that the guard is always true wherever the right side actually reads a value. Then the equation without guards follows.
 
-In [07 The relation R](07-relation-r.md), step 1 is the stage interpretations of §5 (defined in [07](07-relation-r.md) §5), step 2 is the guarded equation of §5, and step 3 is the lemma (removing the guards) and the theorem (defining equation) of §6.
+In [07 The relation R](07-relation-r.md), step 1 is the stage interpretations of §5, step 2 is the guarded equation of §5, and step 3 is the lemma and the theorem of §6.
 
 **A small example.** On $`\mathbb N`$ consider a definition of the form $`F(n) := 1 + \sum_{i \in S_n} F(i)`$, where $`S_n`$ is a given finite set for each $`n`$ that may contain numbers $`\ge n`$. So as it stands, this is not a well-founded recursion. Written with the guard, $`F(n) := 1 + \sum_{i \in S_n,\ i \lt n} F(i)`$, it is defined by well-founded recursion. If $`S_n \subseteq \{0, \ldots, n-1\}`$ is shown separately, the equation without the guard, $`F(n) = 1 + \sum_{i \in S_n} F(i)`$, holds.
 

@@ -7,7 +7,7 @@ Prerequisites
 | Note | Terms used here |
 |---|---|
 | [02 Well-founded relations and recursion](02-well-founded.md) | lexicographic order, well-founded recursion, guarded recursion |
-| [03 Structures and Σ₁-elementary substructures](03-sigma1-elementary.md) | height, point, witness, 5-tuples for $`\Sigma_1`$ formulas and the matrix, top, top predicate, internal relation (§7), position, visible bits $`\mathrm{allow}_{k,S}`$ and the way two structures are compared (§8) |
+| [03 Structures and Σ₁-elementary substructures](03-sigma1-elementary.md) | height, point, witness, 5-tuples for $`\Sigma_1`$ formulas and the matrix, top, top predicate (§7), position, visible bits $`\mathrm{allow}_{k,S}`$ and the way two structures are compared (§8) |
 | [04 Patterns of resemblance](04-patterns-of-resemblance.md) | the idea of making top predicates atomic symbols |
 | [06 Phyrion's combinatorial layer](06-combinatorial-layer.md) | layer, edge, demand, representation, the role of $`R(k, \eta, a, b)`$, strictness and weakening among the six hypotheses |
 
@@ -29,7 +29,7 @@ There are three kinds of symbols.
 | $`\mathrm{Rel}_j`$ ($`j \in \mathbb N`$) | 3 | $`\mathrm{Rel}_j(x, y, z) :\iff R(j, x, y, z)`$ |
 | $`\mathrm{Top}_j`$ ($`j \in \mathbb N`$) | 2 | $`\mathrm{Top}_j(\xi, x) :\iff R(j, \xi, x, \gamma)`$ |
 
-$`\mathrm{Rel}_j`$ relates points to points (an internal relation), and $`\mathrm{Top}_j`$ relates a point to the top $`\gamma`$ (a top predicate) ([03](03-sigma1-elementary.md) §7). $`\gamma`$ itself is not in the domain.
+$`\mathrm{Rel}_j`$ relates points to points, and $`\mathrm{Top}_j`$ relates a point to the top $`\gamma`$ (a top predicate) ([03](03-sigma1-elementary.md) §7). $`\gamma`$ itself is not in the domain.
 
 We call the interpretations of the table the **true interpretations**, to distinguish them from the stage interpretations of §5. The true interpretation of the top predicates depends on the height $`\gamma`$.
 
@@ -45,12 +45,12 @@ We call the interpretations of the table the **true interpretations**, to distin
 
 - $`\mathrm{Rel}_j`$ is present for every layer $`j`$.
 - $`\mathrm{Top}_j`$ ($`j \lt k`$) is a **diagonal top predicate**. "Diagonal" means that the root index $`\xi`$ is not fixed inside the symbol but is taken as the first argument. So the first argument can be an ordinary variable (a parameter or a witness).
-- $`\mathrm{Top}_{k,\xi}(x) :\iff R(k, \xi, x, \gamma)`$ is a **named top predicate**. There is one unary symbol for each $`\xi \lt \eta`$. $`\xi`$ is called the **name** of this symbol.
+- $`\mathrm{Top}_{k,\xi}(x) :\iff R(k, \xi, x, \gamma)`$ is a **named top predicate**. There is one symbol of arity 1 for each $`\xi \lt \eta`$. $`\xi`$ is called the **name** of this symbol.
 - There are no top predicates with $`j \gt k`$.
 
 A **formula of level $`(k, \eta)`$** is a $`\Sigma_1`$ formula of the language of this structure.
 
-**Representation by positions.** A named $`\mathrm{Top}_{k,\xi}(x)`$ is represented as the binary $`\mathrm{Top}_k(p_s, x)`$ whose first argument is at a parameter position $`s`$ ([03](03-sigma1-elementary.md) §8). A formula comes with a set $`S \subseteq \mathbb N`$ of positions, and $`s \in S`$ requires $`s \lt r`$ and $`p_s \lt \eta`$. Here $`r`$ is the number of parameters (the $`r`$ of the 5-tuple of [03](03-sigma1-elementary.md) §7). The visible bits are decided by $`\mathrm{allow}_{k,S}`$ ([03](03-sigma1-elementary.md) §8).
+**Representation by positions.** A named $`\mathrm{Top}_{k,\xi}(x)`$ is represented as $`\mathrm{Top}_k(p_s, x)`$ of arity 2 whose first argument is at a parameter position $`s`$ ([03](03-sigma1-elementary.md) §8). A formula comes with a set $`S \subseteq \mathbb N`$ of positions, and $`s \in S`$ requires $`s \lt r`$ and $`p_s \lt \eta`$. Here $`r`$ is the number of parameters (the $`r`$ of the 5-tuple of [03](03-sigma1-elementary.md) §7). The visible bits are decided by $`\mathrm{allow}_{k,S}`$ ([03](03-sigma1-elementary.md) §8).
 
 ```math
 \mathrm{allow}_{k,S}(j, s) \iff j \lt k \ \lor\ (j = k \land s \in S)

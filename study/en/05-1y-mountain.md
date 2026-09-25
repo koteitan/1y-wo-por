@@ -14,7 +14,7 @@ The values in the examples were computed by a computer from these definitions (2
 
 ## 1. Expressions
 
-**Definition (expression).** An **expression** is a finite sequence of positive integers $`s = (s_0, \ldots, s_{n-1})`$ that is empty or has $`s_0 = 1`$. $`n \in \mathbb N`$ is called the **length** of the expression.
+**Definition (expression).** An **expression** is a finite sequence of positive integers $`s = (s_0, \ldots, s_{n-1})`$ ($`n \in \mathbb N`$) that is empty or has $`s_0 = 1`$.
 
 - Positions are counted from 0. Entry $`i`$ is called "column $`i`$".
 - A **seed** is an expression $`(1, m)`$ with an integer $`m \ge 1`$. An expression need not be obtainable from a seed by expansions (§6).
@@ -106,7 +106,7 @@ For $`(1, 2, 4, 3)`$ all top values are 1, so layers 1 and above have no parents
 **Definition (expansion $`s[N]`$).** $`N \in \mathbb N`$ is the number of copies. Let $`x`$ be the last column.
 
 - No bad root: delete the last column. $`s[N] = (s_0, \ldots, s_{x-1})`$.
-- Bad root $`z`$: build an expression of length $`x + N \cdot (x - z)`$. The block of columns $`z`$ to $`x - 1`$ (length $`x - z`$) is copied $`N`$ times. The values are not copied directly. The mountain (the parent forests) of each layer is copied, and the values are rebuilt from it. This note does not give the details of the rebuilding.
+- Bad root $`z`$: build an expression of length $`x + N \cdot (x - z)`$. The block of columns $`z`$ to $`x - 1`$ (length $`x - z`$) is copied $`N`$ times. The values are not copied directly. The mountain (the parent forests) of each layer is copied, and the values are rebuilt from it.
 
 **Definition (block).** If there is a bad root $`z`$, then for $`i = 0, 1, \ldots, N`$ the columns $`z + i \cdot (x - z)`$ to $`z + (i+1) \cdot (x - z) - 1`$ of $`s[N]`$ form **block $`i`$**. Block 0 is the original block, and blocks $`1, \ldots, N`$ are its copies. $`s[N]`$ is the columns $`0, \ldots, z - 1`$ followed by blocks $`0, \ldots, N`$. For example, in $`(1, 2, 2)[2] = (1, 2, 1, 2, 1, 2)`$ we have $`z = 0`$, $`x = 2`$, and blocks 0, 1, 2 are the columns $`\{0, 1\}`$, $`\{2, 3\}`$, $`\{4, 5\}`$.
 
@@ -137,10 +137,10 @@ In the example $`(1, 3)`$ the copying happens in layer 1, so the values are not 
 
 The final theorems of this repository ([README](../../README-en.md) "The four final theorems") are:
 
-1. Theorem 1 (well-foundedness): the one-step expansion relation is well-founded.
-2. Theorem 2 (well-order from the seeds): the set of expressions reachable from a seed is well-ordered by the lexicographic order.
-3. Theorem 3 (well-order of descendants): for every expression, the set of its descendants is well-ordered by the lexicographic order.
-4. Theorem 4 (reaching the empty expression): however the copy counts are chosen, repeated expansion reaches the empty expression.
+1. Theorem 1: the one-step expansion relation is well-founded.
+2. Theorem 2: the set of expressions reachable from a seed is well-ordered by the lexicographic order.
+3. Theorem 3: for every expression, the set of its descendants is well-ordered by the lexicographic order.
+4. Theorem 4: however the copy counts are chosen, repeated expansion reaches the empty expression.
 
 Theorems 2–4 follow from Theorem 1 by combinatorial arguments only. The proof of Theorem 1 is the topic of [06](06-combinatorial-layer.md) and the later notes.
 

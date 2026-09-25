@@ -8,7 +8,7 @@
 |---|---|
 | [01 順序数と ω₁](01-ordinals.md) | 順序数、極限順序数、$`\mathrm{Ord}`$ |
 | [02 整礎関係と整礎再帰](02-well-founded.md) | 整礎再帰、鍵、ガードつきの再帰、ラベル |
-| [03 構造と Σ₁ 初等部分構造](03-sigma1-elementary.md) | 構造 $`(\gamma; \ldots)`$、点、$`\Sigma_1`$ 論理式、$`\preccurlyeq_{\Sigma_1}`$、上端、上端述語、内部の関係（§7） |
+| [03 構造と Σ₁ 初等部分構造](03-sigma1-elementary.md) | 構造 $`(\gamma; \ldots)`$、点、$`\Sigma_1`$ 論理式、$`\preccurlyeq_{\Sigma_1}`$、上端、上端述語（§7） |
 
 このノートは、Carlson の patterns of resemblance の考え方を説明する。次に、[bms-elem-pattern](https://github.com/koteitan/bms-elem-pattern) が BMS でそれをどう使ったかを述べる。最後に、1-Y でそのままでは足りない理由と、このリポジトリの変更点を述べる。
 
@@ -37,8 +37,8 @@ Carlson はこれを $`\le_1, \ldots, \le_N`$（$`\Sigma_1, \ldots, \Sigma_N`$ �
 ```
 
 - $`N \ge 1`$ は自然数である。
-- $`\alpha \le_i \beta`$ は、$`\le_1`$ の定義の $`\preccurlyeq_{\Sigma_1}`$ を、$`\Sigma_i`$ 論理式での初等性に替えたものである。$`\Sigma_i`$ 論理式は、存在量化子のかたまりから始めて、存在量化子と全称量化子のかたまりを交互に $`i`$ 個並べ、その後ろに量化子の無い論理式を置いたものである。このリポジトリは $`\Sigma_i`$（$`i \ge 2`$）を使わないので、これ以上は説明しない。
-- 関係 $`\le_1, \ldots, \le_N`$ のそれぞれを $`\mathcal R_N`$ の **段** と呼ぶ。段 $`\le_i`$ は、$`\Sigma_i`$ 論理式での初等性で決まる。
+- $`\alpha \le_i \beta`$ は、$`\le_1`$ の定義の $`\preccurlyeq_{\Sigma_1}`$ を、$`\Sigma_i`$ 論理式での初等性に替えたものである。$`\Sigma_i`$ 論理式は、存在量化子のかたまりから始めて、存在量化子と全称量化子のかたまりを交互に $`i`$ 個並べ、その後ろに量化子の無い論理式を置いたものである。
+- 関係 $`\le_1, \ldots, \le_N`$ のそれぞれを $`\mathcal R_N`$ の **段** と呼ぶ。
 
 文献：T. J. Carlson, Elementary patterns of resemblance, Annals of Pure and Applied Logic 108 (2001), 19–77。
 
@@ -73,7 +73,7 @@ $`\omega \le_1 \omega`$ は定義から成り立つ。以上から $`\{\beta \mi
 
 展開では、付け替える列の古いラベルを $`\vec y`$ として、この形を使う。$`\psi`$ に「親子の辺のラベルが関係 $`\le_1`$ などを満たす」と書いておけば、新しいラベル $`\vec y'`$ も同じ辺の条件を満たす。しかも $`\vec y'`$ は $`\alpha`$ より下にある。展開では $`\alpha`$ は切れ目の列の古いラベルで、付け替える古いラベル $`\vec y`$ はどれも $`\alpha`$ 以上である。したがって新しいラベルは古いラベルより小さい。
 
-**bms-elem-pattern での使い方.** [bms-elem-pattern](https://github.com/koteitan/bms-elem-pattern) は、BMS の停止性を $`\mathcal R_N`$ で示した。行 $`k`$ の親子の辺のラベルの関係を $`\lt_{k+1}`$ にする。有限反映には $`\Sigma_n`$ の段と、連続性や共終性の補題を使う。これらの補題はこのリポジトリでは使わないので、説明しない。$`\mathcal R_N`$ の定義と例は、同リポジトリのノート [proof/pss/03-patterns.md](https://github.com/koteitan/bms-elem-pattern/blob/main/proof/pss/03-patterns.md) にある。
+**bms-elem-pattern での使い方.** [bms-elem-pattern](https://github.com/koteitan/bms-elem-pattern) は、BMS の停止性を $`\mathcal R_N`$ で示した。行 $`k`$ の親子の辺のラベルの関係を $`\lt_{k+1}`$ にする。有限反映には $`\Sigma_n`$ の段と、連続性や共終性の補題を使う。$`\mathcal R_N`$ の定義と例は、同リポジトリのノート [proof/pss/03-patterns.md](https://github.com/koteitan/bms-elem-pattern/blob/main/proof/pss/03-patterns.md) にある。
 
 ## 4. 1-Y で足りないもの
 
@@ -95,8 +95,8 @@ R(k, \eta, a, b) \quad (k \in \mathbb N,\ \eta, a, b \in \mathrm{Ord})
 
 1. **段はすべて $`\Sigma_1`$ にする.** 段の強さは、量化子の複雑さではなく、言語にある記号で決める。
 2. **上端述語（[03](03-sigma1-elementary.md) §7）を原子記号にする.** 高さ $`\gamma`$ の構造は、記号 $`\mathrm{Top}_j(\xi, x)`$ を「$`R(j, \xi, x, \gamma)`$」と解釈して持つ。上端への要求は原子式になる。
-3. **段 $`(k, \eta)`$ で見える記号を決める.** 層 $`j \lt k`$ の上端述語は全部見える。層 $`k`$ の上端述語 $`\mathrm{Top}_k(\xi, x)`$ は、第 1 引数 $`\xi`$ が $`\xi \lt \eta`$ を満たすものだけ見える。この $`\xi`$ を上端述語の **名前** と呼ぶ（[07](07-relation-r.md) §3）。$`(k, \eta)`$ が大きいほど、見える記号が増え、関係は強くなる。
-4. **内部の関係（[03](03-sigma1-elementary.md) §7）はすべての層で持つ.** $`\mathrm{Rel}_j(x, y, z) :\iff R(j, x, y, z)`$ をすべての $`j`$ について持つ。
+3. **段 $`(k, \eta)`$ で見える記号を決める.** 層 $`j \lt k`$ の上端述語は全部見える。層 $`k`$ の上端述語 $`\mathrm{Top}_k(\xi, x)`$ は、第 1 引数が $`\xi \lt \eta`$ を満たすものだけ見える。$`(k, \eta)`$ が大きいほど、見える記号が増え、関係は強くなる。
+4. **点どうしの関係 $`\mathrm{Rel}_j`$（[03](03-sigma1-elementary.md) §7）はすべての層で持つ.** $`\mathrm{Rel}_j(x, y, z) :\iff R(j, x, y, z)`$ をすべての $`j`$ について持つ。
 5. **再帰の鍵（[02](02-well-founded.md) §4）を $`(b, k, \eta)`$ にする.** 上端 $`b`$ を一番外に置く（[02](02-well-founded.md) §3）。
 
 こうしてできた関係 $`R`$ は、Carlson の $`\mathcal R_N`$ そのものではない。$`\mathcal R_N`$ と同じだとは主張しない。定義は [07 関係 R](07-relation-r.md) で述べる。

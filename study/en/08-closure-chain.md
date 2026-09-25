@@ -49,7 +49,7 @@ This is why a formula uses finitely many symbols (bound $`m`$). If formulas coul
 
 **Theorem (the height of witnesses is below ω₁).** $`h(\varphi, \vec p) \lt \omega_1`$.
 
-**Proof.** It is the maximum of finitely many $`y_i + 1`$, each below $`\omega_1`$ (Property 2 of [01](01-ordinals.md) §4). $`\square`$
+**Proof.** It is the maximum of finitely many $`y_i + 1`$, each below $`\omega_1`$ ([01](01-ordinals.md) §4). $`\square`$
 
 All chosen witnesses lie below $`h(\varphi, \vec p)`$.
 
@@ -61,7 +61,7 @@ All chosen witnesses lie below $`h(\varphi, \vec p)`$.
 \mathrm{next}(\gamma) := \max\Bigl(\gamma,\ \sup_{(\varphi, l)} h\bigl(\varphi, \mathrm{params}_\gamma(l)\bigr)\Bigr) + 1
 ```
 
-The supremum runs over all $`(\varphi, l) \in \mathcal F \times \mathbb N^{\lt\omega}`$. $`\mathrm{params}_\gamma(l)`$ is the parameter tuple coded by a list of natural numbers, as in [01](01-ordinals.md) §6. For $`\gamma = 0`$, $`e_0`$ is also as in [01](01-ordinals.md) §6.
+The supremum runs over all $`(\varphi, l) \in \mathcal F \times \mathbb N^{\lt\omega}`$. $`\mathrm{params}_\gamma(l)`$ is the parameter tuple coded by a list of natural numbers, as in [01](01-ordinals.md) §6.
 
 | Property | Statement | Reason |
 |---|---|---|
@@ -71,15 +71,15 @@ The supremum runs over all $`(\varphi, l) \in \mathcal F \times \mathbb N^{\lt\o
 
 **Proof of Property 3.** By the theorem (existence of a code) of [01](01-ordinals.md) §6 there is a list $`l`$ with $`\vec p = \mathrm{params}_\gamma(l)`$. The witnesses chosen for $`(\varphi, l)`$ lie below $`h(\varphi, \mathrm{params}_\gamma(l))`$. This is one of the terms of the supremum, so they lie below $`\mathrm{next}(\gamma)`$. $`\square`$
 
-## 5. The tower and λ
+## 5. λ
 
-**Definition (tower and λ).**
+**Definition (λ).**
 
 ```math
 \mathrm{next}^0(\gamma) := \gamma, \quad \mathrm{next}^{t+1}(\gamma) := \mathrm{next}\bigl(\mathrm{next}^t(\gamma)\bigr), \qquad \lambda(\gamma) := \sup_{t \in \mathbb N} \mathrm{next}^t(\gamma)
 ```
 
-Here $`t \in \mathbb N`$. The sequence $`\mathrm{next}^0(\gamma), \mathrm{next}^1(\gamma), \ldots`$ is called the **tower** from $`\gamma`$. An ordinal of the form $`\lambda(\gamma)`$ is called a **closure point**.
+Here $`t \in \mathbb N`$. An ordinal of the form $`\lambda(\gamma)`$ is called a **closure point**.
 
 | Property | Statement |
 |---|---|

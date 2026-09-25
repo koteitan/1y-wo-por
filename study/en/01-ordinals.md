@@ -77,15 +77,13 @@ $`0, 1, \omega, \omega+1, \omega \cdot 2, \omega^2, \omega^\omega, \varepsilon_0
 \alpha \lt \omega_1 \iff \alpha \text{ is countable}
 ```
 
-Three properties are used.
+Three facts are used.
 
-| Property | Statement |
-|---|---|
-| Property 1 | $`0 \lt \omega_1`$ |
-| Property 2 (closed under successor) | $`\alpha \lt \omega_1 \implies \alpha + 1 \lt \omega_1`$ |
-| Property 3 | $`\gamma \lt \omega_1 \implies \{\beta \mid \beta \lt \gamma\}`$ is countable |
+- $`0 \lt \omega_1`$.
+- $`\alpha \lt \omega_1 \implies \alpha + 1 \lt \omega_1`$.
+- $`\gamma \lt \omega_1 \implies \{\beta \mid \beta \lt \gamma\}`$ is countable.
 
-Reason for Property 2: $`\{\beta \mid \beta \lt \alpha + 1\} = \{\beta \mid \beta \lt \alpha\} \cup \{\alpha\}`$, and a countable set with one more point is countable. In other words, $`\omega_1`$ is a limit ordinal.
+Reason for the second: $`\{\beta \mid \beta \lt \alpha + 1\} = \{\beta \mid \beta \lt \alpha\} \cup \{\alpha\}`$, and a countable set with one more point is countable. In other words, $`\omega_1`$ is a limit ordinal.
 
 ## 5. Regularity of ω₁
 
@@ -110,7 +108,7 @@ The right side is a countable union of countable sets. The terms with $`\alpha_n
 
 ## 6. Enumerating a countable ordinal
 
-If $`0 \lt \gamma \lt \omega_1`$, the set $`\{\beta \mid \beta \lt \gamma\}`$ is nonempty and countable, so there is a surjection $`e_\gamma : \mathbb N \to \gamma`$. Choose one with the axiom of choice and call it $`e_\gamma`$. For $`\gamma = 0`$ there is no ordinal below $`\gamma`$. In this case let $`e_0`$ be the function $`\mathbb N \to \mathrm{Ord}`$ whose value is $`0`$ at every $`t`$. The values of $`e_0`$ are never used.
+If $`0 \lt \gamma \lt \omega_1`$, the set $`\{\beta \mid \beta \lt \gamma\}`$ is nonempty and countable, so there is a surjection $`e_\gamma : \mathbb N \to \gamma`$. Choose one with the axiom of choice and call it $`e_\gamma`$. For $`\gamma = 0`$ there is no surjection, so let $`e_0`$ be the function $`\mathbb N \to \mathrm{Ord}`$ whose value is always $`0`$.
 
 **Theorem (enumeration).** If $`\gamma \lt \omega_1`$ and $`a \lt \gamma`$, then $`e_\gamma(t) = a`$ for some $`t \in \mathbb N`$.
 

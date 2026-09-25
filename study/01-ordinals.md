@@ -77,15 +77,13 @@ $`0, 1, \omega, \omega+1, \omega \cdot 2, \omega^2, \omega^\omega, \varepsilon_0
 \alpha \lt \omega_1 \iff \alpha \text{ は可算}
 ```
 
-次の 3 つの性質を使う。
+次の 3 つを使う。
 
-| 性質 | 内容 |
-|---|---|
-| 性質 1 | $`0 \lt \omega_1`$ |
-| 性質 2（後者で閉じる） | $`\alpha \lt \omega_1 \implies \alpha + 1 \lt \omega_1`$ |
-| 性質 3 | $`\gamma \lt \omega_1 \implies \{\beta \mid \beta \lt \gamma\}`$ は可算 |
+- $`0 \lt \omega_1`$。
+- $`\alpha \lt \omega_1 \implies \alpha + 1 \lt \omega_1`$。
+- $`\gamma \lt \omega_1 \implies \{\beta \mid \beta \lt \gamma\}`$ は可算。
 
-性質 2 の理由：$`\{\beta \mid \beta \lt \alpha + 1\} = \{\beta \mid \beta \lt \alpha\} \cup \{\alpha\}`$ で、可算集合に 1 点を足しても可算である。言いかえると、$`\omega_1`$ は極限順序数である。
+2 つめの理由：$`\{\beta \mid \beta \lt \alpha + 1\} = \{\beta \mid \beta \lt \alpha\} \cup \{\alpha\}`$ で、可算集合に 1 点を足しても可算である。言いかえると、$`\omega_1`$ は極限順序数である。
 
 ## 5. ω₁ の正則性
 
@@ -110,7 +108,7 @@ $`0, 1, \omega, \omega+1, \omega \cdot 2, \omega^2, \omega^\omega, \varepsilon_0
 
 ## 6. 可算順序数の数え上げ
 
-$`0 \lt \gamma \lt \omega_1`$ なら、$`\{\beta \mid \beta \lt \gamma\}`$ は空でなく可算なので、全射 $`e_\gamma : \mathbb N \to \gamma`$ がある。選択公理でそれを 1 つ選び、$`e_\gamma`$ と書く。$`\gamma = 0`$ のときは、$`\gamma`$ より下の順序数が無い。このときは $`e_0`$ を、どの $`t`$ でも値が $`0`$ の関数 $`\mathbb N \to \mathrm{Ord}`$ とする。$`e_0`$ の値はどこでも使わない。
+$`0 \lt \gamma \lt \omega_1`$ なら、$`\{\beta \mid \beta \lt \gamma\}`$ は空でなく可算なので、全射 $`e_\gamma : \mathbb N \to \gamma`$ がある。選択公理でそれを 1 つ選び、$`e_\gamma`$ と書く。$`\gamma = 0`$ のときは全射が無いので、$`e_0`$ を値がいつも $`0`$ の関数 $`\mathbb N \to \mathrm{Ord}`$ とする。
 
 **定理（数え上げ）.** $`\gamma \lt \omega_1`$ かつ $`a \lt \gamma`$ なら、ある $`t \in \mathbb N`$ で $`e_\gamma(t) = a`$ である。
 

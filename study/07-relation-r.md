@@ -7,7 +7,7 @@
 | ノート | ここで使う言葉 |
 |---|---|
 | [02 整礎関係と整礎再帰](02-well-founded.md) | 辞書式順序、整礎再帰、ガードつきの再帰 |
-| [03 構造と Σ₁ 初等部分構造](03-sigma1-elementary.md) | 高さ、点、証人、$`\Sigma_1`$ 論理式の 5 つ組と行列、上端、上端述語、内部の関係（§7）、位置、見えるビット $`\mathrm{allow}_{k,S}`$ と 2 つの構造の比べ方（§8） |
+| [03 構造と Σ₁ 初等部分構造](03-sigma1-elementary.md) | 高さ、点、証人、$`\Sigma_1`$ 論理式の 5 つ組と行列、上端、上端述語（§7）、位置、見えるビット $`\mathrm{allow}_{k,S}`$ と 2 つの構造の比べ方（§8） |
 | [04 Patterns of resemblance](04-patterns-of-resemblance.md) | 上端述語を原子記号にする考え方 |
 | [06 Phyrion 氏の組合せの層](06-combinatorial-layer.md) | 層、辺、要求、表現、$`R(k, \eta, a, b)`$ の役割、6 つの仮定のうち狭義性と弱化 |
 
@@ -29,7 +29,7 @@
 | $`\mathrm{Rel}_j`$（$`j \in \mathbb N`$） | 3 | $`\mathrm{Rel}_j(x, y, z) :\iff R(j, x, y, z)`$ |
 | $`\mathrm{Top}_j`$（$`j \in \mathbb N`$） | 2 | $`\mathrm{Top}_j(\xi, x) :\iff R(j, \xi, x, \gamma)`$ |
 
-$`\mathrm{Rel}_j`$ は点どうしの関係（内部の関係）、$`\mathrm{Top}_j`$ は点から上端 $`\gamma`$ への関係（上端述語）である（[03](03-sigma1-elementary.md) §7）。$`\gamma`$ 自身は領域に無い。
+$`\mathrm{Rel}_j`$ は点どうしの関係、$`\mathrm{Top}_j`$ は点から上端 $`\gamma`$ への関係（上端述語）である（[03](03-sigma1-elementary.md) §7）。$`\gamma`$ 自身は領域に無い。
 
 表の解釈を、§5 の段の解釈と区別して **真の解釈** と呼ぶ。上端述語の真の解釈は、高さ $`\gamma`$ ごとに違う。
 
