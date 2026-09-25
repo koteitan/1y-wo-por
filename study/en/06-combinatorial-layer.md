@@ -31,7 +31,29 @@ where $`\mathrm{root}_{k,r}(c)`$ is the root of the component of $`c`$ in layer 
 | $`(1, 2, 4)`$ | $`(0,0,0,1)`$, $`(0,0,1,2)`$, $`(0,1,1,2)`$ |
 | $`(1, 3)`$ | $`(0,0,0,1)`$, $`(1,0,0,1)`$ |
 
-The third atom of $`(1, 2, 4)`$ is the edge $`2 \to 1`$ of row 1. Column 1 has no parent in row 1, so its root is column 1 itself.
+**Example (the atoms of $`(1, 2, 4)`$).** First build the mountain of layer 0 ([05](05-1y-mountain.md) §2, §3). In the table, "$`v \leftarrow p`$" means value $`v`$ with parent column $`p`$.
+
+| layer 0 | column 0 | column 1 | column 2 |
+|---|---|---|---|
+| row 2 | 0 | 0 | 1 |
+| row 1 | 0 | 1 | 2 ← 1 |
+| row 0 | 1 | 2 ← 0 | 4 ← 1 |
+
+- Row 0: the parent of column 1 is the largest $`p \lt 1`$ with $`s_p \lt 2`$, which is column 0. The parent of column 2 is the largest $`p \lt 2`$ with $`s_p \lt 4`$, which is column 1.
+- Row 1: the values are differences, $`v_1 = (0,\ 2 - 1,\ 4 - 2) = (0, 1, 2)`$. The only row-0 ancestor of column 1 is column 0, whose value is 0, so column 1 has no parent. The row-0 ancestors of column 2 are columns 1 and 0, and $`0 \lt v_1(1) = 1 \lt 2`$, so its parent is column 1.
+- Row 2: $`v_2 = (0, 0, 2 - 1) = (0, 0, 1)`$. The only row-1 ancestor of column 2 is column 1, whose value is 0, so there is no parent.
+- The heights of columns 0, 1, 2 are 0, 1, 2, and all top values are 1. Layer 1 has values $`(1, 1, 1)`$; no value is strictly smaller, so there are no parents ([05](05-1y-mountain.md) §4). Layers 1 and above have no atoms.
+
+So the edges are the 3 edges of layer 0, and each becomes one atom. The size is $`n = 3`$.
+
+| Edge (layer, row) | Parent $`p`$ | Child $`q`$ | How to find the root $`r`$ | Atom $`(k, r, p, q)`$ | Validity $`r \le p \lt q \lt 3`$ |
+|---|---|---|---|---|---|
+| layer 0, row 0 | 0 | 1 | in row 0, $`1 \to 0`$; column 0 has no parent. Root 0 | $`(0, 0, 0, 1)`$ | $`0 \le 0 \lt 1 \lt 3`$ |
+| layer 0, row 0 | 1 | 2 | in row 0, $`2 \to 1 \to 0`$; column 0 has no parent. Root 0 | $`(0, 0, 1, 2)`$ | $`0 \le 1 \lt 2 \lt 3`$ |
+| layer 0, row 1 | 1 | 2 | in row 1, $`2 \to 1`$; column 1 has no parent in row 1. Root 1 | $`(0, 1, 1, 2)`$ | $`1 \le 1 \lt 2 \lt 3`$ |
+
+- An atom does not record the row number. The second and third atoms are both the edge with parent 1 and child 2, but they lie in different rows, so their roots differ (0 and 1). That is why they are different atoms.
+- On the edge of the third atom, $`v_1(2) = 2 = v_1(1) + 1`$. This is the bad root of $`(1, 2, 4)`$ (layer 0, row 1, column 1) ([05](05-1y-mountain.md) §5).
 
 ## 2. Representations
 
