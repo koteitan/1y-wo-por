@@ -58,13 +58,15 @@ A column with value 0 is read as "absent from that row".
 
 ## 4. Layers
 
-The mountain of §2 and §3 is called **layer 0**. The 1-Y mountain builds layers $`1, 2, \ldots`$ one after another from layer 0 and stacks them. Each layer has the values of row 0 and the forest of row-0 parents. The higher rows are built by the same rules as in §3. The mountain of layer $`k`$ is simply called layer $`k`$.
+**Definition (layer).** The mountain of §2 and §3 is called **layer 0**. From the mountain of layer $`k`$, the values and parents of row 0 of layer $`k+1`$ are defined by the three definitions below. The rows from 1 up of layer $`k+1`$ are built by the same rules as in §3. The resulting mountain is called **layer $`k+1`$**. The 1-Y mountain is the stack of layers $`0, 1, 2, \ldots`$.
 
-**Definition (extraction).** Layer $`k+1`$ is built from layer $`k`$.
+In the three definitions below, heights and top values (§3) are those of layer $`k`$.
 
-- Values: the top value of each column.
-- Forest of candidate parents: for a column $`c`$ of height $`h \gt 0`$, the largest ancestor of $`c`$ in row $`h - 1`$ whose height is $`h`$ or $`h - 1`$. A column of height 0 has no candidate parent.
-- Inside this forest, parents are chosen by the same rule as in row 0 (the largest ancestor with a positive, strictly smaller value). Ancestors here are ancestors in this candidate forest (§2). The chosen parents are the row-0 parents of layer $`k+1`$.
+**Definition (row-0 values of layer k+1).** The row-0 value of column $`c`$ in layer $`k+1`$ is defined to be the top value of $`c`$ in layer $`k`$.
+
+**Definition (candidate parent).** Let $`h`$ be the height of column $`c`$. If $`h \gt 0`$, the **candidate parent** of $`c`$ is defined to be the largest ancestor of $`c`$ in row $`h - 1`$ of layer $`k`$ whose height is $`h`$ or $`h - 1`$. If $`h = 0`$, or no such ancestor exists, there is no candidate parent. Candidate parents point to the left, so they form a forest (§2).
+
+**Definition (row-0 parents of layer k+1).** The row-0 parent of column $`c`$ in layer $`k+1`$ is defined to be the largest ancestor $`p`$ of $`c`$ in the forest of candidate parents with $`0 \lt v(p) \lt v(c)`$, where $`v`$ is the row-0 value of layer $`k+1`$. If there is none, there is no parent. This is the rule "parents of row $`r+1`$" of §3, with the forest replaced by the forest of candidate parents and the values by the top values.
 
 Column values decrease from layer to layer, so $`\max(1, \max_i s_i)`$ layers suffice.
 
@@ -75,16 +77,20 @@ Column values decrease from layer to layer, so $`\max(1, \max_i s_i)`$ layers su
 | row 1 | 0 | 2 |
 | row 0 | 1 | 3 ← 0 |
 
-Column 1 has height 1 and top value 2. In row 1 the ancestor of column 1 is column 0, but its value is 0, so it is not a parent.
+In layer 0, column 0 has height 0 and top value 1. Column 1 has height 1 and top value 2 (in row 1 the ancestor of column 1 is column 0, whose value is 0, so it is not a parent).
+
+- Row-0 values of layer 1: the top values $`(1, 2)`$.
+- Candidate parents: column 0 has height 0, so it has none. Column 1 has height $`h = 1`$; its ancestor in row $`h - 1 = 0`$ is column 0, whose height is $`0 = h - 1`$. So the candidate parent of column 1 is column 0.
+- Row-0 parents of layer 1: the ancestor of column 1 in the forest of candidate parents is column 0, and $`0 \lt 1 \lt 2`$, so the parent is column 0.
 
 | layer 1 | column 0 | column 1 |
 |---|---|---|
 | row 1 | 0 | 1 |
 | row 0 | 1 | 2 ← 0 |
 
-Row 0 of layer 1 has the top values $`(1, 2)`$. The candidate parent of column 1 is column 0 (a row-0 ancestor of height $`0 = 1 - 1`$). Since $`1 \lt 2`$, the parent is column 0. Layer 2 has values $`(1, 1)`$ and no parents.
+The top values of layer 1 are $`(1, 1)`$, so the row-0 values of layer 2 are $`(1, 1)`$. No $`p`$ has $`0 \lt v(p) \lt 1`$, so layer 2 has no parents.
 
-For $`(1, 2, 4, 3)`$ all top values are 1, so layers 1 and above have no parents.
+For $`(1, 2, 4, 3)`$ all top values of layer 0 are 1, so layers 1 and above have no parents.
 
 ## 5. The bad root
 
