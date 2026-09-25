@@ -224,6 +224,12 @@ The conclusion is "the one-step expansion relation is well-founded" (Theorem 1 o
    - Diagram $`i = 0`$ has size $`x`$ and is a prefix of the old diagram (it does not contain the last column $`x`$). $`f`$ is a representation of it, bounded by $`\beta = f(x)`$.
    - The edge at the bad root gives $`R(K, f(\rho), f(y), f(x))`$, where $`\rho`$ is the root of the component of $`x`$ in layer $`K`$, row $`d`$. This is the first control relation.
    - Going from diagram $`i`$ to diagram $`i + 1`$ uses finite reflection once. The cut is the start of block $`i`$, $`\mathrm{cut} = y + i \cdot (x - y)`$.
+   - Hypothesis 8 of finite reflection (every demand holds for the top $`\beta`$) is checked with **templates**. The templates are the edges from the old last column $`x`$ to its parents, made into top atoms by removing the child (built as in Example 1 of §3). Every diagram of every step is bounded above by $`\beta = f(x)`$, so no column of a diagram has the label $`\beta`$. So the templates remain edges to the outside point $`\beta`$.
+     - At $`i = 0`$ the templates hold for $`\beta`$, because the edges $`(k, r, p, x)`$ to column $`x`$ hold in the original representation.
+     - When a step is taken, the root and parent column numbers of the templates are moved in the same way as the labels. Columns left of the cut stay; columns from the cut on move to the new block. The moved columns carry their old labels, so the templates keep holding for $`\beta`$.
+     - Each demand $`d = (k, r_d, p)`$ of step $`i`$ ("Demands in an expansion" of §3) has a template $`s = (k, r_s, p)`$ with the same layer and parent. The roots are in one of two cases.
+       - $`r_d = r_s`$: $`d`$ and $`s`$ are equal, so $`d`$ holds for $`\beta`$.
+       - $`r_d \lt \mathrm{cut} \le r_s`$ (the root of the demand lies in an earlier block than the root of the template): the labels satisfy $`f(r_d) \lt f(r_s)`$. Weakening turns $`R(k, f(r_s), f(p), \beta)`$ into $`R(k, f(r_d), f(p), \beta)`$.
    - Let $`m`$ be the size of diagram $`i`$ and $`f_i`$ its labelling. The $`g`$ from the reflection equals $`f_i`$ left of the cut and lies entirely below $`f_i(\mathrm{cut})`$. The new diagram has $`m + (m - \mathrm{cut})`$ columns. Column $`c \lt m`$ gets $`g(c)`$, and column $`c \ge m`$ gets the old label $`f_i(\mathrm{cut} + c - m)`$. So $`f_i(\mathrm{cut}), \ldots, f_i(m-1)`$ appear unchanged at the right end. This gives a representation of the diagram that is one block longer.
    - After $`N`$ repetitions we get a representation of the diagram of $`s[N]`$ bounded by $`\beta`$.
    - The new last label is below $`\beta`$. $`\square`$
@@ -235,7 +241,7 @@ The conclusion is "the one-step expansion relation is well-founded" (Theorem 1 o
 | well-foundedness | the induction on the last label |
 | transitivity | order and bound of the spliced labels |
 | strictness | $`f(\mathrm{cut}) \lt \beta`$ from the control relation |
-| weakening | edges whose root moves to an earlier block, and virtual demands |
+| weakening | edges whose root moves to an earlier block, and demands whose root lies in an earlier block than the template's |
 | finite reflection | once per block |
 | initial representation | the start of the induction |
 
