@@ -13,7 +13,16 @@ This note explains the part of Phyrion's proof that does not use the meaning of 
 
 ## 1. Diagrams
 
-**Definition (atom).** An **atom** is a 4-tuple of natural numbers $`e = (k, r, p, q)`$: layer $`k`$, root $`r`$, parent $`p`$, child $`q`$. It is **valid** for size $`n`$ if $`r \le p \lt q \lt n`$.
+**Definition (atom).** An **atom** is a 4-tuple of natural numbers $`e = (k, r, p, q) \in \mathbb N^4`$. It represents one parent–child edge.
+
+- $`k \in \mathbb N`$: the layer number.
+- $`r \in \mathbb N`$: the column number of the root, that is, the root of the child's component in the row of the edge. It is not a row number.
+- $`p \in \mathbb N`$: the column number of the parent.
+- $`q \in \mathbb N`$: the column number of the child.
+
+None of them is a label (an ordinal); they are all numbers. Labels are attached to column numbers by a representation $`f`$ of §2.
+
+It is **valid** for size $`n`$ if $`r \le p \lt q \lt n`$.
 
 **Definition (diagram).** A **diagram** is a size $`n`$ together with a finite list of valid atoms. $`n`$ is the number of columns.
 
