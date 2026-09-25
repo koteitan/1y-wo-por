@@ -116,6 +116,46 @@ For $`(1, 2, 4, 3)`$ all top values of layer 0 are 1, so layers 1 and above have
 
 **Definition (block).** If there is a bad root $`z`$, then for $`i = 0, 1, \ldots, N`$ the columns $`z + i \cdot (x - z)`$ to $`z + (i+1) \cdot (x - z) - 1`$ of $`s[N]`$ form **block $`i`$**. Block 0 is the original block, and blocks $`1, \ldots, N`$ are its copies. $`s[N]`$ is the columns $`0, \ldots, z - 1`$ followed by blocks $`0, \ldots, N`$. For example, in $`(1, 2, 2)[2] = (1, 2, 1, 2, 1, 2)`$ we have $`z = 0`$, $`x = 2`$, and blocks 0, 1, 2 are the columns $`\{0, 1\}`$, $`\{2, 3\}`$, $`\{4, 5\}`$.
 
+**Example ($`(1, 2, 4, 8, 10, 8)[2]`$).** We compute it step by step.
+
+1. **The original mountain.** Built by §2–§4. The row-0 values of layer 1 are $`(1, 1, 1, 1, 1, 1)`$, and there are no parents from layer 1 up. So only the mountain of layer 0 matters. In the table, "$`v \leftarrow p`$" means value $`v`$ with parent column $`p`$.
+
+   | layer 0 | column 0 | column 1 | column 2 | column 3 | column 4 | column 5 |
+   |---|---|---|---|---|---|---|
+   | row 3 | 0 | 0 | 0 | 1 | 0 | 1 |
+   | row 2 | 0 | 0 | 1 | 2 ← 2 | 1 | 2 ← 2 |
+   | row 1 | 0 | 1 | 2 ← 1 | 4 ← 2 | 2 ← 1 | 4 ← 2 |
+   | row 0 | 1 | 2 ← 0 | 4 ← 1 | 8 ← 2 | 10 ← 3 | 8 ← 2 |
+
+2. **The bad root.** The last column is $`x = 5`$, and its parent is column 2 in rows 0, 1 and 2. In row 0, $`8 \ne 4 + 1`$; in row 1, $`4 \ne 2 + 1`$; in row 2, $`2 = 1 + 1`$. So the bad root is layer 0, row 2, column $`z = 2`$. Block 0 is columns 2–4, of length $`x - z = 3`$. The length of $`s[2]`$ is $`5 + 2 \cdot 3 = 11`$; block 1 is columns 5–7 and block 2 is columns 8–10.
+
+3. **Copy the mountain.** A column of block $`i`$ ($`i \ge 1`$) is a copy of the column at the same position in block 0. Its parents are as follows.
+   - If the copied column's parent $`p`$ has $`p \lt z`$, it stays. If $`p \ge z`$, it moves right by $`3 i`$.
+   - The first column of a block (the copy of column $`z`$) takes, in the rows below the bad row 2, the parent of the last column $`x`$ moved by $`3 (i - 1)`$ by the same rule (moved if it is at least $`z`$, kept if it is left of $`z`$). From row 2 up it copies the parents of column $`z`$ (none here). So its height is 2, the same as column $`z`$.
+
+4. **Rebuild the values.** The top value of each column comes from the layers above. Here layer 1 is all 1, so every top value is 1. The values are set from the top row down by the formula below, where $`h(c)`$ is the height of column $`c`$.
+
+   ```math
+   v_r(c) = 1 + \sum_{u = r}^{h(c) - 1} v_u(\mathrm{par}_u(c))
+   ```
+
+   The sum is over the rows $`u`$ where $`c`$ has a parent. This is the difference $`v_{r+1}(c) = v_r(c) - v_r(\mathrm{par}_r(c))`$ of §3 run backwards.
+
+   | row | column 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+   |---|---|---|---|---|---|---|---|---|---|---|---|
+   | 3 | 0 | 0 | 0 | 1 | 0 | 0 | 1 | 0 | 0 | 1 | 0 |
+   | 2 | 0 | 0 | 1 | 2 ← 2 | 1 | 1 | 2 ← 5 | 1 | 1 | 2 ← 8 | 1 |
+   | 1 | 0 | 1 | 2 ← 1 | 4 ← 2 | 2 ← 1 | 3 ← 2 | 5 ← 5 | 2 ← 1 | 4 ← 5 | 6 ← 8 | 2 ← 1 |
+   | 0 | 1 | 2 ← 0 | 4 ← 1 | 8 ← 2 | 10 ← 3 | 7 ← 2 | 12 ← 5 | 14 ← 6 | 11 ← 5 | 17 ← 8 | 19 ← 9 |
+
+   - Column 5 (copy of column 2): height 2. Row 1 value $`1 + v_1(2) = 1 + 2 = 3`$; row 0 value $`1 + v_0(2) + v_1(2) = 1 + 4 + 2 = 7`$.
+   - Column 6 (copy of column 3): height 3. Its parent is column 5 in rows 0–2 (the parent 2 of column 3 moved by 3). Row 0 value $`1 + v_0(5) + v_1(5) + v_2(5) = 1 + 7 + 3 + 1 = 12`$.
+   - Column 7 (copy of column 4): height 2. Its row-0 parent is column 6 (the parent 3 of column 4 moved), and its row-1 parent is column 1 (kept, since $`1 \lt z`$). Row 0 value $`1 + v_0(6) + v_1(1) = 1 + 12 + 1 = 14`$.
+
+   So $`(1, 2, 4, 8, 10, 8)[2] = (1, 2, 4, 8, 10, 7, 12, 14, 11, 17, 19)`$. The values $`(7, 12, 14)`$ of block 1 are not those of block 0, $`(4, 8, 10)`$, plus a constant, because the mountain is copied and the values are rebuilt, instead of copying the values.
+
+The table lists the expansions of a few expressions.
+
 | Expression $`s`$ | $`N`$ | $`s[N]`$ |
 |---|---|---|
 | $`(1)`$ | 5 | $`()`$ |
