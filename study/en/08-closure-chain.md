@@ -120,7 +120,7 @@ c_0 := \lambda(0), \qquad c_{t+1} := \lambda(c_t)
 
 All follow from §5 and §6 by induction on $`t`$.
 
-Any two points of this chain are related by $`R`$ at every layer and every root index up to the smaller point. The proof needs that at a Good point the top predicates agree with the top predicates of $`\omega_1`$. Both are explained in [09](09-obligations.md) §4.
+Any two points of this chain are related by $`R`$ at every layer and every root label up to the smaller point. The proof needs that at a Good point the top predicates agree with the top predicates of $`\omega_1`$. Both are explained in [09](09-obligations.md) §4.
 
 ## 8. Where this repository uses it
 

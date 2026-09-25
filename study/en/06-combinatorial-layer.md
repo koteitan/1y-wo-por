@@ -105,10 +105,10 @@ So there are 2 edges: row 0 of layer 0 and row 0 of layer 1. The size is $`n = 2
 
 Choose one structure of labels $`(\alpha; \lt, D, R)`$ and keep it fixed (for the notation of structures see [03](03-sigma1-elementary.md) §1). All definitions below are relative to this structure.
 
-- $`\alpha`$ is the set of labels (the domain).
+- $`\alpha`$ is the domain. Its elements are called **labels**. A representation below attaches one label to each column of a diagram.
 - $`\lt`$ is an order on $`\alpha`$.
 - $`D`$ is a subset of $`\alpha`$, the labels that may be used. $`D(x)`$ means $`x \in D`$.
-- $`R(k, \eta, a, b)`$ is a relation of four arguments: $`k`$ is a natural number and $`\eta, a, b`$ are elements of $`\alpha`$. Writing $`R_{k,\eta}(a, b) := R(k, \eta, a, b)`$, $`R`$ is a family of relations $`R_{k,\eta}`$ between two points $`a, b`$, one for each pair $`(k, \eta)`$. The $`k`$ and $`\eta`$ that pick one member of the family are called **indices**. In the definition of a representation below, $`\eta`$ receives the label of the root column ([05](05-1y-mountain.md) §3), $`a`$ the label of the parent, and $`b`$ the label of the child. That is why $`\eta`$ is called the **root index**. The root index is not the column number of the root but its label (an element of $`\alpha`$). Read $`R(k, \eta, a, b)`$ as "in layer $`k`$ with root index $`\eta`$, $`a`$ is stable into $`b`$". This is only a reading; what $`R`$ is does not matter here (§7).
+- $`R(k, \eta, a, b)`$ is a relation of four arguments: $`k`$ is a natural number and $`\eta, a, b`$ are elements of $`\alpha`$. In the definition of a representation below, $`\eta`$ receives the label of the root column ([05](05-1y-mountain.md) §3), $`a`$ the label of the parent, and $`b`$ the label of the child. That is why $`\eta`$ is called the **root label** (it is an element of $`\alpha`$, not a column number). Read $`R(k, \eta, a, b)`$ as "in layer $`k`$ with root label $`\eta`$, $`a`$ is stable into $`b`$". This is only a reading; what $`R`$ is does not matter here (§7).
 
 **Definition (representation).** A function $`f : \mathbb N \to \alpha`$ is a **representation** of a diagram $`G`$ of size $`n`$ if the following three conditions hold.
 
@@ -116,7 +116,7 @@ Choose one structure of labels $`(\alpha; \lt, D, R)`$ and keep it fixed (for th
 2. $`f(i) \lt f(j)`$ for $`i \lt j \lt n`$.
 3. $`R(k, f(r), f(p), f(q))`$ for each atom $`(k, r, p, q)`$ of $`G`$.
 
-$`f(i)`$ is called the **label** of column $`i`$.
+$`f(i)`$ is called the label of column $`i`$.
 
 **Example.** A representation of the diagram of $`(1, 2, 4)`$ is an $`f`$ with
 
@@ -159,7 +159,7 @@ Here $`\beta = f(2)`$ is the label of column 2, which is now outside.
   - layer $`K`$: the edges of the rows below row $`\ell`$;
   - layer $`k \gt K`$: none.
 
-The edge of layer $`K`$, row $`\ell`$ is the edge of the bad root, and it is not made a demand. Instead, the relation $`R(K, \theta, f(\mathrm{cut}), \beta)`$ is passed to finite reflection of §4 (hypothesis 5). A relation of this form is called the **control relation**, and $`\theta \in \alpha`$ is called its **index**. At step 0, $`\theta = f(\rho)`$, where $`\rho`$ is the root of the component of $`x`$ in layer $`K`$, row $`\ell`$ ([05](05-1y-mountain.md) §3). The $`\theta`$ of later steps is described in §6.
+The edge of layer $`K`$, row $`\ell`$ is the edge of the bad root, and it is not made a demand. Instead, the relation $`R(K, \theta, f(\mathrm{cut}), \beta)`$ is passed to finite reflection of §4 (hypothesis 5). A relation of this form is called the **control relation**, and $`\theta \in \alpha`$ is its root label. At step 0, $`\theta = f(\rho)`$, where $`\rho`$ is the root of the component of $`x`$ in layer $`K`$, row $`\ell`$ ([05](05-1y-mountain.md) §3). The $`\theta`$ of later steps is described in §6.
 
 **Example 2 (step 0 of the expansion of $`(1, 2, 4)`$).** $`x = 2`$, the bad root is $`y = 1`$ (layer $`K = 0`$, row $`\ell = 1`$), and $`s[N] = (1, 2, \ldots, N + 2)`$. Look at step $`i = 0`$.
 
@@ -174,7 +174,7 @@ The edge of layer $`K`$, row $`\ell`$ is the edge of the bad root, and it is not
 
 ## 4. Finite reflection
 
-**Definition (admissible demand).** For a layer $`K \in \mathbb N`$, a cut $`\mathrm{cut} \in \mathbb N`$, an index $`\theta \in \alpha`$ and a function $`f : \mathbb N \to \alpha`$, a top atom $`d = (k_d, r_d, p_d)`$ is **admissible** if one of the following holds.
+**Definition (admissible demand).** For a layer $`K \in \mathbb N`$, a cut $`\mathrm{cut} \in \mathbb N`$, a root label $`\theta \in \alpha`$ and a function $`f : \mathbb N \to \alpha`$, a top atom $`d = (k_d, r_d, p_d)`$ is **admissible** if one of the following holds.
 
 - $`k_d \lt K`$ (a lower layer).
 - $`k_d = K`$ and $`r_d \lt \mathrm{cut}`$ and $`f(r_d) \lt \theta`$ (the same layer, the root before the cut, and the root's label below $`\theta`$).
@@ -242,7 +242,7 @@ The conclusion is "the one-step expansion relation is well-founded" (Theorem 1 o
 2. Bad root $`y`$ (layer $`K`$, row $`\ell`$):
    - For $`i = 0, 1, \ldots, N`$, the prefix (§1) of $`G(s[N])`$ of size $`x + i \cdot (x - y)`$ is called diagram $`i`$. Diagram $`i`$ consists of the edges of columns $`0, \ldots, y - 1`$ and blocks $`0, \ldots, i`$. Diagram $`N`$ is $`G(s[N])`$ itself.
    - Diagram $`i = 0`$ has size $`x`$ and is a prefix of the old diagram (it does not contain the last column $`x`$). $`f`$ is a representation of it, bounded by $`\beta = f(x)`$.
-   - The edge at the bad root gives $`R(K, f(\rho), f(y), f(x))`$, where $`\rho`$ is the root of the component of $`x`$ in layer $`K`$, row $`\ell`$. This is the first control relation, with index $`\theta = f(\rho)`$.
+   - The edge at the bad root gives $`R(K, f(\rho), f(y), f(x))`$, where $`\rho`$ is the root of the component of $`x`$ in layer $`K`$, row $`\ell`$. This is the first control relation, with root label $`\theta = f(\rho)`$.
    - Let $`f_i`$ be the representation of diagram $`i`$ ($`f_0 = f`$). Step $`i`$ (§3), going from diagram $`i`$ to diagram $`i + 1`$, uses finite reflection once. The cut is the start of block $`i`$, $`\mathrm{cut} = y + i \cdot (x - y)`$.
    - Hypothesis 8 of finite reflection (every demand holds for the top $`\beta`$) is checked with the edges $`(k, r, p, x)`$ from the old last column $`x`$ to its parents. Removing the child $`x`$ from such an edge gives a top atom $`(k, r, p)`$ (built as in Example 1 of §3). Every diagram of every step is bounded above by $`\beta = f(x)`$, so no column of a diagram has the label $`\beta`$. So these top atoms remain edges to the outside point $`\beta`$.
      - At $`i = 0`$ these top atoms hold for $`\beta`$, because the edges $`(k, r, p, x)`$ hold in the original representation.
@@ -250,7 +250,7 @@ The conclusion is "the one-step expansion relation is well-founded" (Theorem 1 o
      - For each demand $`d = (k, r_d, p)`$ of step $`i`$ ("Demands in an expansion" of §3), one of these moved top atoms has the same layer and parent; call it $`\tau = (k, r_\tau, p)`$. The roots are in one of two cases.
        - $`r_d = r_\tau`$: $`d`$ and $`\tau`$ are equal, so $`d`$ holds for $`\beta`$.
        - $`r_d \lt \mathrm{cut} \le r_\tau`$ (the root of the demand lies in an earlier block than the root of $`\tau`$): the labels satisfy $`f_i(r_d) \lt f_i(r_\tau)`$. Weakening turns $`R(k, f_i(r_\tau), f_i(p), \beta)`$ into $`R(k, f_i(r_d), f_i(p), \beta)`$.
-   - The control relation carries over in the same way. Let the control relation of step $`i`$ be $`R(K, f_i(\rho_i), f_i(\mathrm{cut}), \beta)`$ ($`\rho_0 = \rho`$, $`\rho_i \le \mathrm{cut}`$). For the next step, $`\rho_{i+1}`$ is the column $`\rho_i`$ moved in the same way as above, and the cut becomes the start of the next block. Both columns carry the old labels $`f_i(\rho_i)`$ and $`f_i(\mathrm{cut})`$ unchanged, so the same relation is the control relation of the next step. Its index is $`\theta = f_{i+1}(\rho_{i+1})`$.
+   - The control relation carries over in the same way. Let the control relation of step $`i`$ be $`R(K, f_i(\rho_i), f_i(\mathrm{cut}), \beta)`$ ($`\rho_0 = \rho`$, $`\rho_i \le \mathrm{cut}`$). For the next step, $`\rho_{i+1}`$ is the column $`\rho_i`$ moved in the same way as above, and the cut becomes the start of the next block. Both columns carry the old labels $`f_i(\rho_i)`$ and $`f_i(\mathrm{cut})`$ unchanged, so the same relation is the control relation of the next step. Its root label is $`\theta = f_{i+1}(\rho_{i+1})`$.
    - Let $`m`$ be the size of diagram $`i`$. The $`g`$ from the reflection equals $`f_i`$ left of the cut and lies entirely below $`f_i(\mathrm{cut})`$. The new diagram has $`m + (m - \mathrm{cut})`$ columns. Column $`c \lt m`$ gets $`g(c)`$, and column $`c \ge m`$ gets the old label $`f_i(\mathrm{cut} + c - m)`$. So $`f_i(\mathrm{cut}), \ldots, f_i(m-1)`$ appear unchanged at the right end. The labels of $`g`$ and $`f_i`$ spliced this way form a representation of the diagram that is one block longer. The atoms of the new diagram are of three kinds, and each holds for the spliced labels.
      - Atoms of diagram $`i`$: they hold because $`g`$ is a representation.
      - Old atoms copied by moving their column numbers in the same way: the moved columns carry their old labels, so they hold. However, the root of a copied atom may be a column before the block it was copied into (a column number below $`m`$). This is the case "the root moves to an earlier block". Then the root column $`r`$ before copying lies at or after the cut. The new root's label is below $`f_i(\mathrm{cut})`$, so it is smaller than $`f_i(\mathrm{cut}) \le f_i(r)`$. Weakening is used there.

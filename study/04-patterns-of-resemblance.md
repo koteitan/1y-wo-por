@@ -83,9 +83,9 @@ $`\omega \le_1 \omega`$ は定義から成り立つ。以上から $`\{\beta \mi
 R(k, \eta, a, b) \quad (k \in \mathbb N,\ \eta, a, b \in \mathrm{Ord})
 ```
 
-「層 $`k`$、根の添字 $`\eta`$ で、$`a`$ は $`b`$ へ安定している」と読む。$`\eta`$ は辺の成分の根のラベルで、順序数である。層と成分の根は [05](05-1y-mountain.md) §3、§4 で、この読み方は [06](06-combinatorial-layer.md) §2 で述べる。このため 2 つの問題が起きる。
+「層 $`k`$、根のラベル $`\eta`$ で、$`a`$ は $`b`$ へ安定している」と読む。$`\eta`$ は辺の成分の根のラベルで、順序数である。層と成分の根は [05](05-1y-mountain.md) §3、§4 で、この読み方は [06](06-combinatorial-layer.md) §2 で述べる。このため 2 つの問題が起きる。
 
-**問題 1：段の添字が 2 次元で超限である.** このリポジトリでは、段の添字は、層 $`k`$ と根の添字 $`\eta`$ の組 $`(k, \eta)`$ になる（段 $`(k, \eta)`$ は [07](07-relation-r.md) §3 で定義する）。段 $`(k, \eta)`$ は $`\mathbb N \times \mathrm{Ord}`$ を辞書式に動く。ラベルが可算なら、段は $`\omega \times \omega_1`$ の形に並ぶ。$`\mathcal R_N`$ の段 $`\Sigma_1, \ldots, \Sigma_N`$ は有限個で、自然数で数える。超限の $`\eta`$ を段の番号にできない。
+**問題 1：段が 2 次元で超限である.** このリポジトリでは、段は、層 $`k`$ と根のラベル $`\eta`$ の組 $`(k, \eta)`$ である（段 $`(k, \eta)`$ は [07](07-relation-r.md) §3 で定義する）。段 $`(k, \eta)`$ は $`\mathbb N \times \mathrm{Ord}`$ を辞書式に動く。ラベルが可算なら、段は $`\omega \times \omega_1`$ の形に並ぶ。$`\mathcal R_N`$ の段 $`\Sigma_1, \ldots, \Sigma_N`$ は有限個で、自然数で数える。超限の $`\eta`$ を段の番号にできない。
 
 **問題 2：上端への要求.** 上端 $`\beta`$ は、展開の前に古い最後の列に付いていたラベルである（[06](06-combinatorial-layer.md) §3）。有限反映は「上端 $`\beta`$ への関係 $`R(j, v, w, \beta)`$」（$`j`$ は層、$`v`$ と $`w`$ は根と親のラベル）も新しいラベルで成り立たせる必要がある（[06](06-combinatorial-layer.md) §3 の要求のリスト $`\mathrm{needs}`$）。$`\beta`$ は構造 $`(\beta; \ldots)`$ の元ではない。$`R`$ の定義を展開して書くと $`\Sigma_1`$ にならない。
 
@@ -113,6 +113,6 @@ R(k, \eta, a, b) \quad (k \in \mathbb N,\ \eta, a, b \in \mathrm{Ord})
 
 | 場所 | 使い方 |
 |---|---|
-| [README](../README.md)「証明の形」 | bms-elem-pattern の 1-Y 版であること、段の添字が $`\omega \times \omega_1`$ になること |
+| [README](../README.md)「証明の形」 | bms-elem-pattern の 1-Y 版であること、段が $`\omega \times \omega_1`$ のように並ぶこと |
 | [notes/01-design.md](../notes/01-design.md) §1、§3.8 | 設計の理由 |
 | [notes/01-design.md](../notes/01-design.md) §6.3 | bms-elem-pattern から持ってきたもの（再帰の形など） |

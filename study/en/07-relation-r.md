@@ -17,7 +17,7 @@ This note explains the definition of the label relation $`R`$ of this repository
 
 - $`\mathrm{Ord}`$: all ordinals.
 - Lexicographic order on $`\mathbb N \times \mathrm{Ord}`$: $`(j, \xi) \prec (k, \eta) \iff j \lt k \lor (j = k \land \xi \lt \eta)`$.
-- $`R(k, \eta, a, b)`$: layer $`k \in \mathbb N`$, root index ([06](06-combinatorial-layer.md) §2) $`\eta \in \mathrm{Ord}`$, lower point $`a \in \mathrm{Ord}`$, upper point $`b \in \mathrm{Ord}`$. $`R`$ is defined in §4. §2 and §3 use $`R`$ in the interpretations of symbols. As §5 explains, this use is not circular.
+- $`R(k, \eta, a, b)`$: layer $`k \in \mathbb N`$, root label ([06](06-combinatorial-layer.md) §2) $`\eta \in \mathrm{Ord}`$, lower point $`a \in \mathrm{Ord}`$, upper point $`b \in \mathrm{Ord}`$. $`R`$ is defined in §4. §2 and §3 use $`R`$ in the interpretations of symbols. As §5 explains, this use is not circular.
 
 ## 2. The language
 
@@ -35,7 +35,7 @@ We call the interpretations of the table the **true interpretations**, to distin
 
 ## 3. The structure of level (k, η)
 
-**Definition (level).** A pair $`(k, \eta) \in \mathbb N \times \mathrm{Ord}`$ is called a **level**. $`k`$ is the layer and $`\eta`$ the root index. The level decides which top predicates the structure has. Levels are compared by the lexicographic order $`\prec`$ of §1. A level is unrelated to the "one step" of a one-step expansion ([05](05-1y-mountain.md) §7).
+**Definition (level).** A pair $`(k, \eta) \in \mathbb N \times \mathrm{Ord}`$ is called a **level**. $`k`$ is the layer and $`\eta`$ the root label. The level decides which top predicates the structure has. Levels are compared by the lexicographic order $`\prec`$ of §1. A level is unrelated to the "one step" of a one-step expansion ([05](05-1y-mountain.md) §7).
 
 **Definition (the structure of level (k, η)).** For an ordinal $`\gamma`$, the structure of height $`\gamma`$ and level $`(k, \eta)`$ is the following. Its domain is $`\{x \mid x \lt \gamma\}`$.
 
@@ -44,7 +44,7 @@ We call the interpretations of the table the **true interpretations**, to distin
 ```
 
 - $`\mathrm{Rel}_j`$ is present for every layer $`j`$.
-- $`\mathrm{Top}_j`$ ($`j \lt k`$) is a **diagonal top predicate**. "Diagonal" means that the root index $`\xi`$ is not fixed inside the symbol but is taken as the first argument. So the first argument can be an ordinary variable (a parameter or a witness).
+- $`\mathrm{Top}_j`$ ($`j \lt k`$) is a **diagonal top predicate**. "Diagonal" means that the root label $`\xi`$ is not fixed inside the symbol but is taken as the first argument. So the first argument can be an ordinary variable (a parameter or a witness).
 - $`\mathrm{Top}_{k,\xi}(x) :\iff R(k, \xi, x, \gamma)`$ is a **named top predicate**. There is one symbol of arity 1 for each $`\xi \lt \eta`$. $`\xi`$ is called the **name** of this symbol.
 - There are no top predicates with $`j \gt k`$.
 
@@ -134,7 +134,7 @@ R(k, \eta, a, b) \iff \eta \le a \land a \lt b \land \mathrm{Elem}(k, \eta, a, b
 
 **Theorem (strictness).** $`R(k, \eta, a, b)`$ implies $`a \lt b`$. This is the second condition on the right side of the defining equation. It is the strictness of [06](06-combinatorial-layer.md) §5.
 
-**Theorem (lower bound of the index).** $`R(k, \eta, a, b)`$ implies $`\eta \le a`$. This is the first condition on the right side of the defining equation.
+**Theorem (lower bound of the root label).** $`R(k, \eta, a, b)`$ implies $`\eta \le a`$. This is the first condition on the right side of the defining equation.
 
 **Theorem (weakening).** If $`\eta' \le \eta`$ and $`R(k, \eta, p, c)`$, then $`R(k, \eta', p, c)`$.
 
@@ -164,7 +164,7 @@ Both contradict $`\mathrm{Elem}`$. The combinatorial layer does not use this pro
 The following properties are expected to hold but are not proved here. The combinatorial layer does not use them ([notes/01-design.md](../../notes/01-design.md) §4.11, Japanese).
 
 - Transitivity: $`R(k, \eta, a, b) \land R(k, \eta, b, c) \implies R(k, \eta, a, c)`$.
-- Monotonicity in the index: if $`(k, \eta) \preceq (k', \eta')`$ ($`\prec`$ or equal), $`\eta \le a`$ and $`R(k', \eta', a, b)`$, then $`R(k, \eta, a, b)`$.
+- Monotonicity in the level: if $`(k, \eta) \preceq (k', \eta')`$ ($`\prec`$ or equal), $`\eta \le a`$ and $`R(k', \eta', a, b)`$, then $`R(k, \eta, a, b)`$.
 - Locality: $`R`$ with top $`\le \delta`$ is determined by the recursion below $`\delta + 1`$.
 
 ## 9. Where this repository uses it

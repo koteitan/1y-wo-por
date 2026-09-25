@@ -83,9 +83,9 @@ The label relation required by the 1-Y combinatorial layer ([06](06-combinatoria
 R(k, \eta, a, b) \quad (k \in \mathbb N,\ \eta, a, b \in \mathrm{Ord})
 ```
 
-Read it as "in layer $`k`$ with root index $`\eta`$, $`a`$ is stable into $`b`$". $`\eta`$ is the label of the root of the edge's component, an ordinal. Layers and roots of components are explained in [05](05-1y-mountain.md) §3, §4, and this reading in [06](06-combinatorial-layer.md) §2. This causes two problems.
+Read it as "in layer $`k`$ with root label $`\eta`$, $`a`$ is stable into $`b`$". $`\eta`$ is the label of the root of the edge's component, an ordinal. Layers and roots of components are explained in [05](05-1y-mountain.md) §3, §4, and this reading in [06](06-combinatorial-layer.md) §2. This causes two problems.
 
-**Problem 1: the level index is two-dimensional and transfinite.** In this repository a level index is a pair $`(k, \eta)`$ of a layer $`k`$ and a root index $`\eta`$ (the level $`(k, \eta)`$ is defined in [07](07-relation-r.md) §3). The level $`(k, \eta)`$ runs lexicographically over $`\mathbb N \times \mathrm{Ord}`$. With countable labels, the levels are arranged like $`\omega \times \omega_1`$. The levels $`\Sigma_1, \ldots, \Sigma_N`$ of $`\mathcal R_N`$ are finitely many and counted by natural numbers. A transfinite $`\eta`$ cannot serve as a level number.
+**Problem 1: the levels are two-dimensional and transfinite.** In this repository a level is a pair $`(k, \eta)`$ of a layer $`k`$ and a root label $`\eta`$ (the level $`(k, \eta)`$ is defined in [07](07-relation-r.md) §3). The level $`(k, \eta)`$ runs lexicographically over $`\mathbb N \times \mathrm{Ord}`$. With countable labels, the levels are arranged like $`\omega \times \omega_1`$. The levels $`\Sigma_1, \ldots, \Sigma_N`$ of $`\mathcal R_N`$ are finitely many and counted by natural numbers. A transfinite $`\eta`$ cannot serve as a level number.
 
 **Problem 2: demands toward the top.** The top $`\beta`$ is the label that the old last column had before the expansion ([06](06-combinatorial-layer.md) §3). Finite reflection must also make "relations $`R(j, v, w, \beta)`$ to the top $`\beta`$" ($`j`$ a layer, $`v`$ and $`w`$ the labels of the root and the parent) hold for the new labels (the list of demands $`\mathrm{needs}`$ of [06](06-combinatorial-layer.md) §3). $`\beta`$ is not an element of the structure $`(\beta; \ldots)`$. Writing out the definition of $`R`$ does not give a $`\Sigma_1`$ formula.
 
@@ -113,6 +113,6 @@ The resulting relation $`R`$ is not Carlson's $`\mathcal R_N`$ itself, and we do
 
 | Place | Use |
 |---|---|
-| [README](../../README-en.md) "Shape of the proof" | this is the 1-Y version of bms-elem-pattern; the level index becomes $`\omega \times \omega_1`$ |
+| [README](../../README-en.md) "Shape of the proof" | this is the 1-Y version of bms-elem-pattern; the levels are arranged like $`\omega \times \omega_1`$ |
 | [notes/01-design.md](../../notes/01-design.md) §1, §3.8 (Japanese) | reasons for the design |
 | [notes/01-design.md](../../notes/01-design.md) §6.3 (Japanese) | what was taken from bms-elem-pattern (the shape of the recursion and more) |
