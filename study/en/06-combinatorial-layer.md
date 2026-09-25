@@ -128,7 +128,7 @@ f(0) \lt f(1) \lt f(2), \quad R(0, f(0), f(0), f(1)), \quad R(0, f(0), f(1), f(2
 
 **Definition (top atom).** A **top atom** is a triple of natural numbers $`d = (k, r, p)`$; it is valid for size $`n`$ if $`r \le p \lt n`$. A label $`\beta \in \alpha`$ of a point outside the diagram is called a **top**. For a function $`f : \mathbb N \to \alpha`$, $`d`$ holds for the top $`\beta`$ if $`R(k, f(r), f(p), \beta)`$.
 
-A top atom is an edge to a point $`\beta`$ outside the diagram. In an expansion, the label of the old last column plays the role of $`\beta`$.
+A top atom is an edge to a point $`\beta`$ outside the diagram. In an expansion ([05](05-1y-mountain.md) §6), the label of the old last column plays the role of $`\beta`$.
 
 **Difference from ordinary atoms.** A top atom is an atom $`(k, r, p, q)`$ with the child $`q`$ removed. The child is not a column of the diagram but a point outside it, whose label we write $`\beta`$.
 
@@ -148,7 +148,9 @@ Here $`\beta = f(2)`$ is the label of column 2, which is now outside.
 
 **Definition (demand).** A top atom $`d = (k_d, r_d, p_d)`$ that is passed to finite reflection of §4 separately from the diagram $`G`$ is called a **demand**. A finite list of demands is written $`\mathrm{needs}`$. Finite reflection guarantees that the demands that hold for the top $`\beta`$ before the reflection hold for the new top $`f(\mathrm{cut})`$ after it ($`\mathrm{cut}`$ is the cut defined below).
 
-**Demands in an expansion.** In an expansion, $`\mathrm{needs}`$ is built as follows. Let $`x`$ be the last column and $`y`$ the bad root (layer $`K`$, row $`\ell`$). A representation of the diagram of $`s[N]`$ is built by adding the blocks ([05](05-1y-mountain.md) §6) one at a time (§6). For $`i = 0, 1, \ldots, N - 1`$, the procedure that adds block $`i + 1`$ is called **step $`i`$**.
+**Steps of an expansion.** Consider expanding an expression $`s`$ to $`s[N]`$ (expansion: [05](05-1y-mountain.md) §6). Let $`x`$ be the last column of $`s`$ and $`y`$ the bad root (layer $`K`$, row $`\ell`$). From column $`y`$ on, $`s[N]`$ is divided into blocks $`0, 1, \ldots, N`$ ([05](05-1y-mountain.md) §6). In §6, a representation of $`G(s[N])`$ is built from one of $`G(s)`$ by adding the blocks one at a time. For $`i = 0, 1, \ldots, N - 1`$, the procedure that adds block $`i + 1`$ is called **step $`i`$**.
+
+**Demands in an expansion.** At each step $`i`$, $`\mathrm{needs}`$ is built as follows.
 
 - At step $`i`$, the first column of block $`i`$, $`\mathrm{cut} := y + i \cdot (x - y)`$, is called the **cut**.
 - The column to be added next, $`m := x + i \cdot (x - y)`$ (the first column of block $`i + 1`$), is taken as the top.
@@ -159,7 +161,7 @@ Here $`\beta = f(2)`$ is the label of column 2, which is now outside.
 
 The edge of layer $`K`$, row $`\ell`$ is the edge of the bad root, and it is not made a demand. Instead, the relation $`R(K, \theta, f(\mathrm{cut}), \beta)`$ is passed to finite reflection of §4 (hypothesis 5). A relation of this form is called the **control relation**, and $`\theta \in \alpha`$ is called its **index**. At step 0, $`\theta = f(\rho)`$, where $`\rho`$ is the root of the component of $`x`$ in layer $`K`$, row $`\ell`$ ([05](05-1y-mountain.md) §3). The $`\theta`$ of later steps is described in §6.
 
-**Example 2 (the first step of the expansion of $`(1, 2, 4)`$).** $`x = 2`$, the bad root is $`y = 1`$ (layer $`K = 0`$, row $`\ell = 1`$), and $`s[N] = (1, 2, \ldots, N + 2)`$. Look at step $`i = 0`$.
+**Example 2 (step 0 of the expansion of $`(1, 2, 4)`$).** $`x = 2`$, the bad root is $`y = 1`$ (layer $`K = 0`$, row $`\ell = 1`$), and $`s[N] = (1, 2, \ldots, N + 2)`$. Look at step $`i = 0`$.
 
 - The diagram $`G`$ is the diagram of $`(1, 2)`$: size 2, atom $`(0, 0, 0, 1)`$. $`f`$ is the original representation, $`\beta = f(2)`$, and the cut is $`\mathrm{cut} = y = 1`$.
 - The top is column $`m = 2`$. In the mountain of $`s[N]`$, the parent of column 2 is column 1 in row 0 (root column 0), and there is none in row 1. We look only at the rows $`0 \lt \ell = 1`$ of layer 0, so $`\mathrm{needs} = [(0, 0, 1)]`$. It holds for $`\beta = f(2)`$ by the original atom $`(0, 0, 1, 2)`$.
@@ -177,7 +179,7 @@ The edge of layer $`K`$, row $`\ell`$ is the edge of the bad root, and it is not
 - $`k_d \lt K`$ (a lower layer).
 - $`k_d = K`$ and $`r_d \lt \mathrm{cut}`$ and $`f(r_d) \lt \theta`$ (the same layer, the root before the cut, and the root's label below $`\theta`$).
 
-**Example.** At the first step ($`i = 0`$) of an expansion, $`K`$, $`\mathrm{cut}`$ and $`\theta`$ are determined by the bad root ("Demands in an expansion" of §3). $`f`$ is the original representation, whose labels increase with the column.
+**Example.** Look at step 0 of an expansion ("Steps of an expansion" of §3). $`K`$, $`\mathrm{cut}`$ and $`\theta`$ are determined by the bad root ("Demands in an expansion" of §3). $`f`$ is the original representation, whose labels increase with the column.
 
 - $`(1, 2, 4)`$: the bad root is layer $`K = 0`$, row 1, column $`y = 1`$, so $`\mathrm{cut} = 1`$ and $`\theta = f(1)`$ (Example 2 of §3).
 - $`(1, 3)`$: the bad root is layer $`K = 1`$, row 0, column $`y = 0`$ ([05](05-1y-mountain.md) §5), so $`\mathrm{cut} = 0`$. The root of the last column 1 in layer 1, row 0 is column 0, so $`\theta = f(0)`$. The demands are the layer-0 edges from column 1 of $`s[N]`$ to its parents. In $`(1, 3)[2] = (1, 2, 4)`$, the parent of column 1 is column 0 in row 0 of layer 0 (root column 0), and there is none in row 1. So $`\mathrm{needs} = [(0, 0, 0)]`$.
