@@ -136,7 +136,9 @@ A top atom is an edge to a point $`\beta`$ outside the diagram. In an expansion,
 - $`k_d \lt K`$ (a lower layer).
 - $`k_d = K`$ and $`r_d \lt \mathrm{cut}`$ and $`f(r_d) \lt \theta`$ (the same layer, the root before the cut, and the root's label below $`\theta`$).
 
-**Definition (finite reflection).** The following holds. The hypotheses are these eight.
+**Definition (finite reflection).** A structure of labels $`(\alpha; \lt, D, R)`$ satisfies **finite reflection** if the following holds.
+
+For every diagram $`G`$, function $`f : \mathbb N \to \alpha`$, natural numbers $`\mathrm{cut}, K`$, labels $`\theta, \beta \in \alpha`$ and list $`\mathrm{needs}`$ of top atoms, assume that all of the following eight hypotheses hold.
 
 1. $`G`$ is a diagram of size $`n`$ and $`\mathrm{cut} \lt n`$.
 2. $`f`$ is a representation of $`G`$.
@@ -147,7 +149,7 @@ A top atom is an edge to a point $`\beta`$ outside the diagram. In an expansion,
 7. Every element is admissible.
 8. Every element holds for the top $`\beta`$.
 
-Then there is a $`g`$ with:
+Then there is a function $`g : \mathbb N \to \alpha`$ with the following four properties.
 
 1. $`g`$ is a representation of $`G`$.
 2. $`g(i) = f(i)`$ for $`i \lt \mathrm{cut}`$.
