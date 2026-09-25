@@ -8,7 +8,7 @@ Prerequisites
 |---|---|
 | [01 Ordinals and ω₁](01-ordinals.md) | ordinal, $`\mathrm{Ord}`$, infinite descending sequence, $`\lt`$ is well-founded |
 
-This note explains three things: well-founded relations, well-founded recursion, and termination by decreasing labels. The definition of the relation $`R`$ ([07](07-relation-r.md)) has the form of §4 and §5. The whole proof ([06](06-combinatorial-layer.md)) has the form of §6.
+This note explains three things: well-founded relations, well-founded recursion, and termination by a decreasing value in a well-founded order. The definition of the relation $`R`$ ([07](07-relation-r.md)) has the form of §4 and §5. The whole proof ([06](06-combinatorial-layer.md)) has the form of §6.
 
 ## 1. Well-founded relations
 
@@ -33,7 +33,7 @@ The last row. A 1-Y expression is a finite sequence of positive integers, define
 (1,2) \gt (1,1,2) \gt (1,1,1,2) \gt (1,1,1,1,2) \gt \cdots
 ```
 
-A 1-Y expansion lowers the lexicographic order ([05](05-1y-mountain.md) §7). Still, the lexicographic order alone does not give termination. That is why labels are used (§6).
+A 1-Y expansion lowers the lexicographic order ([05](05-1y-mountain.md) §7). Still, the lexicographic order alone does not give termination. That is why the method of §6 is used.
 
 ## 2. Well-founded induction
 
@@ -122,14 +122,7 @@ Then $`\to`$ is well-founded. That is, there is no infinite sequence $`s_0 \to s
 
 The important point is that a state need not have a unique label. We only use "some label can be attached" and "after one step, a smaller label can be attached".
 
-The 1-Y proof uses it as follows ([06](06-combinatorial-layer.md)). Of the words in the table, expression and expansion $`s[N]`$ are defined in [05](05-1y-mountain.md), and diagram, representation and last label in [06](06-combinatorial-layer.md) §1, §2, §6.
-
-| General form | 1-Y |
-|---|---|
-| state | expression $`s`$ |
-| $`s \to t`$ | nontrivial one-step expansion ($`t = s[N] \ne s`$) |
-| label | ordinal |
-| $`\mathrm{valid}(s, a)`$ | the diagram of $`s`$ has a representation whose last label is $`a`$ |
+How the 1-Y proof uses it is described in [06](06-combinatorial-layer.md) §6.
 
 ## 7. Where this repository uses it
 

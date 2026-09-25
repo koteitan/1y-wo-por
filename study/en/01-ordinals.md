@@ -4,7 +4,7 @@
 
 Prerequisites: none
 
-This note explains the ordinals used as labels and the ordinal $`\omega_1`$ used as a bound for the labels. A label is an ordinal used in the proof that expansion terminates. Labels are defined in [02](02-well-founded.md) §6 and [06](06-combinatorial-layer.md) §2. The facts that are used are the regularity in §5 and the enumeration in §6.
+This note explains ordinals and $`\omega_1`$. Later notes attach ordinals to the columns of expressions in the proof that expansion terminates ([02](02-well-founded.md) §6, [06](06-combinatorial-layer.md) §2). The facts that are used are the regularity in §5 and the enumeration in §6.
 
 ## 1. Well-orders and ordinals
 
@@ -126,6 +126,6 @@ With this, finitely many ordinals below $`\gamma`$ can be written as a finite li
 
 | Place | Use |
 |---|---|
-| [README](../../README-en.md) "The relation R" | labels are ordinals, the order is $`\lt`$ |
-| [README](../../README-en.md) "Where the six hypotheses go" | the label order $`\lt`$ is well-founded and transitive (§1) |
+| [README](../../README-en.md) "The relation R" | the values attached to columns are ordinals, the order is $`\lt`$ |
+| [README](../../README-en.md) "Where the six hypotheses go" | the order $`\lt`$ of ordinals is well-founded and transitive (§1) |
 | [notes/01-design.md](../../notes/01-design.md) §3.6, §4.7 (Japanese) | $`\omega_1`$, the enumeration $`e_\gamma`$, closure points ([08](08-closure-chain.md) §5) lie below $`\omega_1`$ (regularity of §5) |

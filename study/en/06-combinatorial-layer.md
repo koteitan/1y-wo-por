@@ -271,6 +271,16 @@ The conclusion is "the one-step expansion relation is well-founded" (Theorem 1 o
 
 **Well-foundedness.** By well-founded induction on $`\beta`$, show "if $`G(s)`$ has a representation with last label $`\beta`$, then $`s`$ is accessible". This is the form of [02](02-well-founded.md) §6. The empty expression has no one-step expansion and is handled separately. By the initial representation every expression gets a first label. Hence the expansion relation is well-founded.
 
+The general form of [02](02-well-founded.md) §6 is applied as follows.
+
+| General form | 1-Y |
+|---|---|
+| state | expression $`s`$ |
+| $`s \to t`$ | nontrivial one-step expansion ($`t = s[N] \ne s`$) |
+| label | ordinal |
+| $`\mathrm{valid}(s, a)`$ | the diagram of $`s`$ has a representation whose last label is $`a`$ |
+
+
 ## 7. What remains for the semantic layer
 
 The combinatorial layer does not ask why finite reflection holds. Supplying $`(\alpha; \lt, D, R)`$ with the six hypotheses is the job of the **semantic layer**.
