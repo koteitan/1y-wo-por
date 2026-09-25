@@ -6,7 +6,7 @@ Prerequisites
 
 | Note | Terms used here |
 |---|---|
-| [02 Well-founded relations and recursion](02-well-founded.md) | well-founded, accessible, termination by labels (§6) |
+| [02 Well-founded relations and recursion](02-well-founded.md) | well-founded, accessible, well-founded induction (§1, §2) |
 | [03 Structures and Σ₁-elementary substructures](03-sigma1-elementary.md) | the notation $`(A; P_1, \ldots)`$ for structures (§1) |
 | [05 The 1-Y sequence and its mountain](05-1y-mountain.md) | expression, layer, row, parent, parent–child edge, root of a component, bad root, expansion, block |
 
@@ -269,17 +269,27 @@ The conclusion is "the one-step expansion relation is well-founded" (Theorem 1 o
 | finite reflection | once per block |
 | initial representation | the start of the induction |
 
-**Well-foundedness.** By well-founded induction on $`\beta`$, show "if $`G(s)`$ has a representation with last label $`\beta`$, then $`s`$ is accessible". This is the form of [02](02-well-founded.md) §6. The empty expression has no one-step expansion and is handled separately. By the initial representation every expression gets a first label. Hence the expansion relation is well-founded.
+**Theorem (well-foundedness by a decreasing value).** Let $`X`$ be a set, $`\to`$ a binary relation on $`X`$, and $`(L, \lt)`$ a well-founded order. Suppose a relation $`\mathrm{valid}(s, a)`$ between $`s \in X`$ and $`a \in L`$ satisfies:
 
-The general form of [02](02-well-founded.md) §6 is applied as follows.
+- every $`s \in X`$ has an $`a \in L`$ with $`\mathrm{valid}(s, a)`$;
+- if $`\mathrm{valid}(s, a)`$ and $`s \to t`$, then $`\mathrm{valid}(t, b)`$ for some $`b \lt a`$.
+
+Then $`\to`$ is well-founded, that is, there is no infinite sequence $`s_0 \to s_1 \to s_2 \to \cdots`$.
+
+**Proof.** By well-founded induction on $`a`$ ([02](02-well-founded.md) §2), show "if $`\mathrm{valid}(s, a)`$ then $`s`$ is accessible ([02](02-well-founded.md) §1)". If $`s \to t`$, there is $`b \lt a`$ with $`\mathrm{valid}(t, b)`$, so $`t`$ is accessible by the induction hypothesis. $`\square`$
+
+The $`a`$ attached to $`s`$ need not be unique. In 1-Y, one expression has many representations.
+
+**Well-foundedness.** By well-founded induction on $`\beta`$, show "if $`G(s)`$ has a representation with last label $`\beta`$, then $`s`$ is accessible". This is the form of the theorem above. The empty expression has no one-step expansion and is handled separately. By the initial representation every expression gets a first label. Hence the expansion relation is well-founded.
+
+The theorem above is applied as follows.
 
 | General form | 1-Y |
 |---|---|
 | element of $`X`$ | expression $`s`$ |
 | $`s \to t`$ | nontrivial one-step expansion ($`t = s[N] \ne s`$) |
-| label | ordinal |
+| $`(L, \lt)`$ | the order of labels $`(\mathrm{Ord}, \lt)`$ |
 | $`\mathrm{valid}(s, a)`$ | the diagram of $`s`$ has a representation whose last label is $`a`$ |
-
 
 ## 7. What remains for the semantic layer
 

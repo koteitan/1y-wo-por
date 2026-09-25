@@ -11,7 +11,7 @@
 | ノート | 内容 | このリポジトリでの対応箇所 |
 |---|---|---|
 | [01 順序数と ω₁](01-ordinals.md) | 整列順序、後者と極限、上限、可算、$`\omega_1`$ の正則性、可算順序数の数え上げ | README「関係 R」「6 つの仮定の行き先」、notes/01-design.md §3.6、§4.7 |
-| [02 整礎関係と整礎再帰](02-well-founded.md) | 整礎関係、到達可能、整礎帰納法、辞書式積、整礎再帰、ガードつきの再帰、ラベルによる停止 | README「関係 R」、notes/01-design.md §3.1、§4.1 |
+| [02 整礎関係と整礎再帰](02-well-founded.md) | 整礎関係、到達可能、整礎帰納法、辞書式積、整礎再帰、ガードつきの再帰 | README「関係 R」、notes/01-design.md §3.1、§4.1 |
 | [03 構造と Σ₁ 初等部分構造](03-sigma1-elementary.md) | 構造、$`\Sigma_1`$ 論理式、原子図式、$`\preccurlyeq_{\Sigma_1}`$、Tarski–Vaught 判定法、$`\Sigma_1`$ 論理式の標準形、見えるビット | README「関係 R」、notes/01-design.md §3.2〜§3.4 |
 | [04 Patterns of resemblance](04-patterns-of-resemblance.md) | Carlson の $`\le_1`$、小さい例、有限反映の形、bms-elem-pattern、1-Y で足りないもの | README「証明の形」、notes/01-design.md §1、§3.8、§6.3 |
 | [05 1-Y 数列と山](05-1y-mountain.md) | 式、山の行、差と親、高さ、層、悪い根、展開の例 | README「記号」「最終定理 4 つ」、notes/01-design.md §2.1 |

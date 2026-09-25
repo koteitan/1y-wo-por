@@ -65,7 +65,7 @@ In the order-only language, $`(\omega; \le) \preccurlyeq_{\Sigma_1} (\beta; \le)
 
 This section uses words that later notes define, and only describes the shape. Columns of an expression, parent–child edges and expansion are defined in [05](05-1y-mountain.md); the way labels are attached and the cut are defined in [06](06-combinatorial-layer.md) §2, §3.
 
-A termination proof for expansion attaches an ordinal label to each column and shows that expansion lowers the labels ([02](02-well-founded.md) §6). The property needed is **finite reflection**.
+A termination proof for expansion attaches an ordinal label to each column and shows that expansion lowers the labels ([06](06-combinatorial-layer.md) §6). The property needed is **finite reflection**.
 
 **The shape of finite reflection.** Let $`\alpha \lt_1 \beta`$. Suppose points $`\vec p`$ below $`\alpha`$ and points $`\vec y`$ below $`\beta`$ satisfy a condition $`\psi(\vec p, \vec y)`$ made of finitely many atomic formulas. Then there are points $`\vec y'`$ below $`\alpha`$ with the same condition $`\psi(\vec p, \vec y')`$.
 

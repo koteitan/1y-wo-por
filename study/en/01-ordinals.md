@@ -4,7 +4,7 @@
 
 Prerequisites: none
 
-This note explains ordinals and $`\omega_1`$. Later notes attach ordinals to the columns of expressions in the proof that expansion terminates ([02](02-well-founded.md) §6, [06](06-combinatorial-layer.md) §2). The facts that are used are the regularity in §5 and the enumeration in §6.
+This note explains ordinals and $`\omega_1`$. Later notes attach ordinals to the columns of expressions in the proof that expansion terminates ([06](06-combinatorial-layer.md) §2, §6). The facts that are used are the regularity in §5 and the enumeration in §6.
 
 ## 1. Well-orders and ordinals
 

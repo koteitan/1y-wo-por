@@ -8,7 +8,7 @@ Prerequisites
 |---|---|
 | [01 Ordinals and ω₁](01-ordinals.md) | ordinal, $`\mathrm{Ord}`$, infinite descending sequence, $`\lt`$ is well-founded |
 
-This note explains three things: well-founded relations, well-founded recursion, and termination by a decreasing value in a well-founded order. The definition of the relation $`R`$ ([07](07-relation-r.md)) has the form of §4 and §5. The whole proof ([06](06-combinatorial-layer.md)) has the form of §6.
+This note explains well-founded relations and well-founded recursion. The definition of the relation $`R`$ ([07](07-relation-r.md)) has the form of §4 and §5.
 
 ## 1. Well-founded relations
 
@@ -33,7 +33,7 @@ The last row. A 1-Y expression is a finite sequence of positive integers, define
 (1,2) \gt (1,1,2) \gt (1,1,1,2) \gt (1,1,1,1,2) \gt \cdots
 ```
 
-A 1-Y expansion lowers the lexicographic order ([05](05-1y-mountain.md) §7). Still, the lexicographic order alone does not give termination. That is why the method of §6 is used.
+A 1-Y expansion lowers the lexicographic order ([05](05-1y-mountain.md) §7). Still, the lexicographic order alone does not give termination. So ordinals are attached to expressions, and it is shown that expansion lowers them ([06](06-combinatorial-layer.md) §6).
 
 ## 2. Well-founded induction
 
@@ -107,24 +107,7 @@ In [07 The relation R](07-relation-r.md), step 1 is the stage interpretations of
 
 **A small example.** On $`\mathbb N`$ consider a definition of the form $`F(n) := 1 + \sum_{i \in S_n} F(i)`$, where $`S_n`$ is a given finite set for each $`n`$ that may contain numbers $`\ge n`$. So as it stands, this is not a well-founded recursion. Written with the guard, $`F(n) := 1 + \sum_{i \in S_n,\ i \lt n} F(i)`$, it is defined by well-founded recursion. If $`S_n \subseteq \{0, \ldots, n-1\}`$ is shown separately, the equation without the guard, $`F(n) = 1 + \sum_{i \in S_n} F(i)`$, holds.
 
-## 6. Termination by labels
-
-Consider a binary relation $`\to`$ on a set $`X`$ (write $`s \to t`$ when $`s, t \in X`$ are in this relation). In 1-Y, $`s \to t`$ becomes the relation "$`t`$ is an expansion of $`s`$" ([06](06-combinatorial-layer.md) §6). We show that $`\to`$ is well-founded, using a well-founded order $`(L, \lt)`$. The elements of $`L`$ are called **labels**.
-
-**Theorem (termination by labels).** Suppose a relation $`\mathrm{valid}(s, a)`$ between elements of $`X`$ and labels ($`s \in X`$, $`a \in L`$) satisfies:
-
-- every $`s \in X`$ has a label $`a`$ with $`\mathrm{valid}(s, a)`$;
-- if $`\mathrm{valid}(s, a)`$ and $`s \to t`$, then $`\mathrm{valid}(t, b)`$ for some $`b \lt a`$.
-
-Then $`\to`$ is well-founded. That is, there is no infinite sequence $`s_0 \to s_1 \to s_2 \to \cdots`$.
-
-**Proof.** By well-founded induction on $`a`$, show "if $`\mathrm{valid}(s, a)`$ then $`s`$ is accessible". If $`s \to t`$, then $`t`$ has a label $`b \lt a`$, so $`t`$ is accessible by the induction hypothesis. $`\square`$
-
-The important point is that an element of $`X`$ need not have a unique label. We only use "every $`s`$ can be given some label" and "if $`s \to t`$, then $`t`$ can be given a smaller label".
-
-How the 1-Y proof uses it is described in [06](06-combinatorial-layer.md) §6.
-
-## 7. Where this repository uses it
+## 6. Where this repository uses it
 
 | Place | Use |
 |---|---|
