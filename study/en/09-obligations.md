@@ -116,7 +116,7 @@ One $`f`$ represents all diagrams at once. In particular it represents the diagr
 
 ## 5. Summary and the final theorems
 
-By §2–§4, $`(\alpha, \lt, D, R) = (\mathrm{Ord}, \lt, \mathrm{True}, R)`$ satisfies all six hypotheses.
+By §2–§4, $`(\alpha; \lt, D, R) = (\mathrm{Ord}; \lt, \mathrm{True}, R)`$ satisfies all six hypotheses.
 
 1. $`\lt`$ on ordinals is well-founded.
 2. $`a \lt b`$ and $`b \lt c`$ imply $`a \lt c`$.

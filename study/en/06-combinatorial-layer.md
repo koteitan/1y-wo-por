@@ -88,7 +88,12 @@ So there are 2 edges: row 0 of layer 0 and row 0 of layer 1. The size is $`n = 2
 
 ## 2. Representations
 
-Fix $`(\alpha, \lt, D, R)`$. $`R(k, \eta, a, b)`$ is a relation of four arguments, read "in layer $`k`$ with root index $`\eta`$, $`a`$ is stable into $`b`$".
+Choose one structure of labels $`(\alpha; \lt, D, R)`$ and keep it fixed (for the notation of structures see [03](03-sigma1-elementary.md) §1). All definitions below are relative to this structure.
+
+- $`\alpha`$ is the set of labels (the domain).
+- $`\lt`$ is an order on $`\alpha`$.
+- $`D`$ is a subset of $`\alpha`$, the labels that may be used. $`D(x)`$ means $`x \in D`$.
+- $`R(k, \eta, a, b)`$ is a relation of four arguments: $`k`$ is a natural number and $`\eta, a, b`$ are elements of $`\alpha`$. Read it as "in layer $`k`$ with root index $`\eta`$, $`a`$ is stable into $`b`$".
 
 **Definition (representation).** A function $`f : \mathbb N \to \alpha`$ is a **representation** of a diagram $`G`$ of size $`n`$ if the following three conditions hold.
 
@@ -149,7 +154,7 @@ The main theorem of the combinatorial layer (below, the **entry theorem**) has t
 | transitivity | $`a \lt b`$ and $`b \lt c`$ imply $`a \lt c`$ |
 | strictness | $`R(k, \eta, a, b)`$ implies $`a \lt b`$ |
 | weakening | $`\eta' \lt \eta`$ and $`R(k, \eta, p, c)`$ imply $`R(k, \eta', p, c)`$ |
-| finite reflection | finite reflection of §4 holds for $`(\alpha, \lt, D, R)`$ |
+| finite reflection | finite reflection of §4 holds for $`(\alpha; \lt, D, R)`$ |
 | initial representation | for every expression $`s`$, $`G(s)`$ has a representation |
 
 The conclusion is "the one-step expansion relation is well-founded" (Theorem 1 of [05](05-1y-mountain.md) §7).
@@ -187,7 +192,7 @@ The conclusion is "the one-step expansion relation is well-founded" (Theorem 1 o
 
 ## 7. What remains for the semantic layer
 
-The combinatorial layer does not ask why finite reflection holds. Supplying $`(\alpha, \lt, D, R)`$ with the six hypotheses is the job of the **semantic layer**.
+The combinatorial layer does not ask why finite reflection holds. Supplying $`(\alpha; \lt, D, R)`$ with the six hypotheses is the job of the **semantic layer**.
 
 - Phyrion's semantic layer: $`D`$ is a condition corresponding to admissible ordinals, and $`R`$ is $`\Sigma_1`$ preservation of a truth tower over the constructible universe $`L`$.
 - The semantic layer of this repository: $`\alpha = \mathrm{Ord}`$, $`D = \mathrm{True}`$, and $`R`$ is the relation of [07 The relation R](07-relation-r.md). The proofs are in [09 Discharging the obligations](09-obligations.md).

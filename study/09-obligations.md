@@ -116,7 +116,7 @@ R(j, \zeta, x, \alpha) \iff R(j, \zeta, x, \omega_1)
 
 ## 5. まとめと最終定理
 
-§2〜§4 から、$`(\alpha, \lt, D, R) = (\mathrm{Ord}, \lt, \mathrm{True}, R)`$ は 6 つの仮定をすべて満たす。
+§2〜§4 から、$`(\alpha; \lt, D, R) = (\mathrm{Ord}; \lt, \mathrm{True}, R)`$ は 6 つの仮定をすべて満たす。
 
 1. 順序数の $`\lt`$ は整礎である。
 2. $`a \lt b`$ かつ $`b \lt c`$ なら $`a \lt c`$。
