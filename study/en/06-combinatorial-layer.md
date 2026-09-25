@@ -10,7 +10,7 @@ Prerequisites
 | [03 Structures and Σ₁-elementary substructures](03-sigma1-elementary.md) | the notation $`(A; P_1, \ldots)`$ for structures (§1) |
 | [05 The 1-Y sequence and its mountain](05-1y-mountain.md) | expression, layer, row, parent, parent–child edge, root of a component, bad root, expansion, block |
 
-This note explains the part of Phyrion's proof that does not use the meaning of the labels (the combinatorial layer). This layer takes the label set $`\alpha`$, an order $`\lt`$, a domain $`D`$ and a relation $`R`$ as arguments, and proves well-foundedness of expansion from six hypotheses about them. This repository uses the theorem of this layer as it is.
+This note explains the combinatorial layer of Phyrion's proof. This layer takes a set $`\alpha`$, an order $`\lt`$, a domain $`D`$ and a relation $`R`$ as arguments (§2), does not use what the elements of $`\alpha`$ are, and proves well-foundedness of expansion from six hypotheses about them. This repository uses the theorem of this layer as it is.
 
 ## 1. Diagrams
 
@@ -21,7 +21,7 @@ This note explains the part of Phyrion's proof that does not use the meaning of 
 - $`p \in \mathbb N`$: the column number of the parent.
 - $`q \in \mathbb N`$: the column number of the child.
 
-None of them is a label (an ordinal); they are all numbers. Labels are attached to column numbers by a representation $`f`$ of §2.
+They are all numbers (natural numbers). The labels attached to columns are defined in §2.
 
 It is **valid** for size $`n`$ if $`r \le p \lt q \lt n`$.
 
@@ -103,7 +103,7 @@ So there are 2 edges: row 0 of layer 0 and row 0 of layer 1. The size is $`n = 2
 
 ## 2. Representations
 
-Choose one structure of labels $`(\alpha; \lt, D, R)`$ and keep it fixed (for the notation of structures see [03](03-sigma1-elementary.md) §1). All definitions below are relative to this structure.
+Choose one structure $`(\alpha; \lt, D, R)`$ and keep it fixed (for the notation of structures see [03](03-sigma1-elementary.md) §1). All definitions below are relative to this structure.
 
 - $`\alpha`$ is the domain. Its elements are called **labels**. A representation below attaches one label to each column of a diagram.
 - $`\lt`$ is an order on $`\alpha`$.
@@ -193,7 +193,7 @@ The edge of layer $`K`$, row $`\ell`$ is the edge of the bad root, and it is not
 
 The two non-admissible ones are the edges of the bad roots ($`(0, 1, 1, 2)`$ and $`(1, 0, 0, 1)`$) with the child removed. These edges are not made demands; they are passed as the control relation.
 
-**Definition (finite reflection).** A structure of labels $`(\alpha; \lt, D, R)`$ satisfies **finite reflection** if the following holds.
+**Definition (finite reflection).** A structure $`(\alpha; \lt, D, R)`$ (§2) satisfies **finite reflection** if the following holds.
 
 For every diagram $`G`$, function $`f : \mathbb N \to \alpha`$, natural numbers $`\mathrm{cut}, K`$, labels $`\theta, \beta \in \alpha`$ and list $`\mathrm{needs}`$ of top atoms, assume that all of the following eight hypotheses hold.
 
