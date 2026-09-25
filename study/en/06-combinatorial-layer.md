@@ -143,13 +143,17 @@ A top atom is an edge to a point $`\beta`$ outside the diagram. In an expansion,
 
 Here $`\beta = f(2)`$ is the label of column 2, which is now outside.
 
-**The list of demands.** In an expansion, a list $`\mathrm{needs}`$ of top atoms (the **demands**) is passed to finite reflection of §4. Let $`x`$ be the last column and $`y`$ the bad root (layer $`K`$, row $`d`$). At step $`i`$, the column to be added next, $`m = x + i \cdot (x - y)`$, is taken as the top, and the edges from column $`m`$ to its parents in the mountain of $`s[N]`$ become demands in this range only:
+**Definition (demand).** When a top atom $`d = (k_d, r_d, p_d)`$ is used as the condition "hold for the top", $`d`$ is called a **demand**. A demand $`d`$ is satisfied for a top $`\beta`$ if $`d`$ holds for $`\beta`$, that is, $`R(k_d, f(r_d), f(p_d), \beta)`$. A finite list of demands is written $`\mathrm{needs}`$.
+
+Unlike atoms, demands are not part of the diagram $`G`$. Finite reflection of §4 receives $`\mathrm{needs}`$ besides the diagram $`G`$. It guarantees that the demands satisfied for the top $`\beta`$ before the reflection are satisfied for the new top $`f(\mathrm{cut})`$ after it.
+
+**Demands in an expansion.** In an expansion, $`\mathrm{needs}`$ is built as follows. Let $`x`$ be the last column and $`y`$ the bad root (layer $`K`$, row $`d`$). At step $`i`$, the column to be added next, $`m = x + i \cdot (x - y)`$, is taken as the top, and the edges from column $`m`$ to its parents in the mountain of $`s[N]`$ become demands in this range only:
 
 - layer $`k \lt K`$: the edges of all rows;
 - layer $`K`$: the edges of the rows below row $`d`$;
 - layer $`k \gt K`$: none.
 
-The edge of layer $`K`$, row $`d`$ is the edge of the bad root. It is passed not as a demand but as the control relation $`R(K, \theta, f(\mathrm{cut}), \beta)`$.
+The edge of layer $`K`$, row $`d`$ is the edge of the bad root. It is passed not as a demand but as the control relation $`R(K, \theta, f(\mathrm{cut}), \beta)`$ (hypothesis 5 of §4).
 
 **Example 2 (the first step of the expansion of $`(1, 2, 4)`$).** $`x = 2`$, the bad root is $`y = 1`$ (layer $`K = 0`$, row $`d = 1`$), and $`s[N] = (1, 2, \ldots, N + 2)`$. Look at step $`i = 0`$.
 
