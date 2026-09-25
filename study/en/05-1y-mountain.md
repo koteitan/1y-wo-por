@@ -155,6 +155,8 @@ This formula is the difference $`v_{r+1}(c) = v_r(c) - v_r(\mathrm{par}_r(c))`$ 
 
 **Branches used.** (0).
 
+---
+
 **Example 2 ($`(1, 2, 3)[2]`$).** In the layer of the bad root, the first column of a block uses the shape of column $`z`$ from row $`d`$ up.
 
 **Branches used.** (2-3-2): columns 2, 3 of layer 0.
@@ -183,6 +185,8 @@ This formula is the difference $`v_{r+1}(c) = v_r(c) - v_r(\mathrm{par}_r(c))`$ 
    | row 0 | 1 | 2 ← 0 | 2 ← 0 | 2 ← 0 |
 
    So $`(1, 2, 3)[2] = (1, 2, 2, 2)`$.
+
+---
 
 **Example 3 ($`(1, 2, 4, 8, 10, 8)[2]`$).** We follow the definition.
 
@@ -236,6 +240,8 @@ This formula is the difference $`v_{r+1}(c) = v_r(c) - v_r(\mathrm{par}_r(c))`$ 
 
    So $`(1, 2, 4, 8, 10, 8)[2] = (1, 2, 4, 8, 10, 7, 12, 14, 11, 17, 19)`$. The values $`(7, 12, 14)`$ of block 1 are not those of block 0, $`(4, 8, 10)`$, plus a constant, because the mountain is copied and the values are rebuilt, instead of copying the values.
 
+---
+
 **Example 4 ($`(1, 3)[2]`$).** The bad root is in layer 1, and branch (3) of step 1 is used.
 
 **Branches used.** (3-2-1-2), (3-2-1-3): column 2 of layer 0.
@@ -254,6 +260,8 @@ This formula is the difference $`v_{r+1}(c) = v_r(c) - v_r(\mathrm{par}_r(c))`$ 
    | row 0 | ○ | ← 0 | ← 1 |
 
 4. **Rebuild the values.** The number of layers is $`B = \max(1, 3) = 3`$, and $`t_2 = 1`$. The copied mountains of layers 2 and 1 have no parents, so $`t_1`$ and $`t_0`$ are all 1 as well. In layer 0, column 1 has $`v_1(1) = 1`$ and $`v_0(1) = 1 + v_0(0) = 2`$. Column 2 has $`v_2(2) = 1`$, $`v_1(2) = 1 + v_1(1) = 2`$, and $`v_0(2) = 1 + v_0(1) + v_1(1) = 1 + 2 + 1 = 4`$. So $`(1, 3)[2] = (1, 2, 4)`$.
+
+---
 
 **Example 5 ($`(1, 3, 2)[2]`$).** A layer above the bad root has parents.
 
@@ -303,6 +311,8 @@ This formula is the difference $`v_{r+1}(c) = v_r(c) - v_r(\mathrm{par}_r(c))`$ 
    | row 0 | 1 | 3 ← 0 | 1 | 3 ← 2 | 1 | 3 ← 4 |
 
    Column 3 has row 1 equal to $`t_0(3) = 2`$ and row 0 equal to $`2 + v_0(2) = 2 + 1 = 3`$. So $`(1, 3, 2)[2] = (1, 3, 1, 3, 1, 3)`$.
+
+---
 
 **Example 6 ($`(1, 3, 4, 2, 5, 6, 5)[2]`$).** In layer 0, columns that lie above $`z`$ and columns that do not are mixed.
 
@@ -365,6 +375,8 @@ This formula is the difference $`v_{r+1}(c) = v_r(c) - v_r(\mathrm{par}_r(c))`$ 
    | row 0 | 1 | 3 ← 0 | 4 ← 1 | 2 ← 0 | 5 ← 3 | 6 ← 4 | 4 ← 3 | 9 ← 6 | 10 ← 7 | 8 ← 6 | 17 ← 9 | 18 ← 10 |
 
    For example, column 7 starts from the top value $`t_0(7) = 2`$: row 2 is $`2 + v_2(6) = 3`$, row 1 is $`2 + v_1(6) + v_2(6) = 5`$, and row 0 is $`2 + v_0(6) + v_1(6) + v_2(6) = 2 + 4 + 2 + 1 = 9`$. So $`(1, 3, 4, 2, 5, 6, 5)[2] = (1, 3, 4, 2, 5, 6, 4, 9, 10, 8, 17, 18)`$.
+
+---
 
 **Example 7 ($`(1, 3, 9, 23)[2]`$).** The bad root is in layer 1, row 1, and in layer 0 the mountain grows by 2 rows with each copy.
 
@@ -435,6 +447,8 @@ This formula is the difference $`v_{r+1}(c) = v_r(c) - v_r(\mathrm{par}_r(c))`$ 
    | row 0 | 1 | 3 ← 0 | 9 ← 1 | 22 ← 2 | 50 ← 3 | 110 ← 4 | 238 ← 5 |
 
    For example, column 3 starts from the top value $`t_0(3) = 3`$: row 2 is $`3 + v_2(2) = 7`$, row 1 is $`3 + v_1(2) + v_2(2) = 13`$, and row 0 is $`3 + v_0(2) + v_1(2) + v_2(2) = 3 + 9 + 6 + 4 = 22`$. So $`(1, 3, 9, 23)[2] = (1, 3, 9, 22, 50, 110, 238)`$.
+
+---
 
 The table lists the expansions of a few expressions.
 
